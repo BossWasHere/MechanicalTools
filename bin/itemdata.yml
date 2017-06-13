@@ -1,0 +1,119 @@
+## Item Configuration for Mechanical Tools and Blocks plugin by IballisticBoss ##
+# Permissions with Other indicate that a player can give another player an item #
+
+#Enable or disable items here
+enabled:
+    - spawnPointTeleporter
+    - radio
+    - iTool
+    - dyeWand
+    - flamethrower
+
+#Item Configuration
+# - item: The ID of the item for the task
+# - name: The name displayed on the item
+# - lore: The lore displayed on the item
+# - cooldown: The time (seconds) before a player can use the item again
+# - permissions: Specific permissions for the item
+# - crafting: [a: the top row, b: the middle row, c: the bottom row, items: specified crafting items, enabled: should crafting be allowed]
+item:
+    spawnPointTeleporter:
+        item: end_crystal
+        name: Spawn Point Teleporter
+        lore:
+            - Mechanical Items Addons
+            - Spawn Point Teleporter
+            - Teleports you to your spawn point
+            - Click to use
+        cooldown: 3
+        permissions:
+            use: mechanical.bedteleport.use
+            command: mechanical.bedteleport.command
+            commandOther: mechanical.bedteleport.command.other
+        crafting:
+            a: ggg
+            b: gdg
+            c: ggg
+            items: g=glass;d=diamond
+            enabled: true
+    
+    radio:
+        item: noteblock
+        name: Radio
+        lore:
+            - Mechanical Items Addons
+            - Note Block Radio
+            - Allows you to listen to music
+            - Click to use
+        cooldown: 8
+        permissions:
+            use: mechanical.radio.use
+            command: mechanical.radio.command
+            commandOther: mechanical.radio.command.other
+        crafting:
+            a: pdp
+            b: trt
+            c: ppp
+            items: p=oak_planks;d=diamond;r=redstone;t=redstone_torch
+            enabled: true
+
+    iTool:
+        item: nether_star
+        name: ITool
+        lore:
+            - Mechanical Items Addons
+            - Amazing ITool
+            - Allows you craft and more!
+            - Click to use
+        permissions:
+            use: mechanical.itool.use
+            useCraft: mechanical.itool.use.craft
+            useEnchant: mechanical.itool.use.enchant
+            useAnvil: mechanical.itool.use.anvil
+            useBackpack: mechanical.itool.use.inventory
+            command: mechanical.itool.command
+            commandOther: mechanical.itool.command.other
+        crafting:
+            a: drd
+            b: bsb
+            c: drd
+            items: d=diamond;r=redstone;b=blaze_powder;s=nether_star
+            enabled: true
+            
+    dyeWand:
+        item: stick
+        name: Dye Wand
+        lore:
+            - Mechanical Items Addons
+            - Dye Wand
+            - Allows you to dye wool, clay and glass
+            - Click a block to use, click air to add dye
+        permissions:
+            use: mechanical.dyewand.use
+            command: mechanical.dyewand.command
+            commandOther: mechanical.dyewand.command.other
+        crafting:
+            a:  p 
+            b:  b 
+            c:  c
+            items: p=bone;b=stick;c=bucket
+            enabled: true
+            
+    flamethrower:
+        item: blaze_rod
+        name: Flamethrower
+        lore:
+            - Mechanical Items Addons
+            - Flamethrower
+            - Allows you to throw fire!
+            - Click to shoot fireball
+        permissions:
+            use: mechanical.flamethrower.use
+            command: mechanical.flamethrower.command
+            commandOther: mechanical.flamethrower.command.other
+        crafting:
+            a: sfs
+            b: fbf
+            c: sfs
+            items: f=flint;s=iron_ingot;b=blaze_rod
+            enabled: true

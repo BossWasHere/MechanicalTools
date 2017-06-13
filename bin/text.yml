@@ -1,0 +1,25 @@
+## Text Configuration for Mechanical Tools and Blocks plugin by IballisticBoss ##
+# Formatting with ~...~ can be used e.g. ~green~, ~darkred~, ~italic~ #
+# Use &player& for stating player name (only some texts) #
+
+onlyPlayers: ~red~Only players can recieve Mechanical Tools and Blocks
+noPermission: ~red~You do not have permission to use this command!
+noPermissionUse: ~red~You do not have permission to use this item!
+noPermissionUseOther: ~red~You do not have permission to use someone's block!
+playerNotFound: ~red~Player ~lightpurple~&player& ~red~is not online!
+recievedBlockFrom: ~darkgreen~Player &player& has given you a Mechanical Block!
+givenBlockTo: ~darkgreen~You have given &player& a Mechanical Block
+recievedItemFrom: ~darkgreen~Player &player& has given you a Mechanical Item!
+givenItemTo: ~darkgreen~You have given &player& a Mechanical Item
+noPermissionToBreak: ~red~You do not have permission to break this block!
+noPermissionToBreakOther: ~red~You do not have permission to break other players' blocks!
+brokenBlock: ~aqua~Broken a Mechanical Block successfully
+notEnabled: ~red~This block or item has been disabled by a server administrator!
+teleporting: ~darkgreen~Now teleporting...
+
+#Items
+spawnPointTeleport_Use: ~darkblue~Teleporting to your spawn point...
+songIssue: ~red~An error has occurred while trying to play your song!
+noSongs: ~aqua~No NoteBlockSongs were found!
+placeDyeHere: ~aqua~Please place your dye in here
+addDyeFirst: ~aqua~Please add dye first
