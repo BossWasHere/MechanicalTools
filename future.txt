@@ -1,0 +1,26 @@
+Future (hopefully!) Additions:
+ - Economy hooks (https://dev.bukkit.org/projects/vault)
+     - Custom payment per execution of block/tool (config customisable, enable/disable)
+     - Custom payment for using private items (e.g. large teleporter)
+
+ - WorldEdit hooks (https://dev.bukkit.org/projects/worldedit)
+     - Schematic saving regions (like structure blocks [.NBT], but for schematics and reloading them in survival)
+     - Schematic loading/pasting regions (with enabled/disabled block requirements to paste them)
+ 
+ - Signs/Signposts
+     - Ability to buy ownership from a MechanicalBlock (using Economy or item requirements)
+     - Ability to enable/disable an automatic block through clicking a sign next to a MechanicalBlock
+
+ - Mining/block management
+     - Whitelist/blacklist for blocks allowed to be broken/placed
+     - Mining block (mines downwards in a 3x3 area to bedrock)
+     - Generator blocks (using Economy to charge, coal furnace etc.)
+
+ - Configuration
+     - Ability to disable/enable block particles for specific blocks in-game
+     - Use custom Economy functionality (see above)
+
+<< Tweaks >>
+ - Multi-version compatibility
+ - Task scheduler manager (save processing time)
+ - Additional configuration items
