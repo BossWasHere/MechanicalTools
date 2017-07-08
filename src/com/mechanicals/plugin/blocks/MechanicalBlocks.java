@@ -3,6 +3,8 @@ package com.mechanicals.plugin.blocks;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import com.mechanicals.plugin.MechMain;
+
 /**
  * Enumeration of all registered MechanicalBlocks and their items
  *
@@ -19,7 +21,8 @@ public enum MechanicalBlocks {
 	CHUNK_LOADER("chunkLoader", new ItemStack(Material.ENCHANTMENT_TABLE)), 
 	ELEVATOR("elevator", new ItemStack(Material.WOOL)),
 	ANIMAL_GROWTH("animalGrowth", new ItemStack(Material.HAY_BLOCK)),
-	PLANT_FARMER("plantFarmer", new ItemStack(Material.MOSSY_COBBLESTONE));
+	PLANT_FARMER("plantFarmer", new ItemStack(Material.MOSSY_COBBLESTONE)),
+	GENERATOR("generator", new ItemStack(Material.FURNACE));
 	
 	private final String id;
 	private final ItemStack item;
@@ -47,4 +50,10 @@ public enum MechanicalBlocks {
 	 * @author IballisticBoss
 	 */
 	public String getId() { return id; }
+	
+	public String getPlacePermission() { return MechMain.plugin.permissions.loaded.get(getId() + "_place"); }
+	public String getBreakPermission() { return MechMain.plugin.permissions.loaded.get(getId() + "_break"); }
+	public String getBreakOtherPermission() { return MechMain.plugin.permissions.loaded.get(getId() + "_breakOther"); }
+	public String getCommandPermission() { return MechMain.plugin.permissions.loaded.get(getId() + "_command"); }
+	public String getCommandOtherPermission() { return MechMain.plugin.permissions.loaded.get(getId() + "_commandOther"); }
 }

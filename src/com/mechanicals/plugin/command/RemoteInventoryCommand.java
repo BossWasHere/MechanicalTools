@@ -17,7 +17,7 @@ public class RemoteInventoryCommand extends RegisteredCommand {
 		if (args.length > 0) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender;
-				if (player.hasPermission(plugin.permissions.remote_inventory_see)) {
+				if (player.hasPermission(plugin.permissions.loaded.get("remote_inventory_see"))) {
 					Player target = EntityUtils.getPlayer(args[0]);
 					if (target != null) player.openInventory(InventoryHandler.loadRemoteInventoryForPlayer(target));
 					else player.sendMessage(plugin.texts.playerNotFound(args[0]));

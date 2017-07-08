@@ -16,7 +16,7 @@ public class RadioCommand extends RegisteredCommand {
 		if (args.length < 1) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender;
-				if (player.hasPermission(plugin.permissions.radio_command)) {
+				if (player.hasPermission(plugin.radio.commandPerm())) {
 					plugin.radio.giveItem(player);
 				} else {
 					sender.sendMessage(plugin.texts.noPermission);
@@ -25,7 +25,7 @@ public class RadioCommand extends RegisteredCommand {
 				sender.sendMessage(plugin.texts.onlyPlayers);
 			}
 		} else {
-			if (sender.hasPermission(plugin.permissions.radio_commandOther)) {
+			if (sender.hasPermission(plugin.radio.commandOtherPerm())) {
 				Player target = EntityUtils.getPlayer(args[0]);
 				if (target == null) {
 					sender.sendMessage(plugin.texts.playerNotFound(args[0]));

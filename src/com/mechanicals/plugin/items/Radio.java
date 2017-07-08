@@ -38,7 +38,7 @@ public class Radio extends BaseMechanicalItem {
 			event.setCancelled(true);
 			return;
 		}
-		if (event.getPlayer().hasPermission(plugin.permissions.radio_use)) {
+		if (event.getPlayer().hasPermission(usePerm())) {
 			for (ConfirmCooldown c : plugin.cooldowns) {
 				if (c.checkID(event.getPlayer().getName(), 13)) {
 					if (!c.isCooled()) {

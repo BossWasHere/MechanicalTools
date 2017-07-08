@@ -31,7 +31,7 @@ public class ITool extends BaseMechanicalItem {
 			event.setCancelled(true);
 			return;
 		}
-		if (event.getPlayer().hasPermission(plugin.permissions.iTool_use)) {
+		if (event.getPlayer().hasPermission(usePerm())) {
 			openMainPage(event.getPlayer());
 		} else {
 			event.getPlayer().sendMessage(plugin.texts.noPermissionUse);
@@ -101,5 +101,10 @@ public class ITool extends BaseMechanicalItem {
 		}
 		player.openInventory(i);
 	}
+	
+	public String useCraftPerm() { return plugin.permissions.loaded.get(getMechItem().getId() + "_useCraft"); }
+	public String useAnvilPerm() { return plugin.permissions.loaded.get(getMechItem().getId() + "_useAnvil"); }
+	public String useEnchantPerm() { return plugin.permissions.loaded.get(getMechItem().getId() + "_useEnchant"); }
+	public String useInventoryPerm() { return plugin.permissions.loaded.get(getMechItem().getId() + "_useInventory"); }
 
 }

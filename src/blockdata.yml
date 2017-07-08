@@ -278,3 +278,24 @@ block:
             items: r=redstone;h=diamond_hoe;c=cobblestone;b=bone
             enabled: true
         showParticles: true
+    generator:
+        name: Generator
+        lore:
+            - MechanicalBlocks Addons
+            - Generator
+            - Will convert coal or economy money to power
+            - Servicable
+        energyMultiplier: 1.0
+        permissions:
+            place: mechanical.generator.place
+            break: mechanical.generator.destroy
+            breakOther: mechanical.generator.destroy.other
+            command: mechanical.generator.command
+            commandOther: mechanical.generator.command.other
+        crafting:
+            a: rdr
+            b: cfc
+            c: tdt
+            items: r=redstone;d=diamond;c=cobblestone;f=furnace;t=redstone_torch
+            enabled: true
+        showParticles: true

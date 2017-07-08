@@ -29,7 +29,7 @@ public class DyeWand extends BaseMechanicalItem {
 			event.setCancelled(true);
 			return;
 		}
-		if (event.getPlayer().hasPermission(plugin.permissions.dyeWand_use)) {
+		if (event.getPlayer().hasPermission(usePerm())) {
 			for (ConfirmCooldown c : plugin.cooldowns) {
 				if (c.checkID(event.getPlayer().getName(), 14)) {
 					if (!c.isCooled()) {

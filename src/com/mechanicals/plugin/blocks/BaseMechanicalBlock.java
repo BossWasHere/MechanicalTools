@@ -42,4 +42,10 @@ public abstract class BaseMechanicalBlock implements IMechanicalBlock {
 		ItemMeta meta = item.getItemMeta();
 		return meta.getDisplayName().equals(plugin.blockData.getString("block." + getMechBlock().getId() + ".name")) && meta.getLore().equals(plugin.blockData.getStringList("block." + getMechBlock().getId() + ".lore"));
 	}
+	
+	public String placePerm() { return getMechBlock().getPlacePermission(); }
+	public String breakPerm() { return getMechBlock().getBreakPermission(); }
+	public String breakOtherPerm() { return getMechBlock().getBreakOtherPermission(); }
+	public String commandPerm() { return getMechBlock().getCommandPermission(); }
+	public String commandOtherPerm() { return getMechBlock().getCommandOtherPermission(); }
 }

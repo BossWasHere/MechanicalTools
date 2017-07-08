@@ -1,5 +1,7 @@
 package com.mechanicals.plugin.items;
 
+import com.mechanicals.plugin.MechMain;
+
 public enum MechanicalItems {
 	BED_TELEPORT("spawnPointTeleporter"),
 	RADIO("radio"),
@@ -21,4 +23,8 @@ public enum MechanicalItems {
 	 * @author IballisticBoss
 	 */
 	public String getId() { return id; }
+	
+	public String getUsePermission() { return MechMain.plugin.permissions.loaded.get(getId() + "_use"); }
+	public String getCommandPermission() { return MechMain.plugin.permissions.loaded.get(getId() + "_command"); }
+	public String getCommandOtherPermission() { return MechMain.plugin.permissions.loaded.get(getId() + "_commandOther"); }
 }

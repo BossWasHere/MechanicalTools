@@ -16,7 +16,7 @@ public class LargeTeleporterCommand extends RegisteredCommand {
 		if (args.length < 1) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender;
-				if (player.hasPermission(plugin.permissions.largeTeleporter_command)) {
+				if (player.hasPermission(plugin.largeTeleporter.commandPerm())) {
 					plugin.largeTeleporter.giveBlockItem(player);
 				} else {
 					sender.sendMessage(plugin.texts.noPermission);
@@ -25,7 +25,7 @@ public class LargeTeleporterCommand extends RegisteredCommand {
 				sender.sendMessage(plugin.texts.onlyPlayers);
 			}
 		} else {
-			if (sender.hasPermission(plugin.permissions.largeTeleporter_commandOther)) {
+			if (sender.hasPermission(plugin.largeTeleporter.commandOtherPerm())) {
 				Player target = EntityUtils.getPlayer(args[0]);
 				if (target == null) {
 					sender.sendMessage(plugin.texts.playerNotFound(args[0]));

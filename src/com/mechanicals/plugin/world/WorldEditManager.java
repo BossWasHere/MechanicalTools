@@ -21,6 +21,10 @@ import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import com.sk89q.worldedit.data.DataException;
 import com.sk89q.worldedit.schematic.SchematicFormat;
 
+/*
+ * This method is messy
+ * Update when solution available
+ */
 @SuppressWarnings("deprecation")
 public class WorldEditManager {
 	

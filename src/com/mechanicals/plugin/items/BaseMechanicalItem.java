@@ -46,4 +46,8 @@ public abstract class BaseMechanicalItem implements IMechanicalItem {
 		ItemMeta meta = item.getItemMeta();
 		return meta.getDisplayName().equals(plugin.itemData.getString("item." + getMechItem().getId() + ".name")) && meta.getLore().equals(plugin.itemData.getStringList("item." + getMechItem().getId() + ".lore"));
 	}
+	
+	public String usePerm() { return getMechItem().getUsePermission(); }
+	public String commandPerm() { return getMechItem().getCommandPermission(); }
+	public String commandOtherPerm() { return getMechItem().getCommandOtherPermission(); }
 }

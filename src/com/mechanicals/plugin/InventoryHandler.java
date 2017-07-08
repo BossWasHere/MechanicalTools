@@ -29,7 +29,7 @@ public class InventoryHandler {
 	}
 	
 	public static Inventory loadInventoryForPlayer(Player player) {
-		if (!player.hasPermission(MechMain.plugin.permissions.iTool_useInventory)) return null;
+		if (!player.hasPermission(MechMain.plugin.iTool.useInventoryPerm())) return null;
 		int sizePerm = 9;
 		if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".6")) {
 			sizePerm = 54;

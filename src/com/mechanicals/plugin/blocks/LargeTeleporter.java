@@ -29,7 +29,7 @@ public class LargeTeleporter extends BaseMechanicalBlock {
 			event.setCancelled(true);
 			return;
 		}
-		if (player.hasPermission(plugin.permissions.largeTeleporter_place)) {
+		if (player.hasPermission(placePerm())) {
 			if (placement.containsKey(player.getName())) {
 				String pre = placement.get(player.getName());
 				plugin.placed.set(pre + ".destWorld", event.getBlock().getWorld().getName());
@@ -80,7 +80,7 @@ public class LargeTeleporter extends BaseMechanicalBlock {
 			event.setCancelled(true);
 			return;
 		}
-		if (!event.getPlayer().hasPermission(plugin.permissions.largeTeleporter_break)) {
+		if (!event.getPlayer().hasPermission(breakPerm())) {
 			event.getPlayer().sendMessage(plugin.texts.noPermissionToBreak);
 			event.setCancelled(true);
 			return;
@@ -93,7 +93,7 @@ public class LargeTeleporter extends BaseMechanicalBlock {
 					if (plugin.placed.getInt(key + ".y") == event.getBlock().getY()) {
 						if (plugin.placed.getInt(key + ".z") == event.getBlock().getZ()) {
 							if (!plugin.placed.getString(key + ".player").equalsIgnoreCase(event.getPlayer().getUniqueId().toString())) {
-								if (!event.getPlayer().hasPermission(plugin.permissions.largeTeleporter_breakOther)) {
+								if (!event.getPlayer().hasPermission(breakOtherPerm())) {
 									event.getPlayer().sendMessage(plugin.texts.noPermissionToBreakOther);
 									return;
 								}
@@ -109,7 +109,7 @@ public class LargeTeleporter extends BaseMechanicalBlock {
 					if (plugin.placed.getInt(key + ".destY") == event.getBlock().getY()) {
 						if (plugin.placed.getInt(key + ".destZ") == event.getBlock().getZ()) {
 							if (!plugin.placed.getString(key + ".player").equalsIgnoreCase(event.getPlayer().getUniqueId().toString())) {
-								if (!event.getPlayer().hasPermission(plugin.permissions.largeTeleporter_breakOther)) {
+								if (!event.getPlayer().hasPermission(breakOtherPerm())) {
 									event.getPlayer().sendMessage(plugin.texts.noPermissionToBreakOther);
 									return;
 								}
@@ -131,6 +131,14 @@ public class LargeTeleporter extends BaseMechanicalBlock {
 	@Override
 	public void updateRunnables() {
 		ParticleSpawnerTaskTimer.shouldReload = true;
+	}
+	
+	public String getUsePerm() {
+		return plugin.permissions.loaded.get(getMechBlock().getId() + "_use");
+	}
+	
+	public String getUseOtherPerm() {
+		return plugin.permissions.loaded.get(getMechBlock().getId() + "_useOther");
 	}
 
 }

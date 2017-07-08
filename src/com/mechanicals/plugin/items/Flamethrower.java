@@ -24,7 +24,7 @@ public class Flamethrower extends BaseMechanicalItem {
 			event.setCancelled(true);
 			return;
 		}
-		if (event.getPlayer().hasPermission(plugin.permissions.flamethrower_use)) {
+		if (event.getPlayer().hasPermission(usePerm())) {
 			for (ConfirmCooldown c : plugin.cooldowns) {
 				if (c.checkID(event.getPlayer().getName(), 16)) {
 					if (!c.isCooled()) {

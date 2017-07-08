@@ -7,20 +7,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import com.mechanicals.plugin.task.GrinderTaskTimer;
-import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
 import com.mechanicals.plugin.utils.StringUtils;
 
-public class Grinder extends BaseMechanicalBlock {
-	
-	public Grinder() {
+public class Generator extends BaseMechanicalBlock {
+
+	public Generator() {
 		super();
 	}
 	
 	@Override
 	public void blockPlaceEvent(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
-		if (!plugin.grinderEnabled) {
+		if (!plugin.generatorEnabled) {
 			player.sendMessage(plugin.texts.notEnabled);
 			event.setCancelled(true);
 			return;
@@ -52,13 +50,8 @@ public class Grinder extends BaseMechanicalBlock {
 	}
 
 	@Override
-	public MechanicalBlocks getMechBlock() {
-		return MechanicalBlocks.GRINDER;
-	}
-
-	@Override
 	public void blockBreakEvent(BlockBreakEvent event) {
-		if (!plugin.grinderEnabled) {
+		if (!plugin.generatorEnabled) {
 			event.getPlayer().sendMessage(plugin.texts.notEnabled);
 			event.setCancelled(true);
 			return;
@@ -94,11 +87,15 @@ public class Grinder extends BaseMechanicalBlock {
 			updateRunnables();
 		}
 	}
-	
+
+	@Override
+	public MechanicalBlocks getMechBlock() {
+		return MechanicalBlocks.GENERATOR;
+	}
+
 	@Override
 	public void updateRunnables() {
-		GrinderTaskTimer.shouldReload = true;
-		ParticleSpawnerTaskTimer.shouldReload = true;
+		plugin.particleTask.reload();
 	}
 
 }

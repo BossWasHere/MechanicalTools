@@ -31,7 +31,7 @@ public class ItemTeleporter extends BaseMechanicalBlock {
 			event.setCancelled(true);
 			return;
 		}
-		if (player.hasPermission(plugin.permissions.itemTeleporter_place)) {
+		if (player.hasPermission(placePerm())) {
 			Set<String> keys = plugin.placed.getKeys(false);
 			int i = 0;
 			for (String key : keys) {
@@ -103,7 +103,7 @@ public class ItemTeleporter extends BaseMechanicalBlock {
 			event.setCancelled(true);
 			return;
 		}
-		if (!event.getPlayer().hasPermission(plugin.permissions.itemTeleporter_break)) {
+		if (!event.getPlayer().hasPermission(breakPerm())) {
 			event.getPlayer().sendMessage(plugin.texts.noPermissionToBreak);
 			event.setCancelled(true);
 			return;
@@ -116,7 +116,7 @@ public class ItemTeleporter extends BaseMechanicalBlock {
 					if (plugin.placed.getInt(key + ".y") == event.getBlock().getY()) {
 						if (plugin.placed.getInt(key + ".z") == event.getBlock().getZ()) {
 							if (!plugin.placed.getString(key + ".player").equalsIgnoreCase(event.getPlayer().getUniqueId().toString())) {
-								if (!event.getPlayer().hasPermission(plugin.permissions.itemTeleporter_breakOther)) {
+								if (!event.getPlayer().hasPermission(breakOtherPerm())) {
 									event.getPlayer().sendMessage(plugin.texts.noPermissionToBreakOther);
 									return;
 								}

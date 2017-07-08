@@ -23,7 +23,7 @@ public class SpawnPointTeleporter extends BaseMechanicalItem {
 			event.setCancelled(true);
 			return;
 		}
-		if (event.getPlayer().hasPermission(plugin.permissions.bedTeleport_use)) {
+		if (event.getPlayer().hasPermission(usePerm())) {
 			boolean cooldown = false;
 			for (ConfirmCooldown c : plugin.cooldowns) {
 				if (c.checkID(event.getPlayer().getName(), 11)) {

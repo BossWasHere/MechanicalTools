@@ -16,7 +16,7 @@ public class GrinderCommand extends RegisteredCommand {
 		if (args.length < 1) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender;
-				if (player.hasPermission(plugin.permissions.grinder_command)) {
+				if (player.hasPermission(plugin.grinder.commandPerm())) {
 					plugin.grinder.giveBlockItem(player);
 				} else {
 					sender.sendMessage(plugin.texts.noPermission);
@@ -25,7 +25,7 @@ public class GrinderCommand extends RegisteredCommand {
 				sender.sendMessage(plugin.texts.onlyPlayers);
 			}
 		} else {
-			if (sender.hasPermission(plugin.permissions.grinder_commandOther)) {
+			if (sender.hasPermission(plugin.grinder.commandOtherPerm())) {
 				Player target = EntityUtils.getPlayer(args[0]);
 				if (target == null) {
 					sender.sendMessage(plugin.texts.playerNotFound(args[0]));

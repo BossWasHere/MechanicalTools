@@ -53,7 +53,7 @@ public class InventoryEvent implements Listener {
 				break;
 			case WORKBENCH:
 				player.closeInventory();
-				if (player.hasPermission(MechMain.plugin.permissions.iTool_useCraft)) {
+				if (player.hasPermission(MechMain.plugin.iTool.useCraftPerm())) {
 					ITool.openCraftingPage(player);
 				} else {
 					player.sendMessage(MechMain.plugin.texts.noPermissionUse);
@@ -61,7 +61,7 @@ public class InventoryEvent implements Listener {
 				break;
 			case ENCHANTMENT_TABLE:
 				player.closeInventory();
-				if (player.hasPermission(MechMain.plugin.permissions.iTool_useEnchant)) {
+				if (player.hasPermission(MechMain.plugin.iTool.useEnchantPerm())) {
 					ITool.openEnchantmentPage(player);
 				} else {
 					player.sendMessage(MechMain.plugin.texts.noPermissionUse);
@@ -69,7 +69,7 @@ public class InventoryEvent implements Listener {
 				break;
 			case ANVIL:
 				player.closeInventory();
-				if (player.hasPermission(MechMain.plugin.permissions.iTool_useAnvil)) {
+				if (player.hasPermission(MechMain.plugin.iTool.useAnvilPerm())) {
 					ITool.openAnvilPage(player);
 				} else {
 					player.sendMessage(MechMain.plugin.texts.noPermissionUse);
@@ -77,7 +77,7 @@ public class InventoryEvent implements Listener {
 				break;
 			case CHEST:
 				player.closeInventory();
-				if (player.hasPermission(MechMain.plugin.permissions.iTool_useInventory)) {
+				if (player.hasPermission(MechMain.plugin.iTool.useInventoryPerm())) {
 					MechMain.plugin.iTool.openPlayerInventory(player);
 				} else {
 					player.sendMessage(MechMain.plugin.texts.noPermissionUse);
@@ -91,7 +91,7 @@ public class InventoryEvent implements Listener {
 		} else if (event.getInventory().getName().equalsIgnoreCase(ChatColor.BLUE + "[Mechanical] Inventory")) {
 			if (MechMain.plugin.iTool.matchesMeta(current)) event.setCancelled(true);
 		} else if (StringUtils.countOccurances(event.getInventory().getName(), " ") == 2 && event.getInventory().getName().endsWith("Inventory")) {
-			if (!player.hasPermission(MechMain.plugin.permissions.remote_inventory_edit)) {
+			if (!player.hasPermission(MechMain.plugin.permissions.loaded.get("remote_inventory_edit"))) {
 				event.setCancelled(true);
 				player.sendMessage(MechMain.plugin.texts.noPermissionRemoteEdit);
 			}

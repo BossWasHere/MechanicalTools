@@ -60,6 +60,8 @@ public class BlockEvent implements Listener {
 			MechMain.plugin.animalGrowth.blockPlaceEvent(event);
 		} else if (MechMain.plugin.plantFarmer.matchesMeta(blockPlaced)) {
 			MechMain.plugin.plantFarmer.blockPlaceEvent(event);
+		} else if (MechMain.plugin.generator.matchesMeta(blockPlaced)) {
+			MechMain.plugin.generator.blockPlaceEvent(event);
 		} else if (MechMain.plugin.bedTeleporter.matchesMeta(blockPlaced)) {
 			event.setCancelled(true);
 		} else if (MechMain.plugin.radio.matchesMeta(blockPlaced)) {
@@ -141,6 +143,13 @@ public class BlockEvent implements Listener {
 				}
 				
 			}
+		} else if (event.getBlock().getType() == Material.MOSSY_COBBLESTONE) {
+			for (String key : MechMain.plugin.placed.getKeys(false)) {
+				if (MechMain.plugin.placed.getString(key + ".id", "").equals(MechanicalBlocks.GENERATOR.getId())) {
+					MechMain.plugin.generator.blockBreakEvent(event);
+				}
+				
+			}
 		}
 	}
 	
@@ -176,12 +185,12 @@ public class BlockEvent implements Listener {
 			if (!l.getBlock().isBlockIndirectlyPowered()) {
 				if (players.isEmpty()) return;
 				for (Player p : players) {
-					if (!p.hasPermission(MechMain.plugin.permissions.largeTeleporter_use)) {
+					if (!p.hasPermission(MechMain.plugin.largeTeleporter.getUsePerm())) {
 						p.sendMessage(MechMain.plugin.texts.noPermissionUse);
 						continue;
 					}
 					if (!MechMain.plugin.placed.getString(useKey + ".player").equalsIgnoreCase(p.getUniqueId().toString())) {
-						if (!p.hasPermission(MechMain.plugin.permissions.largeTeleporter_useOther)) {
+						if (!p.hasPermission(MechMain.plugin.largeTeleporter.getUseOtherPerm())) {
 							p.sendMessage(MechMain.plugin.texts.noPermissionUseOther);
 							continue;
 						}

@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import com.mechanicals.plugin.RegisteredCommand;
+import com.mechanicals.plugin.blocks.MechanicalBlocks;
+import com.mechanicals.plugin.items.MechanicalItems;
 
 public class MechanicalCommand extends RegisteredCommand {
 
@@ -18,17 +20,18 @@ public class MechanicalCommand extends RegisteredCommand {
 		if (args.length > 0 && sender instanceof Player) {
 			if (args[0].equalsIgnoreCase("blocks")) {
 				Inventory i = Bukkit.createInventory(null, 18, ChatColor.BLUE + "[Mechanical Blocks]");
-				if (plugin.blockBreakerEnabled && sender.hasPermission(plugin.permissions.blockBreaker_command)) i.addItem(plugin.blockBreaker.getBlockItem());
-				if (plugin.blockPlacerEnabled && sender.hasPermission(plugin.permissions.blockPlacer_command)) i.addItem(plugin.blockPlacer.getBlockItem());
-				if (plugin.treeCutterEnabled && sender.hasPermission(plugin.permissions.treeCutter_command)) i.addItem(plugin.treeCutter.getBlockItem());
-				if (plugin.entityTeleporterEnabled && sender.hasPermission(plugin.permissions.entityTeleporter_command)) i.addItem(plugin.entityTeleporter.getBlockItem());
-				if (plugin.itemTeleporterEnabled && sender.hasPermission(plugin.permissions.itemTeleporter_command)) i.addItem(plugin.itemTeleporter.getBlockItem());
-				if (plugin.grinderEnabled && sender.hasPermission(plugin.permissions.grinder_command)) i.addItem(plugin.grinder.getBlockItem());
-				if (plugin.largeTeleporterEnabled && sender.hasPermission(plugin.permissions.largeTeleporter_command)) i.addItem(plugin.largeTeleporter.getBlockItem());
-				if (plugin.chunkLoaderEnabled && sender.hasPermission(plugin.permissions.chunkLoader_command)) i.addItem(plugin.chunkLoader.getBlockItem());
-				if (plugin.elevatorEnabled && sender.hasPermission(plugin.permissions.elevator_command)) i.addItem(plugin.elevator.getBlockItem());
-				if (plugin.animalGrowthEnabled && sender.hasPermission(plugin.permissions.animalGrowth_command)) i.addItem(plugin.animalGrowth.getBlockItem());
-				if (plugin.plantFarmerEnabled && sender.hasPermission(plugin.permissions.plantFarmer_command)) i.addItem(plugin.plantFarmer.getBlockItem());
+				if (plugin.blockBreakerEnabled && sender.hasPermission(MechanicalBlocks.BLOCK_BREAKER.getCommandPermission())) i.addItem(plugin.blockBreaker.getBlockItem());
+				if (plugin.blockPlacerEnabled && sender.hasPermission(MechanicalBlocks.BLOCK_PLACER.getCommandPermission())) i.addItem(plugin.blockPlacer.getBlockItem());
+				if (plugin.treeCutterEnabled && sender.hasPermission(MechanicalBlocks.TREE_CUTTER.getCommandPermission())) i.addItem(plugin.treeCutter.getBlockItem());
+				if (plugin.entityTeleporterEnabled && sender.hasPermission(MechanicalBlocks.ENTITY_TELEPORTER.getCommandPermission())) i.addItem(plugin.entityTeleporter.getBlockItem());
+				if (plugin.itemTeleporterEnabled && sender.hasPermission(MechanicalBlocks.ITEM_TELEPORTER.getCommandPermission())) i.addItem(plugin.itemTeleporter.getBlockItem());
+				if (plugin.grinderEnabled && sender.hasPermission(MechanicalBlocks.GRINDER.getCommandPermission())) i.addItem(plugin.grinder.getBlockItem());
+				if (plugin.largeTeleporterEnabled && sender.hasPermission(MechanicalBlocks.LARGE_TELEPORTER.getCommandPermission())) i.addItem(plugin.largeTeleporter.getBlockItem());
+				if (plugin.chunkLoaderEnabled && sender.hasPermission(MechanicalBlocks.CHUNK_LOADER.getCommandPermission())) i.addItem(plugin.chunkLoader.getBlockItem());
+				if (plugin.elevatorEnabled && sender.hasPermission(MechanicalBlocks.ELEVATOR.getCommandPermission())) i.addItem(plugin.elevator.getBlockItem());
+				if (plugin.animalGrowthEnabled && sender.hasPermission(MechanicalBlocks.ANIMAL_GROWTH.getCommandPermission())) i.addItem(plugin.animalGrowth.getBlockItem());
+				if (plugin.plantFarmerEnabled && sender.hasPermission(MechanicalBlocks.PLANT_FARMER.getCommandPermission())) i.addItem(plugin.plantFarmer.getBlockItem());
+				if (plugin.generatorEnabled && sender.hasPermission(MechanicalBlocks.GENERATOR.getCommandPermission())) i.addItem(plugin.generator.getBlockItem());
 				
 				if (i.getContents().length < 1) {
 					sender.sendMessage(ChatColor.RED + "There are no Mechanical Blocks enabled, or you don't have any permissions!");
@@ -39,11 +42,11 @@ public class MechanicalCommand extends RegisteredCommand {
 			}
 			if (args[0].equalsIgnoreCase("items")) {
 				Inventory i = Bukkit.createInventory(null, 9, ChatColor.BLUE + "[Mechanical Items]");
-				if (plugin.spawnPointTeleporterEnabled && sender.hasPermission(plugin.permissions.bedTeleport_command)) i.addItem(plugin.bedTeleporter.getItem());
-				if (plugin.radioEnabled && sender.hasPermission(plugin.permissions.radio_command)) i.addItem(plugin.radio.getItem());
-				if (plugin.iToolEnabled && sender.hasPermission(plugin.permissions.iTool_command)) i.addItem(plugin.iTool.getItem());
-				if (plugin.dyeWandEnabled && sender.hasPermission(plugin.permissions.dyeWand_command)) i.addItem(plugin.dyeWand.getItem());
-				if (plugin.flamethrowerEnabled && sender.hasPermission(plugin.permissions.flamethrower_command)) i.addItem(plugin.flamethrower.getItem());
+				if (plugin.spawnPointTeleporterEnabled && sender.hasPermission(MechanicalItems.BED_TELEPORT.getCommandPermission())) i.addItem(plugin.bedTeleporter.getItem());
+				if (plugin.radioEnabled && sender.hasPermission(MechanicalItems.RADIO.getCommandPermission())) i.addItem(plugin.radio.getItem());
+				if (plugin.iToolEnabled && sender.hasPermission(MechanicalItems.ITOOL.getCommandPermission())) i.addItem(plugin.iTool.getItem());
+				if (plugin.dyeWandEnabled && sender.hasPermission(MechanicalItems.DYE_WAND.getCommandPermission())) i.addItem(plugin.dyeWand.getItem());
+				if (plugin.flamethrowerEnabled && sender.hasPermission(MechanicalItems.FLAMETHROWER.getCommandPermission())) i.addItem(plugin.flamethrower.getItem());
 				
 				if (i.getContents().length < 1) {
 					sender.sendMessage(ChatColor.RED + "There are no Mechanical Items enabled, or you don't have any permissions!");

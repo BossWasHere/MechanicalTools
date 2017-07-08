@@ -20,6 +20,7 @@ import com.mechanicals.plugin.blocks.BlockPlacer;
 import com.mechanicals.plugin.blocks.ChunkLoader;
 import com.mechanicals.plugin.blocks.Elevator;
 import com.mechanicals.plugin.blocks.EntityTeleporter;
+import com.mechanicals.plugin.blocks.Generator;
 import com.mechanicals.plugin.blocks.Grinder;
 import com.mechanicals.plugin.blocks.ItemTeleporter;
 import com.mechanicals.plugin.blocks.LargeTeleporter;
@@ -62,32 +63,22 @@ public class MechMain extends JavaPlugin {
 	
 	public PermissionIndex permissions;
 	public TextIndex texts;
-	public ConfigurationUnit blockData;
-	public ConfigurationUnit itemData;
-	public ConfigurationUnit textData;
-	public ConfigurationUnit placed;
-	public ConfigurationUnit config;
-	public ConfigurationUnit remoteStorage;
+	public ConfigurationUnit blockData;						public ConfigurationUnit itemData;
+	public ConfigurationUnit textData;						public ConfigurationUnit placed;
+	public ConfigurationUnit config;						public ConfigurationUnit remoteStorage;
 	
 	public File resourceLocation;
 	public Logger logger;
 	
-	public BlockPlacer blockPlacer;
-	public BlockBreaker blockBreaker;
-	public TreeCutter treeCutter;
-	public EntityTeleporter entityTeleporter;
-	public ItemTeleporter itemTeleporter;
-	public Grinder grinder;
-	public LargeTeleporter largeTeleporter;
-	public ChunkLoader chunkLoader;
-	public Elevator elevator;
-	public AnimalGrowth animalGrowth;
-	public PlantFarmer plantFarmer;
+	public BlockPlacer blockPlacer;							public BlockBreaker blockBreaker;
+	public TreeCutter treeCutter;							public EntityTeleporter entityTeleporter;
+	public ItemTeleporter itemTeleporter;					public Grinder grinder;
+	public LargeTeleporter largeTeleporter;					public ChunkLoader chunkLoader;
+	public Elevator elevator;								public AnimalGrowth animalGrowth;
+	public PlantFarmer plantFarmer;							public Generator generator;
 	
-	public SpawnPointTeleporter bedTeleporter;
-	public Radio radio;
-	public ITool iTool;
-	public DyeWand dyeWand;
+	public SpawnPointTeleporter bedTeleporter;				public Radio radio;
+	public ITool iTool;										public DyeWand dyeWand;
 	public Flamethrower flamethrower;
 	
 	public BlockEvent placementListener;
@@ -97,20 +88,17 @@ public class MechMain extends JavaPlugin {
 	public MechanicalPluginManager mechPluginManager;
 	public WorldEditManager worldEditManager;
 	
-	public BlockPlaceTaskTimer blockPlaceTask;
-	public BlockBreakTaskTimer blockBreakTask;
-	public TreeCutterTaskTimer treeCutterTask;
-	public EntityTeleporterTaskTimer entityTeleporterTask;
-	public ItemTeleporterTaskTimer itemTeleporterTask;
-	public GrinderTaskTimer grinderTask;
-	public ChunkLoadTaskTimer chunkLoadTask;
-	public AnimalGrowthTaskTimer animalGrowthTask;
-	public PlantFarmerTaskTimer plantFarmerTask;
-	public ParticleSpawnerTaskTimer particleTask;
+	public BlockPlaceTaskTimer blockPlaceTask;				public BlockBreakTaskTimer blockBreakTask;
+	public TreeCutterTaskTimer treeCutterTask;				public EntityTeleporterTaskTimer entityTeleporterTask;
+	public ItemTeleporterTaskTimer itemTeleporterTask;		public GrinderTaskTimer grinderTask;
+	public ChunkLoadTaskTimer chunkLoadTask;				public AnimalGrowthTaskTimer animalGrowthTask;
+	public PlantFarmerTaskTimer plantFarmerTask;			public ParticleSpawnerTaskTimer particleTask;
+	
+	
 	
 	public boolean blockBreakerEnabled = false, blockPlacerEnabled = false, treeCutterEnabled = false, entityTeleporterEnabled = false,
 			itemTeleporterEnabled = false, grinderEnabled = false, largeTeleporterEnabled = false, chunkLoaderEnabled = false, elevatorEnabled = false,
-			animalGrowthEnabled = false, plantFarmerEnabled = false;
+			animalGrowthEnabled = false, plantFarmerEnabled = false, generatorEnabled = false;
 	public boolean spawnPointTeleporterEnabled = false, radioEnabled = false, iToolEnabled = false, dyeWandEnabled = false, flamethrowerEnabled = false;
 
 	@Override
@@ -211,36 +199,26 @@ public class MechMain extends JavaPlugin {
 		permissions = new PermissionIndex(config, blockData, itemData);
 		texts = new TextIndex(textData);
 		
-		blockPlacer = new BlockPlacer();
-		blockBreaker = new BlockBreaker();
-		treeCutter = new TreeCutter();
-		entityTeleporter = new EntityTeleporter();
-		itemTeleporter = new ItemTeleporter();
-		grinder = new Grinder();
-		largeTeleporter = new LargeTeleporter();
-		chunkLoader = new ChunkLoader();
-		elevator = new Elevator();
-		animalGrowth = new AnimalGrowth();
-		plantFarmer = new PlantFarmer();
-		bedTeleporter = new SpawnPointTeleporter();
-		radio = new Radio();
-		iTool = new ITool();
-		dyeWand = new DyeWand();
+		blockPlacer = new BlockPlacer();						blockBreaker = new BlockBreaker();
+		treeCutter = new TreeCutter();							entityTeleporter = new EntityTeleporter();
+		itemTeleporter = new ItemTeleporter();					grinder = new Grinder();
+		largeTeleporter = new LargeTeleporter();				chunkLoader = new ChunkLoader();
+		elevator = new Elevator();								animalGrowth = new AnimalGrowth();
+		plantFarmer = new PlantFarmer();						generator = new Generator();
+		
+		bedTeleporter = new SpawnPointTeleporter();				radio = new Radio();
+		iTool = new ITool();									dyeWand = new DyeWand();
 		flamethrower = new Flamethrower();
-		placementListener = new BlockEvent();
-		inventoryListener = new InventoryEvent();
+		
+		
+		placementListener = new BlockEvent();					inventoryListener = new InventoryEvent();
 		playerListener = new PlayerEvent();
 		
-		blockPlaceTask = new BlockPlaceTaskTimer();
-		blockBreakTask = new BlockBreakTaskTimer();
-		treeCutterTask = new TreeCutterTaskTimer();
-		entityTeleporterTask = new EntityTeleporterTaskTimer();
-		itemTeleporterTask = new ItemTeleporterTaskTimer();
-		chunkLoadTask = new ChunkLoadTaskTimer();
-		grinderTask = new GrinderTaskTimer();
-		animalGrowthTask = new AnimalGrowthTaskTimer();
-		plantFarmerTask = new PlantFarmerTaskTimer();
-		particleTask = new ParticleSpawnerTaskTimer();
+		blockPlaceTask = new BlockPlaceTaskTimer();				blockBreakTask = new BlockBreakTaskTimer();
+		treeCutterTask = new TreeCutterTaskTimer();				entityTeleporterTask = new EntityTeleporterTaskTimer();
+		itemTeleporterTask = new ItemTeleporterTaskTimer();		chunkLoadTask = new ChunkLoadTaskTimer();
+		grinderTask = new GrinderTaskTimer();					animalGrowthTask = new AnimalGrowthTaskTimer();
+		plantFarmerTask = new PlantFarmerTaskTimer();			particleTask = new ParticleSpawnerTaskTimer();
 		
 		registerRunnables();
 		registerRecipes();
