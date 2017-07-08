@@ -49,4 +49,12 @@ public class EntityUtils {
 		}
 		return online;
 	}
+	
+	public static Player getPlayer(String name) {
+		Player target = null;
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			if (p.getName().equalsIgnoreCase(name)) target = p;
+		}
+		return target;
+	}
 }

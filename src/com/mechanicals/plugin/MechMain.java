@@ -208,7 +208,7 @@ public class MechMain extends JavaPlugin {
 		
 		logger.info("Starting Plugin with components enabled: " + (comp == "" ? "None" : comp.substring(0, comp.length() - 2)));
 		
-		permissions = new PermissionIndex(blockData, itemData);
+		permissions = new PermissionIndex(config, blockData, itemData);
 		texts = new TextIndex(textData);
 		
 		blockPlacer = new BlockPlacer();
@@ -353,8 +353,12 @@ public class MechMain extends JavaPlugin {
 			config.set("remoteStorageEnabled", true);
 			change = true;
 		}
-		if (!config.contains("remoteStoragePermission")) {
-			config.set("remoteStoragePermission", "mechanical.backpack");
+		if (!config.contains("remoteInventoryCommand.see")) {
+			config.set("remoteInventoryCommand.see", "mechanical.remotebackpack.see");
+			change = true;
+		}
+		if (!config.contains("remoteInventoryCommand.edit")) {
+			config.set("remoteInventoryCommand.edit", "mechanical.remotebackpack.edit");
 			change = true;
 		}
 		if (change) config.saveAndReload();

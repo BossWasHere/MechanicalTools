@@ -2,6 +2,9 @@ package com.mechanicals.plugin.configuration;
 
 public class PermissionIndex {
 
+	public final String remote_inventory_see;
+	public final String remote_inventory_edit;
+	
 	public final String blockBreaker_place;
 	public final String blockBreaker_break;
 	public final String blockBreaker_breakOther;
@@ -94,7 +97,7 @@ public class PermissionIndex {
 	public final String flamethrower_command;
 	public final String flamethrower_commandOther;
 	
-	public PermissionIndex(ConfigurationUnit blockConfig, ConfigurationUnit itemConfig) {
+	public PermissionIndex(ConfigurationUnit mainConfig, ConfigurationUnit blockConfig, ConfigurationUnit itemConfig) {
 		blockBreaker_place = blockConfig.getString("block.blockBreaker.permissions.place");
 		blockBreaker_break = blockConfig.getString("block.blockBreaker.permissions.break");
 		blockBreaker_breakOther = blockConfig.getString("block.blockBreaker.permissions.breakOther");
@@ -186,6 +189,9 @@ public class PermissionIndex {
 		flamethrower_use = itemConfig.getString("item.flamethrower.permissions.use");
 		flamethrower_command = itemConfig.getString("item.flamethrower.permissions.command");
 		flamethrower_commandOther = itemConfig.getString("item.flamethrower.permissions.commandOther");
+		
+		remote_inventory_see = mainConfig.getString("remoteInventoryCommand.see");
+		remote_inventory_edit = mainConfig.getString("remoteInventoryCommand.edit");
 	}
 	
 }

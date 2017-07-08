@@ -10,6 +10,12 @@ commands:
   mechanicalconfig:
     description: Allows you to adjust the configuration of the plugin.
     usage: /mechanicalconfig <view/set/confirm/reset> [...]
+  remotemechanicalinventory:
+    description: Allows you to view and ajust another player's remote inventory
+    usage: /remotemechanicalinventory <player>
+  rmi:
+    description: Allows you to view and ajust another player's remote inventory
+    usage: /rmi <player>
   blockplacer:
     description: Give a Block Placer tool to a player/yourself.
     usage: /blockplacer (target)

@@ -79,6 +79,10 @@ public class CommandHandler {
 		case "mechanicalconfig":
 			new MechanicalConfigCommand().run(sender, args);
 			return true;
+		case "remotemechanicalinventory":
+		case "rmi":
+			new RemoteInventoryCommand().run(sender, args);
+			return true;
 		case "schemnow":
 			new SchemCommand().run(sender, args);
 			return true;

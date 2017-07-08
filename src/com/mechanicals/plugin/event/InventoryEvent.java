@@ -1,5 +1,6 @@
 package com.mechanicals.plugin.event;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import com.mechanicals.plugin.InventoryHandler;
 import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.items.ITool;
 import com.mechanicals.plugin.server.NoteBlockHandler;
+import com.mechanicals.plugin.utils.StringUtils;
 import com.xxmicloxx.NoteBlockAPI.NoteBlockPlayerMain;
 
 public class InventoryEvent implements Listener {
@@ -88,6 +90,11 @@ public class InventoryEvent implements Listener {
 			if (!current.getType().equals(Material.INK_SACK)) event.setCancelled(true);
 		} else if (event.getInventory().getName().equalsIgnoreCase(ChatColor.BLUE + "[Mechanical] Inventory")) {
 			if (MechMain.plugin.iTool.matchesMeta(current)) event.setCancelled(true);
+		} else if (StringUtils.countOccurances(event.getInventory().getName(), " ") == 2 && event.getInventory().getName().endsWith("Inventory")) {
+			if (!player.hasPermission(MechMain.plugin.permissions.remote_inventory_edit)) {
+				event.setCancelled(true);
+				player.sendMessage(MechMain.plugin.texts.noPermissionRemoteEdit);
+			}
 		}
 	}
 	
@@ -103,6 +110,11 @@ public class InventoryEvent implements Listener {
 			ItemStack i = event.getInventory().getItem(4);
 			if (i == null) return;
 			if (i.getType().equals(Material.INK_SACK)) InventoryHandler.setDyeForPlayer(player, i);
+		} else if (StringUtils.countOccurances(event.getInventory().getName(), " ") == 2 && event.getInventory().getName().endsWith("Inventory")) {
+			String split = event.getInventory().getName().split(" ")[1];
+			Player player = Bukkit.getPlayer(split);
+			if (player != null) InventoryHandler.saveInventoryForPlayer(player, event.getInventory());
+			else event.getPlayer().sendMessage(ChatColor.AQUA + "You may have lost some items because the player data for the player with this name can no longer be found!");
 		}
 	}
 }

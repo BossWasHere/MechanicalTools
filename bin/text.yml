@@ -6,7 +6,9 @@ onlyPlayers: ~red~Only players can recieve Mechanical Tools and Blocks
 noPermission: ~red~You do not have permission to use this command!
 noPermissionUse: ~red~You do not have permission to use this item!
 noPermissionUseOther: ~red~You do not have permission to use someone's block!
+noPermissionRemoteEdit: ~red~You do not have permission to remotely edit inventories!
 playerNotFound: ~red~Player ~lightpurple~&player& ~red~is not online!
+specifyPlayer: ~red~Please specify a player!
 recievedBlockFrom: ~darkgreen~Player &player& has given you a Mechanical Block!
 givenBlockTo: ~darkgreen~You have given &player& a Mechanical Block
 recievedItemFrom: ~darkgreen~Player &player& has given you a Mechanical Item!

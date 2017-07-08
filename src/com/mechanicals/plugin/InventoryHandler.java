@@ -52,6 +52,29 @@ public class InventoryHandler {
 		return i;
 	}
 	
+	public static Inventory loadRemoteInventoryForPlayer(Player player) {
+		int sizePerm = 9;
+		if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".6")) {
+			sizePerm = 54;
+		} else if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".5")) {
+			sizePerm = 45;
+		} else if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".4")) {
+			sizePerm = 36;
+		} else if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".3")) {
+			sizePerm = 27;
+		} else if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".2")) {
+			sizePerm = 18;
+		}
+		ItemStack[] items = getInventoryContentsForPlayer(player);
+		Inventory i = Bukkit.createInventory(null, sizePerm, ChatColor.BLUE + "[Mechanical] " + player.getName() + (player.getName().endsWith("s") ? "' Inventory" : "'s Inventory"));
+		int j = 0;
+		for (ItemStack it : items) {
+			if (j < sizePerm) i.addItem(it);
+			j++;
+		}
+		return i;
+	}
+	
 	public static Inventory loadDyeInventoryForPlayer(Player player) {
 		Inventory i = Bukkit.createInventory(null, 9, ChatColor.BLUE + "[Mechanical] Dyes");
 		i.setItem(4, getDyeForPlayer(player));

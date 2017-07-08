@@ -9,6 +9,7 @@ public class TextIndex {
 	public final String onlyPlayers;
 	public final String noPermission;
 	public final String playerNotFound;
+	public final String specifyPlayer;
 	public final String recievedBlockFrom;
 	public final String givenBlockTo;
 	public final String recievedItemFrom;
@@ -19,6 +20,7 @@ public class TextIndex {
 	public final String notEnabled;
 	public final String noPermissionUse;
 	public final String noPermissionUseOther;
+	public final String noPermissionRemoteEdit;
 	
 	public final String economyNotAvailable;
 	
@@ -33,6 +35,7 @@ public class TextIndex {
 		onlyPlayers = translateAlternateColorCodes(config.getString("onlyPlayers", NOT_FOUND));
 		noPermission = translateAlternateColorCodes(config.getString("noPermission", NOT_FOUND));
 		playerNotFound = translateAlternateColorCodes(config.getString("playerNotFound", NOT_FOUND));
+		specifyPlayer = translateAlternateColorCodes(config.getString("specifyPlayer", NOT_FOUND));
 		recievedBlockFrom = translateAlternateColorCodes(config.getString("recievedBlockFrom", NOT_FOUND));
 		givenBlockTo = translateAlternateColorCodes(config.getString("givenBlockTo", NOT_FOUND));
 		recievedItemFrom = translateAlternateColorCodes(config.getString("recievedItemFrom", NOT_FOUND));
@@ -43,6 +46,7 @@ public class TextIndex {
 		notEnabled = translateAlternateColorCodes(config.getString("notEnabled", NOT_FOUND));
 		noPermissionUse = translateAlternateColorCodes(config.getString("noPermissionUse", NOT_FOUND));
 		noPermissionUseOther = translateAlternateColorCodes(config.getString("noPermissionUseOther", NOT_FOUND));
+		noPermissionRemoteEdit = translateAlternateColorCodes(config.getString("noPermissionRemoteEdit", NOT_FOUND));
 		teleportNow = translateAlternateColorCodes(config.getString("teleporting", NOT_FOUND));
 		
 		economyNotAvailable = translateAlternateColorCodes(config.getString("economyNotAvailable", NOT_FOUND));

@@ -120,4 +120,16 @@ public class StringUtils {
 		}
 		return out;
 	}
+	
+	public static int countOccurances(String template, String search) {
+		if (template == null) return -1;
+		int index = template.indexOf(search);
+		int count = 0;
+		while (index != -1) {
+		    count++;
+		    template = template.substring(index + 1);
+		    index = template.indexOf(search);
+		}
+		return count;
+	}
 }

@@ -1,10 +1,10 @@
 package com.mechanicals.plugin.command;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mechanicals.plugin.RegisteredCommand;
+import com.mechanicals.plugin.utils.EntityUtils;
 
 public class ItemTeleporterCommand extends RegisteredCommand {
 
@@ -26,13 +26,9 @@ public class ItemTeleporterCommand extends RegisteredCommand {
 			}
 		} else {
 			if (sender.hasPermission(plugin.permissions.itemTeleporter_commandOther)) {
-				String t = args[0];
-				Player target = null;
-				for (Player p : Bukkit.getOnlinePlayers()) {
-					if (p.getName().equalsIgnoreCase(t)) target = p;
-				}
+				Player target = EntityUtils.getPlayer(args[0]);
 				if (target == null) {
-					sender.sendMessage(plugin.texts.playerNotFound(t));
+					sender.sendMessage(plugin.texts.playerNotFound(args[0]));
 				} else {
 					plugin.itemTeleporter.giveBlockItem(target);
 					sender.sendMessage(plugin.texts.givenBlockTo(target.getName()));
