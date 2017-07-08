@@ -55,12 +55,13 @@ import com.mechanicals.plugin.task.PlantFarmerTaskTimer;
 import com.mechanicals.plugin.task.TreeCutterTaskTimer;
 import com.mechanicals.plugin.task.extra.ConfirmCooldown;
 import com.mechanicals.plugin.utils.FileUtils;
+import com.mechanicals.plugin.world.WorldEditManager;
 
 public class MechMain extends JavaPlugin {
 	
 	private boolean disable = false;
 	public boolean debug = false;
-	public boolean nbapi = false;
+	public boolean nbapi = false, weapi = false;
 	public boolean onedoteleleven;
 	
 	public PermissionIndex permissions;
@@ -100,6 +101,7 @@ public class MechMain extends JavaPlugin {
 	public Set<ConfirmCooldown> cooldowns = Collections.synchronizedSet(new HashSet<>());
 	public ClickHoldData itemHolder;
 	public NoteBlockHandler noteBlockHandler;
+	public WorldEditManager worldEditManager;
 	public InventoryHandler inventoryHandler;
 	
 	public BlockPlaceTaskTimer blockPlaceTask;
@@ -130,10 +132,10 @@ public class MechMain extends JavaPlugin {
 			if (!getServer().getPluginManager().isPluginEnabled("NoteBlockAPI")) {
 				try {
 					if (!(new File(resourceLocation + File.separator + "dependencies").isDirectory())) {
-						new File(resourceLocation + File.separator + "dependencies").mkdir();
+						new File(resourceLocation + File.separator + "dependencies").mkdirs();
 					}
 					if (!(new File(fileUtils.replaceDirectoryKeys(config.getString("songLocation"))).isDirectory())) {
-						new File(fileUtils.replaceDirectoryKeys(config.getString("songLocation"))).mkdir();
+						new File(fileUtils.replaceDirectoryKeys(config.getString("songLocation"))).mkdirs();
 					}
 					File nb = new File(resourceLocation + File.separator + "dependencies", "NoteBlockAPI-1.1.6.jar");
 					if (!nb.exists()) Files.copy(getResourceAsStream("lib/NoteBlockAPI-1.1.6.jar"), nb.getAbsoluteFile().toPath());
@@ -143,6 +145,27 @@ public class MechMain extends JavaPlugin {
 					noteBlockHandler = new NoteBlockHandler(this);
 				} catch (Exception e) {
 					logger.severe("Could not load active dependency - NoteBlockAPI");
+					logger.severe("Functions requiring this will be disabled!");
+				}
+			}
+		}
+		if (config.getBoolean("useWorldEditAPI")) {
+			if (!getServer().getPluginManager().isPluginEnabled("WorldEdit")) {
+				try {
+					if (!(new File(resourceLocation + File.separator + "dependencies").isDirectory())) {
+						new File(resourceLocation + File.separator + "dependencies").mkdirs();
+					}
+					if (!(new File(fileUtils.replaceDirectoryKeys(config.getString("schematicLocation"))).isDirectory())) {
+						new File(fileUtils.replaceDirectoryKeys(config.getString("schematicLocation"))).mkdirs();
+					}
+					File nb = new File(resourceLocation + File.separator + "dependencies", "worldedit-bukkit-6.1.7.2.jar");
+					if (!nb.exists()) Files.copy(getResourceAsStream("lib/worldedit-bukkit-6.1.7.2.jar"), nb.getAbsoluteFile().toPath());
+					Plugin p = Bukkit.getPluginManager().loadPlugin(nb);
+					Bukkit.getPluginManager().enablePlugin(p);
+					weapi = true;
+					worldEditManager = new WorldEditManager(this);
+				} catch (Exception e) {
+					logger.severe("Could not load active dependency - WorldEdit");
 					logger.severe("Functions requiring this will be disabled!");
 				}
 			}
@@ -329,8 +352,8 @@ public class MechMain extends JavaPlugin {
 	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
-		return super.onTabComplete(sender, cmd, alias, args);
-		//return CommandHandler.parseTabComplete(this, sender, cmd.getName().toLowerCase(), args);
+		List<String> ret = CommandHandler.parseTabComplete(this, sender, cmd.getName().toLowerCase(), args);
+		return ret == null ? super.onTabComplete(sender, cmd, alias, args) : ret;
 	}
 	
 	@Override
@@ -354,8 +377,16 @@ public class MechMain extends JavaPlugin {
 			config.set("useNoteBlockAPI", false);
 			change = true;
 		}
+		if (!config.contains("useWorldEditAPI")) {
+			config.set("useWorldEditAPI", false);
+			change = true;
+		}
 		if (!config.contains("songLocation")) {
 			config.set("songLocation", "~pluginfolder~/noteblocksongs");
+			change = true;
+		}
+		if (!config.contains("schematicLocation")) {
+			config.set("schematicLocation", "~pluginfolder~/MechanicalTools/schematics");
 			change = true;
 		}
 		if (!config.contains("debug")) {

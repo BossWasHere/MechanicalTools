@@ -57,6 +57,7 @@ public class ServerVersion {
 	}
 	
 	public static boolean isAtOrHigherThan(final String ver) {
+		if (ver_split == null) return false;
 		boolean larger = false;
 		if (ver.contains(".")) {
 			String[] d = ver.split("\\.");

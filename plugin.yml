@@ -1,8 +1,8 @@
-name: MechanicalBlocks
+name: MechanicalTools
 description: Adds Mechanical Tools and Blocks to Bukkit Servers
 main: com.mechanicals.plugin.MechMain
 author: IballisticBoss
-version: 2.5
+version: 2.4.1
 commands:
   mechanical:
     description: Shows help on commands for this plugin.
@@ -58,5 +58,8 @@ commands:
   flamethrower:
     description: Give a Flamethrower item to a player/yourself.
     usage: /flamethrower (target)
+  schemnow:
+    description: Schematics
+    usage: /schemnow <name> <x1> <y1> <z1> <x2> <y2> <z2>
 
-softdepend: [NoteBlockAPI]
+softdepend: [NoteBlockAPI, WorldEdit]

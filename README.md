@@ -40,6 +40,10 @@ Other Features:
 Changelog:
 <br/>
 
+Version 2.4.1:
+  - Various Tweaks
+<br/>
+
 Version 2.4 (Chunk Loader):
   - Added Chunk Loader
 <br/>

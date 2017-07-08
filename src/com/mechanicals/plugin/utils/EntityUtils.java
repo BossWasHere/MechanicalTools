@@ -1,10 +1,14 @@
 package com.mechanicals.plugin.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
@@ -29,5 +33,20 @@ public class EntityUtils {
 		fireball.setVelocity(fireball.getVelocity().multiply(10));
 		fireball.setYield(3F);
 		fireball.setIsIncendiary(true);
+	}
+
+	public static List<String> getOnlinePlayersWithPriority(CommandSender sender) {
+		List<String> online = new ArrayList<>();
+		if (sender instanceof Player) {
+			online.add(((Player)sender).getName());
+			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+				if (!online.contains(p.getName())) online.add(p.getName());
+			}
+		} else {
+			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+				online.add(p.getName());
+			}
+		}
+		return online;
 	}
 }

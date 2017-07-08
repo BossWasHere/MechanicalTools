@@ -1,10 +1,12 @@
 package com.mechanicals.plugin.command;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
 import com.mechanicals.plugin.MechMain;
+import com.mechanicals.plugin.utils.EntityUtils;
 
 /**
  * The main Command Handling System for this plugin
@@ -78,6 +80,9 @@ public class CommandHandler {
 		case "mechanicalconfig":
 			MechanicalConfigCommand.run(plugin, sender, args);
 			return true;
+		case "schemnow":
+			SchemCommand.run(plugin, sender, args);
+			return true;
 		}
 		
 		return false;
@@ -90,10 +95,34 @@ public class CommandHandler {
 	 * @param command the name of the command 
 	 * @param args args the arguments associated with the command
 	 * @return a String List object with possible tab ideas
-	 * @since 1.3
+	 * @since 1.3 (impl. 2.4.1)
 	 * @author IballisticBoss
 	 */
 	public static List<String> parseTabComplete(MechMain plugin, CommandSender sender, String command, String[] args) {
-		return null;
+		switch (command) {
+		case "blockplacer":
+		case "blockbreaker":
+		case "treecutter":
+		case "entityteleporter":
+		case "itemteleporter":
+		case "grinder":
+		case "largeteleporter":
+		case "chunkloader":
+		case "elevator":
+		case "animalgrowth":
+		case "plantfarmer":
+		case "spawnpointteleporter":
+		case "mechradio":
+		case "itool":
+		case "dyewand":
+		case "flamethrower":
+			return EntityUtils.getOnlinePlayersWithPriority(sender);
+		case "mechanical":
+			return Arrays.asList(new String[] {"blocks", "items"});
+		case "mechanicalconfig":
+			return Arrays.asList(new String[] {"view", "set", "confirm", "reset"});
+		default:
+			return null;
+		}
 	}
 }
