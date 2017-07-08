@@ -8,21 +8,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import com.mechanicals.plugin.MechMain;
-import com.mechanicals.plugin.sound.NoteBlockHandler;
 import com.mechanicals.plugin.utils.FileUtils;
-import com.mechanicals.plugin.world.WorldEditManager;
 
 public class MechanicalPluginManager {
 
 	private final MechMain plugin;
 	private final File resourceLocation;
-	private final FileUtils fileUtils;
 	private final Logger logger;
 	
-	public MechanicalPluginManager(MechMain plugin) {
-		this.plugin = plugin;
+	public MechanicalPluginManager() {
+		plugin = MechMain.plugin;
 		this.resourceLocation = plugin.resourceLocation;
-		this.fileUtils = plugin.fileUtils;
 		this.logger = plugin.logger;
 	}
 	
@@ -33,15 +29,14 @@ public class MechanicalPluginManager {
 				if (!(new File(resourceLocation + File.separator + "dependencies").isDirectory())) {
 					new File(resourceLocation + File.separator + "dependencies").mkdirs();
 				}
-				if (!(new File(fileUtils.replaceDirectoryKeys(plugin.config.getString("songLocation"))).isDirectory())) {
-					new File(fileUtils.replaceDirectoryKeys(plugin.config.getString("songLocation"))).mkdirs();
+				if (!(new File(FileUtils.replaceDirectoryKeys(plugin.config.getString("songLocation"))).isDirectory())) {
+					new File(FileUtils.replaceDirectoryKeys(plugin.config.getString("songLocation"))).mkdirs();
 				}
 				File resource = new File(resourceLocation + File.separator + "dependencies", PluginLoadable.NOTEBLOCKAPI_JAR);
 				if (!resource.exists()) Files.copy(plugin.getResourceAsStream("lib/" + PluginLoadable.NOTEBLOCKAPI_JAR), resource.getAbsoluteFile().toPath());
 				Plugin p = Bukkit.getPluginManager().loadPlugin(resource);
 				Bukkit.getPluginManager().enablePlugin(p);
 				enabled = true;
-				plugin.noteBlockHandler = new NoteBlockHandler(plugin);
 			} catch (Exception e) {
 				logger.severe("Could not load active dependency - " + PluginLoadable.NOTEBLOCKAPI);
 				logger.severe("Functions requiring this will be disabled!");
@@ -57,15 +52,14 @@ public class MechanicalPluginManager {
 				if (!(new File(resourceLocation + File.separator + "dependencies").isDirectory())) {
 					new File(resourceLocation + File.separator + "dependencies").mkdirs();
 				}
-				if (!(new File(fileUtils.replaceDirectoryKeys(plugin.config.getString("schematicLocation"))).isDirectory())) {
-					new File(fileUtils.replaceDirectoryKeys(plugin.config.getString("schematicLocation"))).mkdirs();
+				if (!(new File(FileUtils.replaceDirectoryKeys(plugin.config.getString("schematicLocation"))).isDirectory())) {
+					new File(FileUtils.replaceDirectoryKeys(plugin.config.getString("schematicLocation"))).mkdirs();
 				}
 				File resource = new File(resourceLocation + File.separator + "dependencies", PluginLoadable.WORLDEDIT_JAR);
 				if (!resource.exists()) Files.copy(plugin.getResourceAsStream("lib/" + PluginLoadable.WORLDEDIT_JAR), resource.getAbsoluteFile().toPath());
 				Plugin p = Bukkit.getPluginManager().loadPlugin(resource);
 				Bukkit.getPluginManager().enablePlugin(p);
 				enabled = true;
-				plugin.worldEditManager = new WorldEditManager(plugin);
 			} catch (Exception e) {
 				logger.severe("Could not load active dependency - " + PluginLoadable.WORLDEDIT);
 				logger.severe("Functions requiring this will be disabled!");
@@ -86,7 +80,6 @@ public class MechanicalPluginManager {
 				Plugin p = Bukkit.getPluginManager().loadPlugin(resource);
 				Bukkit.getPluginManager().enablePlugin(p);
 				enabled = true;
-				plugin.worldEditManager = new WorldEditManager(plugin);
 			} catch (Exception e) {
 				logger.severe("Could not load active dependency - " + PluginLoadable.ECONOMY_PROVIDER);
 				logger.severe("Functions requiring this will be disabled!");

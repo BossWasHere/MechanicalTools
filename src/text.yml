@@ -16,6 +16,7 @@ noPermissionToBreakOther: ~red~You do not have permission to break other players
 brokenBlock: ~aqua~Broken a Mechanical Block successfully
 notEnabled: ~red~This block or item has been disabled by a server administrator!
 teleporting: ~darkgreen~Now teleporting...
+economyNotAvailable: ~red~Economy could not be setup - is there an economy management plugin?
 
 #Items
 spawnPointTeleport_Use: ~darkblue~Teleporting to your spawn point...

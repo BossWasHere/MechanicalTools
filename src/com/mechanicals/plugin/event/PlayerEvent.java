@@ -26,12 +26,9 @@ import com.mechanicals.plugin.blocks.MechanicalBlocks;
 import com.mechanicals.plugin.utils.WorldUtils;
 
 public class PlayerEvent implements Listener {
-
-	public final MechMain plugin;
 	
-	public PlayerEvent(MechMain plugin) {
-		this.plugin = plugin;
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+	public PlayerEvent() {
+		MechMain.plugin.getServer().getPluginManager().registerEvents(this, MechMain.plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGH)
@@ -40,18 +37,18 @@ public class PlayerEvent implements Listener {
 		if (item == null) return;
 		if (!item.hasItemMeta()) return;
 		if (!item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore()) return;
-		if (plugin.bedTeleporter.matchesMeta(item)) {
-			plugin.bedTeleporter.itemUseEvent(event);
-		} else if (plugin.radio.matchesMeta(item)) {
-			plugin.radio.itemUseEvent(event);
-		} else if (plugin.iTool.matchesMeta(item)) {
-			plugin.iTool.itemUseEvent(event);
-		} else if (plugin.iTool.matchesMeta(item)) {
-			plugin.iTool.itemUseEvent(event);
-		} else if (plugin.dyeWand.matchesMeta(item)) {
-			plugin.dyeWand.itemUseEvent(event);
-		} else if (plugin.flamethrower.matchesMeta(item)) {
-			plugin.flamethrower.itemUseEvent(event);
+		if (MechMain.plugin.bedTeleporter.matchesMeta(item)) {
+			MechMain.plugin.bedTeleporter.itemUseEvent(event);
+		} else if (MechMain.plugin.radio.matchesMeta(item)) {
+			MechMain.plugin.radio.itemUseEvent(event);
+		} else if (MechMain.plugin.iTool.matchesMeta(item)) {
+			MechMain.plugin.iTool.itemUseEvent(event);
+		} else if (MechMain.plugin.iTool.matchesMeta(item)) {
+			MechMain.plugin.iTool.itemUseEvent(event);
+		} else if (MechMain.plugin.dyeWand.matchesMeta(item)) {
+			MechMain.plugin.dyeWand.itemUseEvent(event);
+		} else if (MechMain.plugin.flamethrower.matchesMeta(item)) {
+			MechMain.plugin.flamethrower.itemUseEvent(event);
 		}
 	}
 	
@@ -61,7 +58,7 @@ public class PlayerEvent implements Listener {
 		if (item == null) return;
 		if (!item.hasItemMeta()) return;
 		if (!item.getItemMeta().hasDisplayName() || !item.getItemMeta().hasLore()) return;
-		if (plugin.dyeWand.matchesMeta(item)) {
+		if (MechMain.plugin.dyeWand.matchesMeta(item)) {
 			Bukkit.getServer().getPluginManager().callEvent(new PlayerInteractEvent(event.getPlayer(), Action.RIGHT_CLICK_BLOCK, item, event.getBed(), BlockFace.UP));
 			event.setCancelled(true);
 		}
@@ -76,19 +73,19 @@ public class PlayerEvent implements Listener {
 			Location below = new Location(start.getWorld(), start.getBlockX(), start.getBlockY() - 1, start.getBlockZ());
 			if (below.getBlock().getType().equals(MechanicalBlocks.ELEVATOR.getItemBase().getType())) {
 				Set<String> newKeys = new HashSet<>();
-				for (String key : plugin.placed.getKeys(false)) {
-					if (MechanicalBlocks.ELEVATOR.getId().equals(plugin.placed.getString(key + ".id"))) {
+				for (String key : MechMain.plugin.placed.getKeys(false)) {
+					if (MechanicalBlocks.ELEVATOR.getId().equals(MechMain.plugin.placed.getString(key + ".id"))) {
 						newKeys.add(key);
 					}
 				}
 					
 				for (String key : newKeys) {
 					Location tp = null;
-					if (WorldUtils.isSameLocation(new Location(Bukkit.getWorld(plugin.placed.getString(key + ".world")), plugin.placed.getInt(key + ".x"), plugin.placed.getInt(key + ".y"), plugin.placed.getInt(key + ".z")), below)) {
+					if (WorldUtils.isSameLocation(new Location(Bukkit.getWorld(MechMain.plugin.placed.getString(key + ".world")), MechMain.plugin.placed.getInt(key + ".x"), MechMain.plugin.placed.getInt(key + ".y"), MechMain.plugin.placed.getInt(key + ".z")), below)) {
 						List<Location> locs = WorldUtils.getBlocksUpY(below.getWorld(), below.getBlockX(), below.getBlockZ(), MechanicalBlocks.ELEVATOR.getItemBase().getType());
 						for (String key2 : newKeys) {
 							for (Location loc : locs) {
-								Location o = new Location(Bukkit.getWorld(plugin.placed.getString(key2 + ".world")), plugin.placed.getInt(key2 + ".x"), plugin.placed.getInt(key2 + ".y"), plugin.placed.getInt(key2 + ".z"));
+								Location o = new Location(Bukkit.getWorld(MechMain.plugin.placed.getString(key2 + ".world")), MechMain.plugin.placed.getInt(key2 + ".x"), MechMain.plugin.placed.getInt(key2 + ".y"), MechMain.plugin.placed.getInt(key2 + ".z"));
 								if (WorldUtils.isSameLocation(below, loc)) continue;
 								if (WorldUtils.isSameLocation(o, loc) && loc.getBlockY() > below.getBlockY()) {
 									if (tp == null) tp = loc;
@@ -110,18 +107,18 @@ public class PlayerEvent implements Listener {
 			below.setY(below.getBlockY() - 1);
 			if (below.getBlock().getType().equals(MechanicalBlocks.ELEVATOR.getItemBase().getType())) {
 				Set<String> newKeys = new HashSet<>();
-				for (String key : plugin.placed.getKeys(false)) {
-					if (MechanicalBlocks.ELEVATOR.getId().equals(plugin.placed.getString(key + ".id"))) {
+				for (String key : MechMain.plugin.placed.getKeys(false)) {
+					if (MechanicalBlocks.ELEVATOR.getId().equals(MechMain.plugin.placed.getString(key + ".id"))) {
 						newKeys.add(key);
 					}
 				}
 				
 				for (String key : newKeys) {
 					Location tp = null;
-					if (WorldUtils.isSameLocation(new Location(Bukkit.getWorld(plugin.placed.getString(key + ".world")), plugin.placed.getInt(key + ".x"), plugin.placed.getInt(key + ".y"), plugin.placed.getInt(key + ".z")), below)) {
+					if (WorldUtils.isSameLocation(new Location(Bukkit.getWorld(MechMain.plugin.placed.getString(key + ".world")), MechMain.plugin.placed.getInt(key + ".x"), MechMain.plugin.placed.getInt(key + ".y"), MechMain.plugin.placed.getInt(key + ".z")), below)) {
 						for (Location loc : WorldUtils.getBlocksUpY(below.getWorld(), below.getBlockX(), below.getBlockZ(), MechanicalBlocks.ELEVATOR.getItemBase().getType())) {
 							for (String key2 : newKeys) {
-								Location o = new Location(Bukkit.getWorld(plugin.placed.getString(key2 + ".world")), plugin.placed.getInt(key2 + ".x"), plugin.placed.getInt(key2 + ".y"), plugin.placed.getInt(key2 + ".z"));
+								Location o = new Location(Bukkit.getWorld(MechMain.plugin.placed.getString(key2 + ".world")), MechMain.plugin.placed.getInt(key2 + ".x"), MechMain.plugin.placed.getInt(key2 + ".y"), MechMain.plugin.placed.getInt(key2 + ".z"));
 								if (WorldUtils.isSameLocation(below, loc)) continue;
 								if (WorldUtils.isSameLocation(o, loc) && loc.getBlockY() < below.getBlockY()) {
 									if (tp == null) tp = loc;

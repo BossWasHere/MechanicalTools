@@ -12,15 +12,14 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.material.Dispenser;
 import org.bukkit.material.MaterialData;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.task.BlockPlaceTaskTimer;
 import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
 import com.mechanicals.plugin.utils.StringUtils;
 
 public class BlockPlacer extends BaseMechanicalBlock {
 	
-	public BlockPlacer(MechMain plugin) {
-		super(plugin);
+	public BlockPlacer() {
+		super();
 	}
 	
 	@Override

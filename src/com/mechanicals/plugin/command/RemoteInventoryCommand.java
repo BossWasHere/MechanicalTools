@@ -2,11 +2,15 @@ package com.mechanicals.plugin.command;
 
 import org.bukkit.command.CommandSender;
 
-import com.mechanicals.plugin.MechMain;
+import com.mechanicals.plugin.RegisteredCommand;
 
-public class RemoteInventoryCommand {
+public class RemoteInventoryCommand extends RegisteredCommand {
+	
+	public RemoteInventoryCommand() {
+		super();
+	}
 
-	public static void run(MechMain plugin, CommandSender sender, String[] args) {
-		
+	public void run(CommandSender sender, String[] args) {
+		//this exists?
 	}
 }

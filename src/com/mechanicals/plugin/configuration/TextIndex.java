@@ -4,6 +4,8 @@ import org.bukkit.ChatColor;
 
 public class TextIndex {
 
+	private final String NOT_FOUND = "str_not_found_exception";
+	
 	public final String onlyPlayers;
 	public final String noPermission;
 	public final String playerNotFound;
@@ -18,6 +20,8 @@ public class TextIndex {
 	public final String noPermissionUse;
 	public final String noPermissionUseOther;
 	
+	public final String economyNotAvailable;
+	
 	public final String bedTeleport_Use;
 	public final String songIssue;
 	public final String noSongs;
@@ -26,26 +30,28 @@ public class TextIndex {
 	public final String addDyeFirst;
 	
 	public TextIndex(ConfigurationUnit config) {
-		onlyPlayers = translateAlternateColorCodes(config.getString("onlyPlayers"));
-		noPermission = translateAlternateColorCodes(config.getString("noPermission"));
-		playerNotFound = translateAlternateColorCodes(config.getString("playerNotFound"));
-		recievedBlockFrom = translateAlternateColorCodes(config.getString("recievedBlockFrom"));
-		givenBlockTo = translateAlternateColorCodes(config.getString("givenBlockTo"));
-		recievedItemFrom = translateAlternateColorCodes(config.getString("recievedItemFrom"));
-		givenItemTo = translateAlternateColorCodes(config.getString("givenItemTo"));
-		noPermissionToBreak = translateAlternateColorCodes(config.getString("noPermissionToBreak"));
-		noPermissionToBreakOther = translateAlternateColorCodes(config.getString("noPermissionToBreakOther"));
-		breakSuccess = translateAlternateColorCodes(config.getString("brokenBlock"));
-		notEnabled = translateAlternateColorCodes(config.getString("notEnabled"));
-		noPermissionUse = translateAlternateColorCodes(config.getString("noPermissionUse"));
-		noPermissionUseOther = translateAlternateColorCodes(config.getString("noPermissionUseOther"));
-		teleportNow = translateAlternateColorCodes(config.getString("teleporting"));
+		onlyPlayers = translateAlternateColorCodes(config.getString("onlyPlayers", NOT_FOUND));
+		noPermission = translateAlternateColorCodes(config.getString("noPermission", NOT_FOUND));
+		playerNotFound = translateAlternateColorCodes(config.getString("playerNotFound", NOT_FOUND));
+		recievedBlockFrom = translateAlternateColorCodes(config.getString("recievedBlockFrom", NOT_FOUND));
+		givenBlockTo = translateAlternateColorCodes(config.getString("givenBlockTo", NOT_FOUND));
+		recievedItemFrom = translateAlternateColorCodes(config.getString("recievedItemFrom", NOT_FOUND));
+		givenItemTo = translateAlternateColorCodes(config.getString("givenItemTo", NOT_FOUND));
+		noPermissionToBreak = translateAlternateColorCodes(config.getString("noPermissionToBreak", NOT_FOUND));
+		noPermissionToBreakOther = translateAlternateColorCodes(config.getString("noPermissionToBreakOther", NOT_FOUND));
+		breakSuccess = translateAlternateColorCodes(config.getString("brokenBlock", NOT_FOUND));
+		notEnabled = translateAlternateColorCodes(config.getString("notEnabled", NOT_FOUND));
+		noPermissionUse = translateAlternateColorCodes(config.getString("noPermissionUse", NOT_FOUND));
+		noPermissionUseOther = translateAlternateColorCodes(config.getString("noPermissionUseOther", NOT_FOUND));
+		teleportNow = translateAlternateColorCodes(config.getString("teleporting", NOT_FOUND));
 		
-		bedTeleport_Use = translateAlternateColorCodes(config.getString("spawnPointTeleport_Use"));
-		songIssue = translateAlternateColorCodes(config.getString("songIssue"));
-		noSongs = translateAlternateColorCodes(config.getString("noSongs"));
-		placeDyes = translateAlternateColorCodes(config.getString("placeDyeHere"));
-		addDyeFirst = translateAlternateColorCodes(config.getString("addDyeFirst"));
+		economyNotAvailable = translateAlternateColorCodes(config.getString("economyNotAvailable", NOT_FOUND));
+		
+		bedTeleport_Use = translateAlternateColorCodes(config.getString("spawnPointTeleport_Use", NOT_FOUND));
+		songIssue = translateAlternateColorCodes(config.getString("songIssue", NOT_FOUND));
+		noSongs = translateAlternateColorCodes(config.getString("noSongs", NOT_FOUND));
+		placeDyes = translateAlternateColorCodes(config.getString("placeDyeHere", NOT_FOUND));
+		addDyeFirst = translateAlternateColorCodes(config.getString("addDyeFirst", NOT_FOUND));
 	}
 	
 	/**

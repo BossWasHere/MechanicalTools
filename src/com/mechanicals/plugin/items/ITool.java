@@ -11,12 +11,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.mechanicals.plugin.MechMain;
+import com.mechanicals.plugin.InventoryHandler;
 
 public class ITool extends BaseMechanicalItem {
 
-	public ITool(MechMain plugin) {
-		super(plugin);
+	public ITool() {
+		super();
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class ITool extends BaseMechanicalItem {
 	}
 
 	public void openPlayerInventory(Player player) {
-		Inventory i = plugin.inventoryHandler.loadInventoryForPlayer(player);
+		Inventory i = InventoryHandler.loadInventoryForPlayer(player);
 		if (i == null) {
 			player.sendMessage(ChatColor.RED + "You cannot use this!");
 			return;

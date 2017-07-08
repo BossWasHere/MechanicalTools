@@ -3,14 +3,13 @@ package com.mechanicals.plugin.items;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.task.extra.ConfirmCooldown;
 import com.mechanicals.plugin.utils.EntityUtils;
 
 public class Flamethrower extends BaseMechanicalItem {
 
-	public Flamethrower(MechMain plugin) {
-		super(plugin);
+	public Flamethrower() {
+		super();
 	}
 
 	@Override

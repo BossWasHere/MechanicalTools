@@ -20,8 +20,8 @@ public abstract class BaseMechanicalItem implements IMechanicalItem {
 
 	public final MechMain plugin;
 	
-	public BaseMechanicalItem(MechMain plugin) {
-		this.plugin = plugin;
+	public BaseMechanicalItem() {
+		this.plugin = MechMain.plugin;
 	}
 	
 	@Override

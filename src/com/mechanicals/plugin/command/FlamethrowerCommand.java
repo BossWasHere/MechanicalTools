@@ -4,11 +4,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.mechanicals.plugin.MechMain;
+import com.mechanicals.plugin.RegisteredCommand;
 
-public class FlamethrowerCommand {
+public class FlamethrowerCommand extends RegisteredCommand {
 
-	public static void run(MechMain plugin, CommandSender sender, String[] args) {
+	public FlamethrowerCommand() {
+		super();
+	}
+	
+	public void run(CommandSender sender, String[] args) {
 		if (args.length < 1) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender;

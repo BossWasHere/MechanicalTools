@@ -9,14 +9,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
+import com.mechanicals.plugin.server.MechRunnable;
 
-public class TreeCutterTaskTimer extends BukkitRunnable {
+public class TreeCutterTaskTimer extends MechRunnable {
 
-	final MechMain plugin;
 	private Set<Location> locations = new HashSet<>();
 	private Set<Location> droppers = new HashSet<>();
 	private int max;
@@ -24,8 +22,8 @@ public class TreeCutterTaskTimer extends BukkitRunnable {
 	private Set<Location> locs = new HashSet<>();
 	public static boolean shouldReload = false;
 	
-	public TreeCutterTaskTimer(MechMain plugin) {
-		this.plugin = plugin;
+	public TreeCutterTaskTimer() {
+		super();
 		int maxTemp = plugin.blockData.getInt("block.treeCutter.maxBlocksAtOnce");
 		if (maxTemp < 1) max = 5;
 		else max = maxTemp;

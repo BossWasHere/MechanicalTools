@@ -11,19 +11,17 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Dispenser;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
+import com.mechanicals.plugin.server.MechRunnable;
 
-public class BlockPlaceTaskTimer extends BukkitRunnable {
+public class BlockPlaceTaskTimer extends MechRunnable {
 
-	final MechMain plugin;
 	private Map<Location, Location> dispensable = new HashMap<>();
 	public static boolean shouldReload = false;
 	
-	public BlockPlaceTaskTimer(MechMain plugin) {
-		this.plugin = plugin;
+	public BlockPlaceTaskTimer() {
+		super();
 		reload();
 	}
 	

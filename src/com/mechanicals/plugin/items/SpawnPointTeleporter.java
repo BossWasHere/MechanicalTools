@@ -3,13 +3,12 @@ package com.mechanicals.plugin.items;
 import org.bukkit.ChatColor;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.task.extra.ConfirmCooldown;
 
 public class SpawnPointTeleporter extends BaseMechanicalItem {
 
-	public SpawnPointTeleporter(MechMain plugin) {
-		super(plugin);
+	public SpawnPointTeleporter() {
+		super();
 	}
 
 	@Override

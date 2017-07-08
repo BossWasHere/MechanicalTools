@@ -5,12 +5,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.error.YAMLException;
 
-import com.mechanicals.plugin.MechMain;
+import com.mechanicals.plugin.RegisteredCommand;
 import com.mechanicals.plugin.world.InvalidLocationException;
+import com.mechanicals.plugin.world.WorldEditManager;
 
-public class SchemCommand {
+public class SchemCommand extends RegisteredCommand {
 
-	public static void run(MechMain plugin, CommandSender sender, String[] args) {
+	public SchemCommand() {
+		super();
+	}
+	
+	public void run(CommandSender sender, String[] args) {
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
 			if (args.length >= 7) {
@@ -25,7 +30,7 @@ public class SchemCommand {
 				Location end = new Location(player.getLocation().getWorld(), x2, y2, z2);
 				
 				try {
-					plugin.worldEditManager.saveSchematic(name, player, start, end);
+					WorldEditManager.saveSchematic(name, player, start, end);
 				} catch (YAMLException e) {
 					e.printStackTrace();
 				} catch (InvalidLocationException e) {

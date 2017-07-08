@@ -18,8 +18,8 @@ public abstract class BaseMechanicalBlock implements IMechanicalBlock {
 	
 	public final MechMain plugin;
 	
-	public BaseMechanicalBlock(MechMain plugin) {
-		this.plugin = plugin;
+	public BaseMechanicalBlock() {
+		this.plugin = MechMain.plugin;
 	}
 	
 	@Override

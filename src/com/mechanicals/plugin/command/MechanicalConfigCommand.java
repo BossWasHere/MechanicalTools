@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.bukkit.command.CommandSender;
 
-import com.mechanicals.plugin.MechMain;
+import com.mechanicals.plugin.RegisteredCommand;
 import com.mechanicals.plugin.configuration.ConfigurationUnit;
 import com.mechanicals.plugin.task.extra.ConfirmCooldown;
 import com.mechanicals.plugin.utils.StringUtils;
@@ -17,9 +17,13 @@ import net.md_5.bungee.api.ChatColor;
  * Sub-handler of the {@link CommandHandler} class
  *
  */
-public class MechanicalConfigCommand {
+public class MechanicalConfigCommand extends RegisteredCommand {
 	
-	public static void run(MechMain plugin, CommandSender sender, String[] args) {
+	public MechanicalConfigCommand() {
+		super();
+	}
+	
+	public void run(CommandSender sender, String[] args) {
 		if (sender.hasPermission("mechanical.config")) {
 			if (args.length < 1) {
 				sender.sendMessage(ChatColor.RED + "Usage: /mechanicalconfig <view/set/reset/confirm> <root> [value]");
@@ -30,7 +34,7 @@ public class MechanicalConfigCommand {
 					} else {
 						String fileRoot = args[1];
 						if (fileRoot.toLowerCase().startsWith("text") || fileRoot.toLowerCase().startsWith("blockdata") || fileRoot.toLowerCase().startsWith("itemdata") || fileRoot.toLowerCase().startsWith("config")) {
-							String[] conf = getConfigurationInfo(plugin, fileRoot);
+							String[] conf = getConfigurationInfo(fileRoot);
 							sender.sendMessage(ChatColor.DARK_AQUA + ">> Root: " + fileRoot);
 							for (String c : conf) {
 								sender.sendMessage(ChatColor.AQUA + c);
@@ -58,7 +62,7 @@ public class MechanicalConfigCommand {
 										sender.sendMessage(ChatColor.RED + "Please specify a replacement value\nExample Value Types: text=string, 0=int, [\"list\", \"element\"]=stringlist, true=boolean");
 										return;
 									}
-									setConfiguration(plugin, sender, fileRoot, replacement.substring(0, replacement.length() - 1));
+									setConfiguration(sender, fileRoot, replacement.substring(0, replacement.length() - 1));
 								}
 							} else {
 								sender.sendMessage(ChatColor.RED + "Please specify a configuration root (valid starters are 'text', 'blockdata', 'itemdata', 'config')");
@@ -72,7 +76,7 @@ public class MechanicalConfigCommand {
 						if (c.checkID(sender.getName(), 1)) {
 							if (c.isCooled()) {
 								sender.sendMessage(ChatColor.RED + "Your task has already cooled down! (You may have multiple items in your queue - try again)");
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							} else {
 								String data = c.getData();
@@ -131,59 +135,59 @@ public class MechanicalConfigCommand {
 								} else {
 									sender.sendMessage(ChatColor.RED + "Invalid confirmation (something went wrong)");
 								}
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							}
 						} else if (c.checkID(sender.getName(), 2)) {
 							if (c.isCooled()) {
 								sender.sendMessage(ChatColor.RED + "Your task has already cooled down! (You may have multiple items in your queue - try again)");
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							} else {
 								if (plugin.textData.reset()) {
 									sender.sendMessage(ChatColor.GREEN + "Successfully reset text.yml!");
 									sender.sendMessage(ChatColor.DARK_AQUA + "It is recommended that you restart or /reload the server now for changes to work!");
 								} else sender.sendMessage(ChatColor.DARK_RED + "An error has occurred while trying to reset the configuration for text.yml");
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							}
 						} else if (c.checkID(sender.getName(), 3)) {
 							if (c.isCooled()) {
 								sender.sendMessage(ChatColor.RED + "Your task has already cooled down! (You may have multiple items in your queue - try again)");
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							} else {
 								if (plugin.blockData.reset()) {
 									sender.sendMessage(ChatColor.GREEN + "Successfully reset blockdata.yml!");
 									sender.sendMessage(ChatColor.DARK_AQUA + "It is recommended that you restart or /reload the server now for changes to work!");
 								} else sender.sendMessage(ChatColor.DARK_RED + "An error has occurred while trying to reset the configuration for blockdata.yml");
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							}
 						} else if (c.checkID(sender.getName(), 4)) {
 							if (c.isCooled()) {
 								sender.sendMessage(ChatColor.RED + "Your task has already cooled down! (You may have multiple items in your queue - try again)");
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							} else {
 								if (plugin.blockData.reset()) {
 									sender.sendMessage(ChatColor.GREEN + "Successfully reset itemdata.yml!");
 									sender.sendMessage(ChatColor.DARK_AQUA + "It is recommended that you restart or /reload the server now for changes to work!");
 								} else sender.sendMessage(ChatColor.DARK_RED + "An error has occurred while trying to reset the configuration for itemdata.yml");
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							}
 						} else if (c.checkID(sender.getName(), 5)) {
 							if (c.isCooled()) {
 								sender.sendMessage(ChatColor.RED + "Your task has already cooled down! (You may have multiple items in your queue - try again)");
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							} else {
 								if (plugin.blockData.reset()) {
 									sender.sendMessage(ChatColor.GREEN + "Successfully reset config.yml!");
 									sender.sendMessage(ChatColor.DARK_AQUA + "It is recommended that you restart or /reload the server now for changes to work!");
 								} else sender.sendMessage(ChatColor.DARK_RED + "An error has occurred while trying to reset the configuration for config.yml");
-								removeCooldown(plugin, c);
+								removeCooldown(c);
 								return;
 							}
 						}
@@ -197,24 +201,24 @@ public class MechanicalConfigCommand {
 								sender.sendMessage(ChatColor.AQUA + "Please enter /mechanicalconfig confirm to reset text.yml (10s left)");
 								ConfirmCooldown cool = new ConfirmCooldown(sender.getName(), "text:reset", 2, 10);
 								cool.runTaskTimerAsynchronously(plugin, 0, 20);
-								addCooldown(plugin, cool);
+								addCooldown(cool);
 							} else if (args[1].equalsIgnoreCase("blockdata")) {
 								sender.sendMessage(ChatColor.AQUA + "Please enter /mechanicalconfig confirm to reset blockdata.yml (10s left)");
 								ConfirmCooldown cool = new ConfirmCooldown(sender.getName(), "blockdata:reset", 3, 10);
 								cool.runTaskTimerAsynchronously(plugin, 0, 20);
-								addCooldown(plugin, cool);
+								addCooldown(cool);
 								
 							} else if (args[1].equalsIgnoreCase("itemdata")) {
 								sender.sendMessage(ChatColor.AQUA + "Please enter /mechanicalconfig confirm to reset itemdata.yml (10s left)");
 								ConfirmCooldown cool = new ConfirmCooldown(sender.getName(), "itemdata:reset", 4, 10);
 								cool.runTaskTimerAsynchronously(plugin, 0, 20);
-								addCooldown(plugin, cool);
+								addCooldown(cool);
 								
 							} else if (args[1].equalsIgnoreCase("config")) {
 								sender.sendMessage(ChatColor.AQUA + "Please enter /mechanicalconfig confirm to reset config.yml (10s left)");
 								ConfirmCooldown cool = new ConfirmCooldown(sender.getName(), "config:reset", 5, 10);
 								cool.runTaskTimerAsynchronously(plugin, 0, 20);
-								addCooldown(plugin, cool);
+								addCooldown(cool);
 								
 							} else {
 								sender.sendMessage(ChatColor.RED + "Usage: /mechanicalconfig reset <text/blockdata/itemdata/config>");
@@ -242,7 +246,7 @@ public class MechanicalConfigCommand {
 	 * @author IballisticBoss
 	 * @see ConfigurationUnit
 	 */
-	protected static void setConfiguration(MechMain plugin, CommandSender sender, String path, String value) {
+	protected void setConfiguration(CommandSender sender, String path, String value) {
 		if (value == null) value = "";
 		if (path.toLowerCase().startsWith("text")) {
 			path = path.substring(4);
@@ -254,7 +258,7 @@ public class MechanicalConfigCommand {
 					sender.sendMessage(ChatColor.AQUA + "Please enter /mechanicalconfig confirm to save changes (10s left)");
 					ConfirmCooldown cool = new ConfirmCooldown(sender.getName(), "text." + path + ":" + value, 1, 10);
 					cool.runTaskTimerAsynchronously(plugin, 0, 20);
-					addCooldown(plugin, cool);
+					addCooldown(cool);
 				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "Invalid path!");
@@ -269,7 +273,7 @@ public class MechanicalConfigCommand {
 					sender.sendMessage(ChatColor.AQUA + "Please enter /mechanicalconfig confirm to save changes (10s left)");
 					ConfirmCooldown cool = new ConfirmCooldown(sender.getName(), "blockdata." + path + ":" + value, 1, 10);
 					cool.runTaskTimerAsynchronously(plugin, 0, 20);
-					addCooldown(plugin, cool);
+					addCooldown(cool);
 				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "Invalid path!");
@@ -284,7 +288,7 @@ public class MechanicalConfigCommand {
 					sender.sendMessage(ChatColor.AQUA + "Please enter /mechanicalconfig confirm to save changes (10s left)");
 					ConfirmCooldown cool = new ConfirmCooldown(sender.getName(), "itemdata." + path + ":" + value, 1, 10);
 					cool.runTaskTimerAsynchronously(plugin, 0, 20);
-					addCooldown(plugin, cool);
+					addCooldown(cool);
 				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "Invalid path!");
@@ -299,7 +303,7 @@ public class MechanicalConfigCommand {
 					sender.sendMessage(ChatColor.AQUA + "Please enter /mechanicalconfig confirm to save changes (10s left)");
 					ConfirmCooldown cool = new ConfirmCooldown(sender.getName(), "config." + path + ":" + value, 1, 10);
 					cool.runTaskTimerAsynchronously(plugin, 0, 20);
-					addCooldown(plugin, cool);
+					addCooldown(cool);
 				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "Invalid path!");
@@ -316,7 +320,7 @@ public class MechanicalConfigCommand {
 	 * @author IballisticBoss
 	 * @see ConfigurationUnit
 	 */
-	protected static String[] getConfigurationInfo(MechMain plugin, String path) {
+	protected String[] getConfigurationInfo(String path) {
 		if (path.toLowerCase().startsWith("text")) {
 			path = path.substring(4);
 			if (path.equals("")) {
@@ -425,13 +429,13 @@ public class MechanicalConfigCommand {
 		return new String[] {"Invalid Entry"};
 	}
 	
-	public static synchronized void removeCooldown(MechMain plugin, ConfirmCooldown c) {
+	public synchronized void removeCooldown(ConfirmCooldown c) {
 		synchronized (plugin.cooldowns) {
 			plugin.cooldowns.remove(c);
 		}
 	}
 	
-	public static synchronized void addCooldown(MechMain plugin, ConfirmCooldown c) {
+	public synchronized void addCooldown(ConfirmCooldown c) {
 		synchronized (plugin.cooldowns) {
 			plugin.cooldowns.add(c);
 		}

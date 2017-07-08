@@ -13,15 +13,14 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.material.Dispenser;
 import org.bukkit.material.MaterialData;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.task.EntityTeleporterTaskTimer;
 import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
 import com.mechanicals.plugin.utils.StringUtils;
 
 public class EntityTeleporter extends BaseMechanicalBlock {
 	
-	public EntityTeleporter(MechMain plugin) {
-		super(plugin);
+	public EntityTeleporter() {
+		super();
 	}
 	
 	@Override

@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
 import com.mechanicals.plugin.utils.StringUtils;
 
@@ -18,8 +17,8 @@ public class LargeTeleporter extends BaseMechanicalBlock {
 	
 	private Map<String, String> placement = new HashMap<>();
 	
-	public LargeTeleporter(MechMain plugin) {
-		super(plugin);
+	public LargeTeleporter() {
+		super();
 	}
 	
 	@Override

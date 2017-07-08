@@ -23,12 +23,10 @@ public class ConfigurationUnit extends YamlConfiguration {
 
 	private YamlConfiguration config;
 	private File configFile;
-	private final MechMain plugin;
 	private final String extractor;
 	
 	/**
 	 * Generates configuration without intentionally loading the configuration within this class
-	 * @param plugin the main class of the plugin
 	 * @param configFile the output file to save the configuration to
 	 * @param config the pre-loaded configuration
 	 * @throws IOException if the file cannot be loaded, extracted, saved to or created
@@ -36,34 +34,32 @@ public class ConfigurationUnit extends YamlConfiguration {
 	 * @author IballisticBoss
 	 * @see YamlConfiguration
 	 */
-	public ConfigurationUnit(MechMain plugin, File configFile, YamlConfiguration config) throws IOException {
+	public ConfigurationUnit(File configFile, YamlConfiguration config) throws IOException {
 		this.config = config;
 		this.configFile = configFile;
-		this.plugin = plugin;
 		extractor = null;
 		if (!checkFile()) throw new IOException("A configuration file failed to initialise!");
+		super.loadConfiguration(configFile);
 	}
 	
 	/**
 	 * Generates configuration by generating configuration from the specified file
-	 * @param plugin the main class of the plugin
 	 * @param configFile the output file to save the configuration to and load from
 	 * @throws IOException if the file cannot be loaded, extracted, saved to or created
 	 * @since 1.1
 	 * @author IballisticBoss
 	 * @see YamlConfiguration
 	 */
-	public ConfigurationUnit(MechMain plugin, File configFile) throws IOException {
+	public ConfigurationUnit(File configFile) throws IOException {
 		this.configFile = configFile;
-		this.plugin = plugin;
 		extractor = null;
 		if (!checkFile()) throw new IOException("A configuration file failed to initialise!");
 		config = loadConfiguration(configFile);
+		super.loadConfiguration(configFile);
 	}
 	
 	/**
 	 * Generates configuration by intentionally extracting an internal file within the JAR
-	 * @param plugin the main class of the plugin
 	 * @param configFile the output file to save the configuration to
 	 * @param extract the name of the file within the JAR file
 	 * @throws IOException if the file cannot be loaded, extracted, saved to or created
@@ -71,12 +67,12 @@ public class ConfigurationUnit extends YamlConfiguration {
 	 * @author IballisticBoss
 	 * @see YamlConfiguration
 	 */
-	public ConfigurationUnit(MechMain plugin, File configFile, String extract) throws IOException {
+	public ConfigurationUnit(File configFile, String extract) throws IOException {
 		this.configFile = configFile;
-		this.plugin = plugin;
 		extractor = extract;
 		if (!checkFile()) throw new IOException("A configuration file failed to initialise!");
 		config = loadConfiguration(configFile);
+		super.loadConfiguration(configFile);
 	}
 	
 	private boolean checkFile() {
@@ -95,7 +91,7 @@ public class ConfigurationUnit extends YamlConfiguration {
 		configFile.delete();
 		if (extractor != null) {
 			try {
-				Files.copy(plugin.getResourceAsStream(extractor), configFile.getAbsoluteFile().toPath());
+				Files.copy(MechMain.plugin.getResourceAsStream(extractor), configFile.getAbsoluteFile().toPath());
 				return true;
 			} catch (IOException e) { return false; }
 		}

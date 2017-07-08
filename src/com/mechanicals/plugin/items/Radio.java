@@ -13,17 +13,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.item.Items;
 import com.mechanicals.plugin.task.extra.ConfirmCooldown;
+import com.mechanicals.plugin.utils.FileUtils;
 import com.mechanicals.plugin.utils.MathUtils;
 import com.xxmicloxx.NoteBlockAPI.NBSDecoder;
 import com.xxmicloxx.NoteBlockAPI.Song;
 
 public class Radio extends BaseMechanicalItem {
 
-	public Radio(MechMain plugin) {
-		super(plugin);
+	public Radio() {
+		super();
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class Radio extends BaseMechanicalItem {
 	
 	public File[] getNoteBlockSongs() {
 		try {
-			return plugin.fileUtils.filterFilesWithExtension(plugin.fileUtils.getFiles(plugin.config.getString("songLocation")), "nbs");
+			return FileUtils.filterFilesWithExtension(FileUtils.getFiles(plugin.config.getString("songLocation")), "nbs");
 		} catch (IOException e) {
 			return null;
 		}

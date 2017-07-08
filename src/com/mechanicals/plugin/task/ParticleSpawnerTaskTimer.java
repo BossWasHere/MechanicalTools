@@ -6,20 +6,17 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
 import com.mechanicals.plugin.particle.ParticleManager;
+import com.mechanicals.plugin.server.MechRunnable;
 
-public class ParticleSpawnerTaskTimer extends BukkitRunnable {
+public class ParticleSpawnerTaskTimer extends MechRunnable {
 
-	private final MechMain plugin;
 	private Set<Location> mechBlocks = new HashSet<>();
 	public static boolean shouldReload = false;
 	
-	public ParticleSpawnerTaskTimer(MechMain plugin) {
-		this.plugin = plugin;
+	public ParticleSpawnerTaskTimer() {
 		reload();
 	}
 	

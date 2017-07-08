@@ -8,22 +8,20 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
+import com.mechanicals.plugin.server.MechRunnable;
 import com.mechanicals.plugin.utils.EntityUtils;
 
-public class GrinderTaskTimer extends BukkitRunnable {
+public class GrinderTaskTimer extends MechRunnable {
 
-	final MechMain plugin;
 	private Set<Location> locations = new HashSet<>();
 	private final double damage;
 	private final boolean damagePlayers;
 	public static boolean shouldReload = false;
 	
-	public GrinderTaskTimer(MechMain plugin) {
-		this.plugin = plugin;
+	public GrinderTaskTimer() {
+		super();
 		damage = (float)plugin.blockData.getDouble("block.grinder.damage");
 		damagePlayers = plugin.blockData.getBoolean("block.grinder.damagePlayers");
 		reload();

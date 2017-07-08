@@ -7,22 +7,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
+import com.mechanicals.plugin.server.MechRunnable;
 import com.mechanicals.plugin.utils.EntityUtils;
 
-public class AnimalGrowthTaskTimer extends BukkitRunnable {
+public class AnimalGrowthTaskTimer extends MechRunnable {
 
-	final MechMain plugin;
 	private Set<Location> locations = new HashSet<>();
 	private int radius;
 	public static boolean shouldReload = false;
 
-	public AnimalGrowthTaskTimer(MechMain plugin) {
-		this.plugin = plugin;
-		radius = plugin.blockData.getInt("block.animalGrowth.radius", 5);
+	public AnimalGrowthTaskTimer() {
+		super();
+		radius = MechMain.plugin.blockData.getInt("block.animalGrowth.radius", 5);
 		reload();
 	}
 	

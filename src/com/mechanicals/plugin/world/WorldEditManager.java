@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.error.YAMLException;
 
 import com.mechanicals.plugin.MechMain;
+import com.mechanicals.plugin.utils.FileUtils;
 import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.LocalPlayer;
@@ -22,27 +23,21 @@ import com.sk89q.worldedit.schematic.SchematicFormat;
 
 @SuppressWarnings("deprecation")
 public class WorldEditManager {
-
-	MechMain plugin;
 	
-	public WorldEditManager(MechMain plugin) {
-		this.plugin = plugin;
-	}
-	
-	public void saveSchematic(String filename, Player caller, Location start, Location end) throws InvalidLocationException, YAMLException {
+	public static void saveSchematic(String filename, Player caller, Location start, Location end) throws InvalidLocationException, YAMLException {
 		if (!start.getWorld().getName().equalsIgnoreCase(end.getWorld().getName())) throw new InvalidLocationException(start, end);
 		
 		try {
-			new File(plugin.fileUtils.replaceDirectoryKeys(plugin.config.getString("schematicLocation"))).mkdirs();
+			new File(FileUtils.replaceDirectoryKeys(MechMain.plugin.config.getString("schematicLocation"))).mkdirs();
 		} catch (Exception e) {
 			throw new YAMLException("Invalid configuration for MechanicalTools>config.yml");
 		}
-		File file = new File(plugin.fileUtils.replaceDirectoryKeys(plugin.config.getString("schematicLocation")), filename + ".schematic");
+		File file = new File(FileUtils.replaceDirectoryKeys(MechMain.plugin.config.getString("schematicLocation")), filename + ".schematic");
 		int i = 1;
 		while (file.exists()) {
-			file = new File(plugin.fileUtils.replaceDirectoryKeys(plugin.config.getString("schematicLocation")), filename + "(" + i + ").schematic");
+			file = new File(FileUtils.replaceDirectoryKeys(MechMain.plugin.config.getString("schematicLocation")), filename + "(" + i + ").schematic");
 			i++;
-			plugin.logger.warning("Schematic already exists under that name! Updating to " + file.getName());
+			MechMain.plugin.logger.warning("Schematic already exists under that name! Updating to " + file.getName());
 			
 		}
 		

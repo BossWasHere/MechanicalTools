@@ -7,14 +7,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
 import com.mechanicals.plugin.utils.StringUtils;
 
 public class Elevator extends BaseMechanicalBlock {
 	
-	public Elevator(MechMain plugin) {
-		super(plugin);
+	public Elevator() {
+		super();
 	}
 	
 	@Override

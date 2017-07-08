@@ -6,14 +6,14 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.mechanicals.plugin.MechMain;
+import com.mechanicals.plugin.InventoryHandler;
 import com.mechanicals.plugin.item.Items;
 import com.mechanicals.plugin.task.extra.ConfirmCooldown;
 
 public class DyeWand extends BaseMechanicalItem {
 
-	public DyeWand(MechMain plugin) {
-		super(plugin);
+	public DyeWand() {
+		super();
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class DyeWand extends BaseMechanicalItem {
 				}
 			}
 			if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR) {
-				event.getPlayer().openInventory(plugin.inventoryHandler.loadDyeInventoryForPlayer(event.getPlayer()));
+				event.getPlayer().openInventory(InventoryHandler.loadDyeInventoryForPlayer(event.getPlayer()));
 				ConfirmCooldown c = new ConfirmCooldown(event.getPlayer().getName(), "", 14, plugin.itemData.getInt("item.dyeWand.cooldown", 3));
 				c.runTaskTimerAsynchronously(plugin, 0, 20);
 				synchronized (plugin.cooldowns) {
@@ -51,7 +51,7 @@ public class DyeWand extends BaseMechanicalItem {
 				Block block = event.getClickedBlock();
 				if (block != null) {
 					if (Items.isColourable(block)) {
-						ItemStack dye = plugin.inventoryHandler.getDyeForPlayer(event.getPlayer());
+						ItemStack dye = InventoryHandler.getDyeForPlayer(event.getPlayer());
 						if (dye.getType().equals(Material.AIR)) {
 							event.getPlayer().sendMessage(plugin.texts.addDyeFirst);
 							return;
@@ -86,9 +86,9 @@ public class DyeWand extends BaseMechanicalItem {
 						}
 						if (dye.getAmount() > 1) {
 							dye.setAmount(dye.getAmount() - 1);
-							plugin.inventoryHandler.setDyeForPlayer(event.getPlayer(), dye);
+							InventoryHandler.setDyeForPlayer(event.getPlayer(), dye);
 						} else {
-							plugin.inventoryHandler.setDyeForPlayer(event.getPlayer(), new ItemStack(Material.AIR));
+							InventoryHandler.setDyeForPlayer(event.getPlayer(), new ItemStack(Material.AIR));
 						}
 					}
 				}

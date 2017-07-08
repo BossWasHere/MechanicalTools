@@ -12,21 +12,19 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Crops;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
+import com.mechanicals.plugin.server.MechRunnable;
 import com.mechanicals.plugin.utils.WorldUtils;
 
-public class PlantFarmerTaskTimer extends BukkitRunnable {
+public class PlantFarmerTaskTimer extends MechRunnable {
 
-	final MechMain plugin;
 	private Set<Location> locations = new HashSet<>();
 	private int radius;
 	public static boolean shouldReload = false;
 
-	public PlantFarmerTaskTimer(MechMain plugin) {
-		this.plugin = plugin;
+	public PlantFarmerTaskTimer() {
+		super();
 		radius = plugin.blockData.getInt("block.plantFarmer.radius", 5);
 		reload();
 	}

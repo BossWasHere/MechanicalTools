@@ -7,17 +7,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.task.AnimalGrowthTaskTimer;
 import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
 import com.mechanicals.plugin.utils.StringUtils;
 
 public class AnimalGrowth extends BaseMechanicalBlock {
 	
-	public AnimalGrowth(MechMain plugin) {
-		super(plugin);
+	public AnimalGrowth() {
+		super();
 	}
-	
+
 	@Override
 	public void blockPlaceEvent(BlockPlaceEvent event) {
 		Player player = event.getPlayer();

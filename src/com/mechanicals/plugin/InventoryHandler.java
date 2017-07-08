@@ -12,40 +12,34 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class InventoryHandler {
-
-	private final MechMain plugin;
 	
-	public InventoryHandler(MechMain plugin) {
-		this.plugin = plugin;
-	}
-	
-	public void saveInventoryForPlayer(Player player, Inventory inventory) {
+	public static void saveInventoryForPlayer(Player player, Inventory inventory) {
 		ItemStack[] contents = inventory.getContents();
 		if (contents == null) return;
 		String UUID = player.getUniqueId().toString();
-		if (plugin.remoteStorage.isConfigurationSection(UUID)) {
-			plugin.remoteStorage.set(UUID, null);
-			plugin.remoteStorage.saveAndReload();
+		if (MechMain.plugin.remoteStorage.isConfigurationSection(UUID)) {
+			MechMain.plugin.remoteStorage.set(UUID, null);
+			MechMain.plugin.remoteStorage.saveAndReload();
 		}
 		for (int i = 0; i < contents.length; i++) {
 			if (contents[i] == null) continue;
-			plugin.remoteStorage.set(UUID + "." + i, contents[i]);
+			MechMain.plugin.remoteStorage.set(UUID + "." + i, contents[i]);
 		}
-		plugin.remoteStorage.saveAndReload();
+		MechMain.plugin.remoteStorage.saveAndReload();
 	}
 	
-	public Inventory loadInventoryForPlayer(Player player) {
-		if (!player.hasPermission(plugin.permissions.iTool_useInventory)) return null;
+	public static Inventory loadInventoryForPlayer(Player player) {
+		if (!player.hasPermission(MechMain.plugin.permissions.iTool_useInventory)) return null;
 		int sizePerm = 9;
-		if (player.hasPermission(plugin.config.getString("remoteStoragePermission", "mechanicals") + ".6")) {
+		if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".6")) {
 			sizePerm = 54;
-		} else if (player.hasPermission(plugin.config.getString("remoteStoragePermission", "mechanicals") + ".5")) {
+		} else if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".5")) {
 			sizePerm = 45;
-		} else if (player.hasPermission(plugin.config.getString("remoteStoragePermission", "mechanicals") + ".4")) {
+		} else if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".4")) {
 			sizePerm = 36;
-		} else if (player.hasPermission(plugin.config.getString("remoteStoragePermission", "mechanicals") + ".3")) {
+		} else if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".3")) {
 			sizePerm = 27;
-		} else if (player.hasPermission(plugin.config.getString("remoteStoragePermission", "mechanicals") + ".2")) {
+		} else if (player.hasPermission(MechMain.plugin.config.getString("remoteStoragePermission", "mechanicals") + ".2")) {
 			sizePerm = 18;
 		}
 		ItemStack[] items = getInventoryContentsForPlayer(player);
@@ -58,12 +52,12 @@ public class InventoryHandler {
 		return i;
 	}
 	
-	public Inventory loadDyeInventoryForPlayer(Player player) {
+	public static Inventory loadDyeInventoryForPlayer(Player player) {
 		Inventory i = Bukkit.createInventory(null, 9, ChatColor.BLUE + "[Mechanical] Dyes");
 		i.setItem(4, getDyeForPlayer(player));
 		ItemStack filter = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)8);
 		ItemMeta meta = filter.getItemMeta();
-		meta.setDisplayName(plugin.texts.placeDyes);
+		meta.setDisplayName(MechMain.plugin.texts.placeDyes);
 		filter.setItemMeta(meta);
 		for (int j = 0; j < 8; j++) {
 			if (j == 4) continue;
@@ -72,32 +66,32 @@ public class InventoryHandler {
 		return i;
 	}
 	
-	public ItemStack getDyeForPlayer(Player player) {
+	public static ItemStack getDyeForPlayer(Player player) {
 		ItemStack item = new ItemStack(Material.AIR);
 		String UUID = player.getUniqueId().toString();
-		if (plugin.remoteStorage.isConfigurationSection(UUID)) {
-			if (plugin.remoteStorage.isItemStack(UUID + ".dye")) {
-				item = plugin.remoteStorage.getItemStack(UUID + ".dye");
+		if (MechMain.plugin.remoteStorage.isConfigurationSection(UUID)) {
+			if (MechMain.plugin.remoteStorage.isItemStack(UUID + ".dye")) {
+				item = MechMain.plugin.remoteStorage.getItemStack(UUID + ".dye");
 			}
 		}
 		return item;
 	}
 	
-	public void setDyeForPlayer(Player player, ItemStack dye) {
+	public static void setDyeForPlayer(Player player, ItemStack dye) {
 		if (dye == null) return;
-		plugin.remoteStorage.set(player.getUniqueId().toString() + ".dye", dye);
-		plugin.remoteStorage.saveAndReload();
+		MechMain.plugin.remoteStorage.set(player.getUniqueId().toString() + ".dye", dye);
+		MechMain.plugin.remoteStorage.saveAndReload();
 	}
 	
-	public ItemStack[] getInventoryContentsForPlayer(Player player) {
+	public static ItemStack[] getInventoryContentsForPlayer(Player player) {
 		String UUID = player.getUniqueId().toString();
 		List<ItemStack> items = new ArrayList<>();
-		if (!plugin.remoteStorage.isConfigurationSection(UUID)) return new ItemStack[] {};
-		for (String key : plugin.remoteStorage.getConfigurationSection(UUID).getKeys(false)) {
+		if (!MechMain.plugin.remoteStorage.isConfigurationSection(UUID)) return new ItemStack[] {};
+		for (String key : MechMain.plugin.remoteStorage.getConfigurationSection(UUID).getKeys(false)) {
 			if (key.equalsIgnoreCase("dye")) continue;
-			if (plugin.remoteStorage.contains(UUID + "." + key)) {
-				if (plugin.remoteStorage.isItemStack(UUID + "." + key)) {
-					items.add(plugin.remoteStorage.getItemStack(UUID + "." + key));
+			if (MechMain.plugin.remoteStorage.contains(UUID + "." + key)) {
+				if (MechMain.plugin.remoteStorage.isItemStack(UUID + "." + key)) {
+					items.add(MechMain.plugin.remoteStorage.getItemStack(UUID + "." + key));
 				}
 			}
 		}

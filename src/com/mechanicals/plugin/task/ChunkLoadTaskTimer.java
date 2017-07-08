@@ -5,21 +5,19 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
+import com.mechanicals.plugin.server.MechRunnable;
 
-public class ChunkLoadTaskTimer extends BukkitRunnable {
+public class ChunkLoadTaskTimer extends MechRunnable {
 
-	final MechMain plugin;
 	public static boolean shouldReload = false;
 	Set<Location> toLoad = new HashSet<>();
 	Set<Location> tempLocs = new HashSet<>();
 	private final boolean shouldGenerate;
 	
-	public ChunkLoadTaskTimer(MechMain plugin) {
-		this.plugin = plugin;
+	public ChunkLoadTaskTimer() {
+		super();
 		shouldGenerate = plugin.blockData.getBoolean("block.chunkLoader.generateNewChunks", true);
 		reload();
 	}

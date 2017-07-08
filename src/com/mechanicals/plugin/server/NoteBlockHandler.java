@@ -1,4 +1,4 @@
-package com.mechanicals.plugin.sound;
+package com.mechanicals.plugin.server;
 
 import java.io.File;
 
@@ -12,14 +12,8 @@ import com.xxmicloxx.NoteBlockAPI.SongPlayer;
 
 public class NoteBlockHandler {
 	
-	final MechMain plugin;
-	
-	public NoteBlockHandler(MechMain plugin) {
-		this.plugin = plugin;
-	}
-	
-	public boolean playNBS(Player player, String song) {
-		File[] files = plugin.radio.getNoteBlockSongs();
+	public static boolean playNBS(Player player, String song) {
+		File[] files = MechMain.plugin.radio.getNoteBlockSongs();
 		if (files == null) return false;
 		for (File f : files) {
 			Song s = NBSDecoder.parse(f);

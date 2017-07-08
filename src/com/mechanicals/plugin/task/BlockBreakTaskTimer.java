@@ -7,20 +7,18 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
+import com.mechanicals.plugin.server.MechRunnable;
 
-public class BlockBreakTaskTimer extends BukkitRunnable {
+public class BlockBreakTaskTimer extends MechRunnable {
 
-	final MechMain plugin;
 	private Set<Location> droppers = new HashSet<>();
 	private Set<Location> breakBlocks = new HashSet<>(); 
 	public static boolean shouldReload = false;
 	
-	public BlockBreakTaskTimer(MechMain plugin) {
-		this.plugin = plugin;
+	public BlockBreakTaskTimer() {
+		super();
 		reload();
 	}
 	

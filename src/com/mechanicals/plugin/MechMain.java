@@ -32,7 +32,6 @@ import com.mechanicals.plugin.configuration.TextIndex;
 import com.mechanicals.plugin.event.BlockEvent;
 import com.mechanicals.plugin.event.InventoryEvent;
 import com.mechanicals.plugin.event.PlayerEvent;
-import com.mechanicals.plugin.item.ClickHoldData;
 import com.mechanicals.plugin.items.DyeWand;
 import com.mechanicals.plugin.items.Flamethrower;
 import com.mechanicals.plugin.items.ITool;
@@ -40,7 +39,6 @@ import com.mechanicals.plugin.items.Radio;
 import com.mechanicals.plugin.items.SpawnPointTeleporter;
 import com.mechanicals.plugin.server.MechanicalPluginManager;
 import com.mechanicals.plugin.server.ServerVersion;
-import com.mechanicals.plugin.sound.NoteBlockHandler;
 import com.mechanicals.plugin.task.AnimalGrowthTaskTimer;
 import com.mechanicals.plugin.task.BlockBreakTaskTimer;
 import com.mechanicals.plugin.task.BlockPlaceTaskTimer;
@@ -52,15 +50,15 @@ import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
 import com.mechanicals.plugin.task.PlantFarmerTaskTimer;
 import com.mechanicals.plugin.task.TreeCutterTaskTimer;
 import com.mechanicals.plugin.task.extra.ConfirmCooldown;
-import com.mechanicals.plugin.utils.FileUtils;
 import com.mechanicals.plugin.world.WorldEditManager;
 
 public class MechMain extends JavaPlugin {
 	
 	private boolean disable = false;
 	public boolean debug = false;
-	public boolean nbapi = false, weapi = false;
-	public boolean onedoteleleven;
+	public boolean nbapi = false, weapi = false, vault = false;
+	
+	public static MechMain plugin;
 	
 	public PermissionIndex permissions;
 	public TextIndex texts;
@@ -72,7 +70,6 @@ public class MechMain extends JavaPlugin {
 	public ConfigurationUnit remoteStorage;
 	
 	public File resourceLocation;
-	public FileUtils fileUtils;
 	public Logger logger;
 	
 	public BlockPlacer blockPlacer;
@@ -97,11 +94,8 @@ public class MechMain extends JavaPlugin {
 	public InventoryEvent inventoryListener;
 	public PlayerEvent playerListener;
 	public Set<ConfirmCooldown> cooldowns = Collections.synchronizedSet(new HashSet<>());
-	public ClickHoldData itemHolder;
 	public MechanicalPluginManager mechPluginManager;
-	public NoteBlockHandler noteBlockHandler;
 	public WorldEditManager worldEditManager;
-	public InventoryHandler inventoryHandler;
 	
 	public BlockPlaceTaskTimer blockPlaceTask;
 	public BlockBreakTaskTimer blockBreakTask;
@@ -127,7 +121,7 @@ public class MechMain extends JavaPlugin {
 			return;
 		}
 		
-		mechPluginManager = new MechanicalPluginManager(this);
+		mechPluginManager = new MechanicalPluginManager();
 		
 		if (config.getBoolean("useNoteBlockAPI")) {
 			nbapi = mechPluginManager.enableNoteBlockAPI();
@@ -216,39 +210,37 @@ public class MechMain extends JavaPlugin {
 		
 		permissions = new PermissionIndex(blockData, itemData);
 		texts = new TextIndex(textData);
-		itemHolder = new ClickHoldData(this);
 		
-		blockPlacer = new BlockPlacer(this);
-		blockBreaker = new BlockBreaker(this);
-		treeCutter = new TreeCutter(this);
-		entityTeleporter = new EntityTeleporter(this);
-		itemTeleporter = new ItemTeleporter(this);
-		grinder = new Grinder(this);
-		largeTeleporter = new LargeTeleporter(this);
-		chunkLoader = new ChunkLoader(this);
-		elevator = new Elevator(this);
-		animalGrowth = new AnimalGrowth(this);
-		plantFarmer = new PlantFarmer(this);
-		bedTeleporter = new SpawnPointTeleporter(this);
-		radio = new Radio(this);
-		iTool = new ITool(this);
-		dyeWand = new DyeWand(this);
-		flamethrower = new Flamethrower(this);
-		placementListener = new BlockEvent(this);
-		inventoryListener = new InventoryEvent(this);
-		playerListener = new PlayerEvent(this);
-		inventoryHandler = new InventoryHandler(this);
+		blockPlacer = new BlockPlacer();
+		blockBreaker = new BlockBreaker();
+		treeCutter = new TreeCutter();
+		entityTeleporter = new EntityTeleporter();
+		itemTeleporter = new ItemTeleporter();
+		grinder = new Grinder();
+		largeTeleporter = new LargeTeleporter();
+		chunkLoader = new ChunkLoader();
+		elevator = new Elevator();
+		animalGrowth = new AnimalGrowth();
+		plantFarmer = new PlantFarmer();
+		bedTeleporter = new SpawnPointTeleporter();
+		radio = new Radio();
+		iTool = new ITool();
+		dyeWand = new DyeWand();
+		flamethrower = new Flamethrower();
+		placementListener = new BlockEvent();
+		inventoryListener = new InventoryEvent();
+		playerListener = new PlayerEvent();
 		
-		blockPlaceTask = new BlockPlaceTaskTimer(this);
-		blockBreakTask = new BlockBreakTaskTimer(this);
-		treeCutterTask = new TreeCutterTaskTimer(this);
-		entityTeleporterTask = new EntityTeleporterTaskTimer(this);
-		itemTeleporterTask = new ItemTeleporterTaskTimer(this);
-		chunkLoadTask = new ChunkLoadTaskTimer(this);
-		grinderTask = new GrinderTaskTimer(this);
-		animalGrowthTask = new AnimalGrowthTaskTimer(this);
-		plantFarmerTask = new PlantFarmerTaskTimer(this);
-		particleTask = new ParticleSpawnerTaskTimer(this);
+		blockPlaceTask = new BlockPlaceTaskTimer();
+		blockBreakTask = new BlockBreakTaskTimer();
+		treeCutterTask = new TreeCutterTaskTimer();
+		entityTeleporterTask = new EntityTeleporterTaskTimer();
+		itemTeleporterTask = new ItemTeleporterTaskTimer();
+		chunkLoadTask = new ChunkLoadTaskTimer();
+		grinderTask = new GrinderTaskTimer();
+		animalGrowthTask = new AnimalGrowthTaskTimer();
+		plantFarmerTask = new PlantFarmerTaskTimer();
+		particleTask = new ParticleSpawnerTaskTimer();
 		
 		registerRunnables();
 		registerRecipes();
@@ -284,6 +276,7 @@ public class MechMain extends JavaPlugin {
 	
 	@Override
 	public void onLoad() {
+		plugin = this;
 		ServerVersion.findVersion();
 		resourceLocation = this.getDataFolder();
 		logger = getLogger();
@@ -293,14 +286,12 @@ public class MechMain extends JavaPlugin {
 				resourceLocation.mkdir();
 			}
 			
-			blockData = new ConfigurationUnit(this, new File(resourceLocation, "blockdata.yml"), "blockdata.yml");
-			itemData = new ConfigurationUnit(this, new File(resourceLocation, "itemdata.yml"), "itemdata.yml");
-			textData = new ConfigurationUnit(this, new File(resourceLocation, "text.yml"), "text.yml");
-			placed = new ConfigurationUnit(this, new File(resourceLocation, "placed.yml"));
-			remoteStorage = new ConfigurationUnit(this, new File(resourceLocation, "extrainventory.yml"));
-			config = new ConfigurationUnit(this, new File(resourceLocation, "config.yml"));
-			
-			fileUtils = new FileUtils(this);
+			blockData = new ConfigurationUnit(new File(resourceLocation, "blockdata.yml"), "blockdata.yml");
+			itemData = new ConfigurationUnit(new File(resourceLocation, "itemdata.yml"), "itemdata.yml");
+			textData = new ConfigurationUnit(new File(resourceLocation, "text.yml"), "text.yml");
+			placed = new ConfigurationUnit(new File(resourceLocation, "placed.yml"));
+			remoteStorage = new ConfigurationUnit(new File(resourceLocation, "extrainventory.yml"));
+			config = new ConfigurationUnit(new File(resourceLocation, "config.yml"));
 			
 			saveDefaultConfig();
 			debug = config.getBoolean("debug");
@@ -312,12 +303,12 @@ public class MechMain extends JavaPlugin {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		return CommandHandler.parseIncomingCommand(this, sender, cmd.getName().toLowerCase(), args);
+		return CommandHandler.parseIncomingCommand(sender, cmd.getName().toLowerCase(), args);
 	}
 	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
-		List<String> ret = CommandHandler.parseTabComplete(this, sender, cmd.getName().toLowerCase(), args);
+		List<String> ret = CommandHandler.parseTabComplete(sender, cmd.getName().toLowerCase(), args);
 		return ret == null ? super.onTabComplete(sender, cmd, alias, args) : ret;
 	}
 	

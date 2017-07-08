@@ -8,21 +8,19 @@ import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.mechanicals.plugin.MechMain;
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
 import com.mechanicals.plugin.obj.BlockFacingPartion;
+import com.mechanicals.plugin.server.MechRunnable;
 import com.mechanicals.plugin.utils.WorldUtils;
 
-public class ItemTeleporterTaskTimer extends BukkitRunnable {
+public class ItemTeleporterTaskTimer extends MechRunnable {
 
-	final MechMain plugin;
 	private Set<BlockFacingPartion> annex = new HashSet<>();
 	public static boolean shouldReload = false;
 	
-	public ItemTeleporterTaskTimer(MechMain plugin) {
-		this.plugin = plugin;
+	public ItemTeleporterTaskTimer() {
+		super();
 		reload();
 	}
 	

@@ -8,14 +8,8 @@ import java.util.Set;
 import com.mechanicals.plugin.MechMain;
 
 public class FileUtils {
-
-	final MechMain plugin;
 	
-	public FileUtils(MechMain plugin) {
-		this.plugin = plugin;
-	}
-	
-	public File[] getFiles(String directory) throws IOException {
+	public static File[] getFiles(String directory) throws IOException {
 		File f = new File(replaceDirectoryKeys(directory));
 		File[] files = f.listFiles();
 		if (files == null) return new File[] {};
@@ -26,7 +20,7 @@ public class FileUtils {
 		return output.toArray(new File[output.size()]);
 	}
 	
-	public File[] filterFilesWithExtension(File[] files, String extension) {
+	public static File[] filterFilesWithExtension(File[] files, String extension) {
 		if (files == null) return new File[] {};
 		Set<File> output = new HashSet<>();
 		for (File in : files) {
@@ -44,8 +38,8 @@ public class FileUtils {
 		return output.toArray(new File[output.size()]);
 	}
 	
-	public String replaceDirectoryKeys(String formatted) {
-		formatted = formatted.replaceAll("(?i)~pluginfolder~", plugin.resourceLocation.getParentFile().getPath());
+	public static String replaceDirectoryKeys(String formatted) {
+		formatted = formatted.replaceAll("(?i)~pluginfolder~", MechMain.plugin.resourceLocation.getParentFile().getPath());
 		return formatted;
 	}
 }

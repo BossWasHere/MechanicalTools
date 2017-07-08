@@ -6,11 +6,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import com.mechanicals.plugin.MechMain;
+import com.mechanicals.plugin.RegisteredCommand;
 
-public class MechanicalCommand {
+public class MechanicalCommand extends RegisteredCommand {
 
-	public static void run(MechMain plugin, CommandSender sender, String[] args) {
+	public MechanicalCommand() {
+		super();
+	}
+	
+	public void run(CommandSender sender, String[] args) {
 		if (args.length > 0 && sender instanceof Player) {
 			if (args[0].equalsIgnoreCase("blocks")) {
 				Inventory i = Bukkit.createInventory(null, 18, ChatColor.BLUE + "[Mechanical Blocks]");
