@@ -3,18 +3,15 @@ package com.mechanicals.plugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mechanicals.plugin.blocks.AnimalGrowth;
@@ -41,6 +38,7 @@ import com.mechanicals.plugin.items.Flamethrower;
 import com.mechanicals.plugin.items.ITool;
 import com.mechanicals.plugin.items.Radio;
 import com.mechanicals.plugin.items.SpawnPointTeleporter;
+import com.mechanicals.plugin.server.MechanicalPluginManager;
 import com.mechanicals.plugin.server.ServerVersion;
 import com.mechanicals.plugin.sound.NoteBlockHandler;
 import com.mechanicals.plugin.task.AnimalGrowthTaskTimer;
@@ -100,6 +98,7 @@ public class MechMain extends JavaPlugin {
 	public PlayerEvent playerListener;
 	public Set<ConfirmCooldown> cooldowns = Collections.synchronizedSet(new HashSet<>());
 	public ClickHoldData itemHolder;
+	public MechanicalPluginManager mechPluginManager;
 	public NoteBlockHandler noteBlockHandler;
 	public WorldEditManager worldEditManager;
 	public InventoryHandler inventoryHandler;
@@ -128,47 +127,13 @@ public class MechMain extends JavaPlugin {
 			return;
 		}
 		
+		mechPluginManager = new MechanicalPluginManager(this);
+		
 		if (config.getBoolean("useNoteBlockAPI")) {
-			if (!getServer().getPluginManager().isPluginEnabled("NoteBlockAPI")) {
-				try {
-					if (!(new File(resourceLocation + File.separator + "dependencies").isDirectory())) {
-						new File(resourceLocation + File.separator + "dependencies").mkdirs();
-					}
-					if (!(new File(fileUtils.replaceDirectoryKeys(config.getString("songLocation"))).isDirectory())) {
-						new File(fileUtils.replaceDirectoryKeys(config.getString("songLocation"))).mkdirs();
-					}
-					File nb = new File(resourceLocation + File.separator + "dependencies", "NoteBlockAPI-1.1.6.jar");
-					if (!nb.exists()) Files.copy(getResourceAsStream("lib/NoteBlockAPI-1.1.6.jar"), nb.getAbsoluteFile().toPath());
-					Plugin p = Bukkit.getPluginManager().loadPlugin(nb);
-					Bukkit.getPluginManager().enablePlugin(p);
-					nbapi = true;
-					noteBlockHandler = new NoteBlockHandler(this);
-				} catch (Exception e) {
-					logger.severe("Could not load active dependency - NoteBlockAPI");
-					logger.severe("Functions requiring this will be disabled!");
-				}
-			}
+			nbapi = mechPluginManager.enableNoteBlockAPI();
 		}
 		if (config.getBoolean("useWorldEditAPI")) {
-			if (!getServer().getPluginManager().isPluginEnabled("WorldEdit")) {
-				try {
-					if (!(new File(resourceLocation + File.separator + "dependencies").isDirectory())) {
-						new File(resourceLocation + File.separator + "dependencies").mkdirs();
-					}
-					if (!(new File(fileUtils.replaceDirectoryKeys(config.getString("schematicLocation"))).isDirectory())) {
-						new File(fileUtils.replaceDirectoryKeys(config.getString("schematicLocation"))).mkdirs();
-					}
-					File nb = new File(resourceLocation + File.separator + "dependencies", "worldedit-bukkit-6.1.7.2.jar");
-					if (!nb.exists()) Files.copy(getResourceAsStream("lib/worldedit-bukkit-6.1.7.2.jar"), nb.getAbsoluteFile().toPath());
-					Plugin p = Bukkit.getPluginManager().loadPlugin(nb);
-					Bukkit.getPluginManager().enablePlugin(p);
-					weapi = true;
-					worldEditManager = new WorldEditManager(this);
-				} catch (Exception e) {
-					logger.severe("Could not load active dependency - WorldEdit");
-					logger.severe("Functions requiring this will be disabled!");
-				}
-			}
+			weapi = mechPluginManager.enableWorldEdit();
 		}
 		
 		String comp = "";

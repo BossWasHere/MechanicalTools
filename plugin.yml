@@ -62,4 +62,4 @@ commands:
     description: Schematics
     usage: /schemnow <name> <x1> <y1> <z1> <x2> <y2> <z2>
 
-softdepend: [NoteBlockAPI, WorldEdit]
+softdepend: [NoteBlockAPI, WorldEdit, Vault]
