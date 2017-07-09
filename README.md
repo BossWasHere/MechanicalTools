@@ -40,6 +40,10 @@ Other Features:
 Changelog:
 <br/>
 
+Version 2.4.2:
+  - Added Generator
+<br/>
+
 Version 2.4.1:
   - Various Tweaks
 <br/>

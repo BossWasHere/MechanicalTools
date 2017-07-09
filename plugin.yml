@@ -2,7 +2,7 @@ name: MechanicalTools
 description: Adds Mechanical Tools and Blocks to Bukkit Servers
 main: com.mechanicals.plugin.MechMain
 author: IballisticBoss
-version: 2.4.1
+version: 2.4.2
 commands:
   mechanical:
     description: Shows help on commands for this plugin.
