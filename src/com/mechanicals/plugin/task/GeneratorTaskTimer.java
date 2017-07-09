@@ -22,10 +22,22 @@ public class GeneratorTaskTimer extends MechRunnable {
 		boolean shouldSave = false;
 		for (String key : keys) {
 			double fuel = plugin.placed.getDouble(key + ".fuel");
-			if (fuel < 1) continue;
+			//Location l = new Location(Bukkit.getWorld(plugin.placed.getString(key + ".world")), plugin.placed.getInt(key + ".x"), plugin.placed.getInt(key + ".y"), plugin.placed.getInt(key + ".z"));
+			//byte face = l.getBlock().getData();
+			if (fuel < 1) {
+				/*if (l.getBlock().getType().equals(Material.BURNING_FURNACE)) {
+					l.getBlock().setType(Material.FURNACE, false);
+					l.getBlock().setData(face);
+				}*/
+				continue;
+			}
 			fuel--;
 			plugin.placed.set(key + ".fuel", fuel);
 			plugin.placed.set(key + ".power", plugin.placed.getDouble(key + ".power") + 1);
+			/*if (l.getBlock().getType().equals(Material.FURNACE)) {
+				l.getBlock().setType(Material.BURNING_FURNACE, false);
+				l.getBlock().setData(face);
+			}*/
 			shouldSave = true;
 		}
 		if (shouldSave) plugin.placed.saveAndReload();

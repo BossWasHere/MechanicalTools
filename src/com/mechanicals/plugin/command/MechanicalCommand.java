@@ -70,6 +70,7 @@ public class MechanicalCommand extends RegisteredCommand {
 		sender.sendMessage(ChatColor.BLUE + "/elevator (player) - " + ChatColor.AQUA + " Give yourself (or another player) an elevator item");
 		sender.sendMessage(ChatColor.BLUE + "/animalgrowth (player) - " + ChatColor.AQUA + " Give yourself (or another player) an animal growth item");
 		sender.sendMessage(ChatColor.BLUE + "/plantfarmer (player) - " + ChatColor.AQUA + " Give yourself (or another player) a plant farmer item");
+		sender.sendMessage(ChatColor.BLUE + "/generator (player) - " + ChatColor.AQUA + " Give yourself (or another player) a generator item");
 		sender.sendMessage(ChatColor.BLUE + "/spawnpointteleporter (player) - " + ChatColor.AQUA + " Give yourself (or another player) an spawn point teleporter item");
 		sender.sendMessage(ChatColor.BLUE + "/mechradio (player) - " + ChatColor.AQUA + " Give yourself (or another player) an radio item");
 		sender.sendMessage(ChatColor.BLUE + "/itool (player) - " + ChatColor.AQUA + " Give yourself (or another player) an ITool item");

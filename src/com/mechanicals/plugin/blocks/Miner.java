@@ -2,31 +2,31 @@ package com.mechanicals.plugin.blocks;
 
 import java.util.Set;
 
-import org.bukkit.Location;
+import javax.management.modelmbean.InvalidTargetObjectTypeException;
+
 import org.bukkit.Sound;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Dropper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.material.Dispenser;
+import org.bukkit.material.MaterialData;
 
-import com.mechanicals.plugin.InventoryHandler;
-import com.mechanicals.plugin.task.GeneratorTaskTimer;
+import com.mechanicals.plugin.task.BlockBreakTaskTimer;
 import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
 import com.mechanicals.plugin.utils.StringUtils;
 
-public class Generator extends BaseMechanicalBlock {
-
-	public final double energyMultiplier;
+public class Miner extends BaseMechanicalBlock {
 	
-	public Generator() {
+	public Miner() {
 		super();
-		energyMultiplier = plugin.blockData.getDouble("block.generator.energyMultiplier");
 	}
 	
 	@Override
 	public void blockPlaceEvent(BlockPlaceEvent event) {
 		Player player = event.getPlayer();
-		if (!plugin.generatorEnabled) {
+		if (!plugin.blockBreakerEnabled) {
 			player.sendMessage(plugin.texts.notEnabled);
 			event.setCancelled(true);
 			return;
@@ -46,8 +46,39 @@ public class Generator extends BaseMechanicalBlock {
 			plugin.placed.set(i + ".x", event.getBlock().getX());
 			plugin.placed.set(i + ".y", event.getBlock().getY());
 			plugin.placed.set(i + ".z", event.getBlock().getZ());
-			plugin.placed.set(i + ".power", 0.0);
-			plugin.placed.set(i + ".fuel", 0);
+			
+			MaterialData data = event.getBlock().getState().getData();
+			if (!(data instanceof Dispenser || data instanceof Dropper)) {
+				new InvalidTargetObjectTypeException("Block Placement has encountered a severe error");
+				return;
+			}
+			BlockFace facing = ((Dispenser)data).getFacing();
+			int targetX = event.getBlock().getX(), targetY = event.getBlock().getY(), targetZ = event.getBlock().getZ();
+			switch (facing) {
+			default:
+			case UP:
+				targetY++;
+				break;
+			case DOWN:
+				targetY--;
+				break;
+			case NORTH:
+				targetZ--;
+				break;
+			case EAST:
+				targetX++;
+				break;
+			case SOUTH:
+				targetZ++;
+				break;
+			case WEST:
+				targetX--;
+				break;
+			}
+			
+			plugin.placed.set(i + ".targetX", targetX);
+			plugin.placed.set(i + ".targetY", targetY);
+			plugin.placed.set(i + ".targetZ", targetZ);
 			
 			plugin.placed.saveAndReload();
 			
@@ -60,8 +91,13 @@ public class Generator extends BaseMechanicalBlock {
 	}
 
 	@Override
+	public MechanicalBlocks getMechBlock() {
+		return MechanicalBlocks.MINER;
+	}
+
+	@Override
 	public void blockBreakEvent(BlockBreakEvent event) {
-		if (!plugin.generatorEnabled) {
+		if (!plugin.blockBreakerEnabled) {
 			event.getPlayer().sendMessage(plugin.texts.notEnabled);
 			event.setCancelled(true);
 			return;
@@ -97,42 +133,11 @@ public class Generator extends BaseMechanicalBlock {
 			updateRunnables();
 		}
 	}
-
-	@Override
-	public MechanicalBlocks getMechBlock() {
-		return MechanicalBlocks.GENERATOR;
-	}
-
+	
 	@Override
 	public void updateRunnables() {
+		BlockBreakTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
-		GeneratorTaskTimer.shouldReload = true;
-	}
-
-	public String getKeyForPos(Location location) {
-		Set<String> keys = plugin.placed.getKeys(false);
-		for (String key : keys) {
-			if (plugin.placed.getString(key + ".id").equalsIgnoreCase(getMechBlock().getId())) {
-				if (plugin.placed.getString(key + ".world").equalsIgnoreCase(location.getWorld().getName())) {
-					if (plugin.placed.getInt(key + ".x") == location.getBlockX()) {
-						if (plugin.placed.getInt(key + ".y") == location.getBlockY()) {
-							if (plugin.placed.getInt(key + ".z") == location.getBlockZ()) {
-								return key;
-							}
-						}
-					}
-				}
-			}
-		}
-		return null;
-	}
-	
-	public Inventory openFuelWindow(Player player, Location block) {
-		String s = getKeyForPos(block);
-		if (s != null) {
-			return InventoryHandler.loadGeneratorInventory(s);
-		}
-		return null;
 	}
 
 }

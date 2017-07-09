@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -31,8 +32,16 @@ public class PlayerEvent implements Listener {
 		MechMain.plugin.getServer().getPluginManager().registerEvents(this, MechMain.plugin);
 	}
 	
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.NORMAL)
 	public void playerInteractEvent(PlayerInteractEvent event) {
+		if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getType().equals(Material.FURNACE) || event.getClickedBlock().getType().equals(Material.BURNING_FURNACE)) {
+			Inventory i = MechMain.plugin.generator.openFuelWindow(event.getPlayer(), event.getClickedBlock().getLocation());
+			if (i != null) {
+				event.setCancelled(true);
+				event.getPlayer().openInventory(i);
+			}
+			return;
+		}
 		ItemStack item = event.getItem();
 		if (item == null) return;
 		if (!item.hasItemMeta()) return;
@@ -49,8 +58,6 @@ public class PlayerEvent implements Listener {
 			MechMain.plugin.dyeWand.itemUseEvent(event);
 		} else if (MechMain.plugin.flamethrower.matchesMeta(item)) {
 			MechMain.plugin.flamethrower.itemUseEvent(event);
-		} else if (event.getClickedBlock().getType().equals(Material.FURNACE) || event.getClickedBlock().getType().equals(Material.BURNING_FURNACE)) {
-			MechMain.plugin.generator.openFuelWindow(event.getPlayer(), event.getClickedBlock().getLocation());
 		}
 	}
 	

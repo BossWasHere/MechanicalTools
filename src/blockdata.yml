@@ -15,6 +15,7 @@ enabled:
     - animalGrowth
     - plantFarmer
     - generator
+    - miner
 
 #Particles Configuration
 particle:
@@ -28,7 +29,7 @@ particle:
 # - permissions: Specific permissions for the block (other: a block placed by another player)
 # - crafting: [a: the top row, b: the middle row, c: the bottom row, items: specified crafting items, enabled: should crafting be allowed]
 # - showParticles: Display particles to players for special blocks
-# Other paramaters include: radius, teleportsPlayers, maxEntities, maxBlocksAtOnce, generateNewChunks, energyMultiplier
+# Other paramaters include: radius, teleportsPlayers, maxEntities, maxBlocksAtOnce, generateNewChunks, energyMultiplier, energyPerBlock
 block:
     blockBreaker: 
         name: Block Breaker
@@ -279,6 +280,7 @@ block:
             items: r=redstone;h=diamond_hoe;c=cobblestone;b=bone
             enabled: true
         showParticles: true
+        
     generator:
         name: Generator
         lore:
@@ -301,5 +303,28 @@ block:
             b: cfc
             c: tdt
             items: r=redstone;d=diamond;c=cobblestone;f=furnace;t=redstone_torch
+            enabled: true
+        showParticles: true
+        
+    miner:
+        name: Miner
+        lore:
+            - MechanicalBlocks Addons
+            - Miner
+            - Will break blocks in a 3x3 area
+            - Requires a Generator
+        trigger: 1
+        energyPerBlock: 4.0
+        permissions:
+            place: mechanical.miner.place
+            break: mechanical.miner.destroy
+            breakOther: mechanical.miner.destroy.other
+            command: mechanical.miner.command
+            commandOther: mechanical.miner.command.other
+        crafting:
+            a: rdr
+            b: ifi
+            c: tdt
+            items: r=redstone;d=diamond_pickaxe;i=iron_block;f=furnace;t=iron_ingot
             enabled: true
         showParticles: true

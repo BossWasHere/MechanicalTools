@@ -49,6 +49,9 @@ commands:
   plantfarmer:
     description: Give an Plant Farmer tool to a player/yourself.
     usage: /plantfarmer (target)
+  generator:
+    description: Give a Generator tool to a player/yourself.
+    usage: /generator (target)
   spawnpointteleporter:
     description: Give an Spawn Point Teleporter tool to a player/yourself.
     usage: /spawnpointteleporter (target)

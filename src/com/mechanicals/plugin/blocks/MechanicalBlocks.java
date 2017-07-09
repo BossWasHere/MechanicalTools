@@ -22,7 +22,8 @@ public enum MechanicalBlocks {
 	ELEVATOR("elevator", new ItemStack(Material.WOOL)),
 	ANIMAL_GROWTH("animalGrowth", new ItemStack(Material.HAY_BLOCK)),
 	PLANT_FARMER("plantFarmer", new ItemStack(Material.MOSSY_COBBLESTONE)),
-	GENERATOR("generator", new ItemStack(Material.FURNACE));
+	GENERATOR("generator", new ItemStack(Material.FURNACE)),
+	MINER("miner", new ItemStack(Material.IRON_BLOCK));
 	
 	private final String id;
 	private final ItemStack item;

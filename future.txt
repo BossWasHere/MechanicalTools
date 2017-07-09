@@ -14,7 +14,6 @@ Future (hopefully!) Additions:
  - Mining/block management
      - Whitelist/blacklist for blocks allowed to be broken/placed
      - Mining block (mines downwards in a 3x3 area to bedrock)
-     - Generator blocks (using Economy to charge, coal furnace etc.)
 
  - Configuration
      - Ability to disable/enable block particles for specific blocks in-game

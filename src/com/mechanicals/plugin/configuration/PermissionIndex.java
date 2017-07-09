@@ -84,6 +84,12 @@ public class PermissionIndex {
 		loaded.put("generator_command", blockConfig.getString("block.generator.permissions.command", NOT_FOUND));
 		loaded.put("generator_commandOther", blockConfig.getString("block.generator.permissions.commandOther", NOT_FOUND));
 		
+		loaded.put("miner_place", blockConfig.getString("block.miner.permissions.place", NOT_FOUND));
+		loaded.put("miner_break", blockConfig.getString("block.miner.permissions.break", NOT_FOUND));
+		loaded.put("miner_breakOther", blockConfig.getString("block.miner.permissions.breakOther", NOT_FOUND));
+		loaded.put("miner_command", blockConfig.getString("block.miner.permissions.command", NOT_FOUND));
+		loaded.put("miner_commandOther", blockConfig.getString("block.miner.permissions.commandOther", NOT_FOUND));
+		
 		loaded.put("spawnPointTeleporter_use", itemConfig.getString("item.spawnPointTeleporter.permissions.use", NOT_FOUND));
 		loaded.put("spawnPointTeleporter_command", itemConfig.getString("item.spawnPointTeleporter.permissions.command", NOT_FOUND));
 		loaded.put("spawnPointTeleporter_commandOther", itemConfig.getString("item.spawnPointTeleporter.permissions.commandOther", NOT_FOUND));

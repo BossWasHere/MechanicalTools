@@ -58,6 +58,9 @@ public class CommandHandler {
 		case "plantfarmer":
 			new PlantFarmerCommand().run(sender, args);
 			return true;
+		case "generator":
+			new GeneratorCommand().run(sender, args);
+			return true;
 		case "spawnpointteleporter":
 			new SpawnPointTeleporterCommand().run(sender, args);
 			return true;
@@ -114,6 +117,7 @@ public class CommandHandler {
 		case "elevator":
 		case "animalgrowth":
 		case "plantfarmer":
+		case "generator":
 		case "spawnpointteleporter":
 		case "mechradio":
 		case "itool":

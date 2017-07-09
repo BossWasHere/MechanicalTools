@@ -220,4 +220,22 @@ public class BlockEvent implements Listener {
 			}
 		}
 	}
+	
+	/*@EventHandler(priority = EventPriority.HIGH)
+	public void blockUpdateEvent(BlockPhysicsEvent event) {
+		if (event.getBlock().equals(Material.BURNING_FURNACE) || event.getBlock().equals(Material.FURNACE)) {
+			for (String key : MechMain.plugin.placed.getKeys(false)) {
+				if (!MechMain.plugin.placed.getString(key + ".id").equalsIgnoreCase(MechanicalBlocks.GENERATOR.getId())) return; 
+				if (MechMain.plugin.placed.getInt(key + ".x") == event.getBlock().getX()) {
+					if (MechMain.plugin.placed.getInt(key + ".y") == event.getBlock().getY()) {
+						if (MechMain.plugin.placed.getInt(key + ".y") == event.getBlock().getZ()) {
+							if (MechMain.plugin.placed.getString(key + ".world").equalsIgnoreCase(event.getBlock().getWorld().getName())) {
+								event.setCancelled(true);
+							}
+						}
+					}
+				}
+			}
+		}
+	}*/
 }

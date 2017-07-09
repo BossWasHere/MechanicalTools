@@ -92,7 +92,7 @@ public class InventoryHandler {
 	
 	public static Inventory loadGeneratorInventory(String configKey) {
 		Inventory i = Bukkit.createInventory(null, 9, ChatColor.BLUE + "[Mechanical] Generator");
-		ItemStack filter = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)8);
+		ItemStack filter = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)7);
 		ItemMeta meta = filter.getItemMeta();
 		meta.setDisplayName(MechMain.plugin.texts.placeFuel);
 		filter.setItemMeta(meta);
@@ -101,15 +101,20 @@ public class InventoryHandler {
 		locMeta.setDisplayName("BlockPos");
 		locMeta.setLore(Arrays.asList(new String[] {"ConfigKey", configKey}));
 		locData.setItemMeta(locMeta);
-		i.setItem(0, locData);
 		ItemStack fuelData = new ItemStack(Material.BLAZE_POWDER);
 		ItemMeta fuelMeta = fuelData.getItemMeta();
 		fuelMeta.setDisplayName("Fuel: " + MechMain.plugin.placed.getDouble(configKey + ".fuel"));
 		fuelMeta.setLore(Arrays.asList(new String[] {"How much fuel this generator has"}));
-		locData.setItemMeta(locMeta);
+		fuelData.setItemMeta(fuelMeta);
+		ItemStack powerData = new ItemStack(Material.DAYLIGHT_DETECTOR);
+		ItemMeta powerMeta = powerData.getItemMeta();
+		powerMeta.setDisplayName("Power: " + MechMain.plugin.placed.getDouble(configKey + ".power"));
+		powerMeta.setLore(Arrays.asList(new String[] {"How much energy this generator has"}));
+		powerData.setItemMeta(powerMeta);
 		i.setItem(0, locData);
 		i.setItem(1, fuelData);
-		for (int j = 2; j < 8; j++) {
+		i.setItem(2, powerData);
+		for (int j = 3; j < 9; j++) {
 			if (j == 4) continue;
 			i.setItem(j, filter);
 		}

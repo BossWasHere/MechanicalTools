@@ -32,7 +32,10 @@ public class InventoryEvent implements Listener {
 		ItemStack current = event.getCurrentItem();
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		if (current == null) return;
-		if (!current.hasItemMeta()) return;
+		if (!current.hasItemMeta()) {
+			inventoryClickEventNoMeta(event);
+			return;
+		}
 		Player player = (Player) event.getWhoClicked();
 		String inventoryName = event.getInventory().getName();
 		if (inventoryName.equalsIgnoreCase(ChatColor.BLUE + "[Mechanical Blocks]") || inventoryName.equalsIgnoreCase(ChatColor.BLUE + "[Mechanical Items]")) {
@@ -161,47 +164,68 @@ public class InventoryEvent implements Listener {
 				default:
 					break;
 				}
-			} else if (current.getType().equals(Material.COAL) || current.getType().equals(Material.LAVA_BUCKET)) {
-				int configKey = StringUtils.getNumber(event.getInventory().getItem(0).getItemMeta().getLore().get(1));
-				if (configKey == -1) {
-					return;
-				}
-				ItemStack fuel = event.getInventory().getItem(4);
-				if (fuel == null) return;
-				double d, output;
-				switch (fuel.getType()) {
-				case COAL:
-					 d = MechMain.plugin.generator.energyMultiplier;
-					 output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
-					 MechMain.plugin.placed.set(configKey + ".fuel", output);
-					 MechMain.plugin.placed.saveAndReload();
-					 Inventory updated = event.getInventory();
-					 ItemStack item = updated.getItem(1);
-					 ItemMeta meta = item.getItemMeta();
-					 meta.setDisplayName("Fuel: " + output);
-					 item.setItemMeta(meta);
-					 updated.setItem(1, item);
-					 updated.setItem(4, new ItemStack(Material.AIR));
-					 player.openInventory(updated);
-				case LAVA_BUCKET:
-					 d = MechMain.plugin.generator.energyMultiplier * 12.5;
-					 output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
-					 MechMain.plugin.placed.set(configKey + ".fuel", output);
-					 MechMain.plugin.placed.saveAndReload();
-					 Inventory updated2 = event.getInventory();
-					 ItemStack item2 = updated2.getItem(1);
-					 ItemMeta meta2 = item2.getItemMeta();
-					 meta2.setDisplayName("Fuel: " + output);
-					 item2.setItemMeta(meta2);
-					 updated2.setItem(1, item2);
-					 updated2.setItem(4, new ItemStack(Material.AIR));
-					 player.openInventory(updated2);
-					 
-				default:
-					return;
-				}
 			} else event.setCancelled(true);
 		}
+	}
+	
+	private void inventoryClickEventNoMeta(InventoryClickEvent event) {
+		ItemStack current = event.getCurrentItem();
+		Player player = (Player) event.getWhoClicked();
+		if (event.getInventory().getItem(0) == null) return;
+		if (!event.getInventory().getItem(0).hasItemMeta()) return;
+		if (!event.getInventory().getItem(0).getItemMeta().hasLore()) return;
+		if (current.getType().equals(Material.COAL) || current.getType().equals(Material.LAVA_BUCKET)) {
+			int configKey = StringUtils.getNumber(event.getInventory().getItem(0).getItemMeta().getLore().get(1));
+			if (configKey == -1) {
+				return;
+			}
+			ItemStack fuel = event.getInventory().getItem(4);
+			if (fuel == null) return;
+			double d, output;
+			switch (fuel.getType()) {
+			case COAL:
+				 d = MechMain.plugin.generator.energyMultiplier * fuel.getAmount();
+				 output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
+				 MechMain.plugin.placed.set(configKey + ".fuel", output);
+				 MechMain.plugin.placed.saveAndReload();
+				 Inventory updated = event.getInventory();
+				 ItemStack item = updated.getItem(1);
+				 ItemMeta meta = item.getItemMeta();
+				 meta.setDisplayName("Fuel: " + output);
+				 item.setItemMeta(meta);
+				 ItemStack itemb = updated.getItem(1);
+				 ItemMeta metab = itemb.getItemMeta();
+				 metab.setDisplayName("Power: " + MechMain.plugin.placed.getDouble(configKey + ".power"));
+				 itemb.setItemMeta(metab);
+				 updated.setItem(1, item);
+				 updated.setItem(2, itemb);
+				 updated.setItem(4, new ItemStack(Material.AIR));
+				 player.openInventory(updated);
+				 break;
+			case LAVA_BUCKET:
+				 d = MechMain.plugin.generator.energyMultiplier * 12.5 * fuel.getAmount();
+				 output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
+				 MechMain.plugin.placed.set(configKey + ".fuel", output);
+				 MechMain.plugin.placed.saveAndReload();
+				 Inventory updated2 = event.getInventory();
+				 ItemStack item2 = updated2.getItem(1);
+				 ItemMeta meta2 = item2.getItemMeta();
+				 meta2.setDisplayName("Fuel: " + output);
+				 item2.setItemMeta(meta2);
+				 ItemStack itemb2 = updated2.getItem(1);
+				 ItemMeta metab2 = itemb2.getItemMeta();
+				 metab2.setDisplayName("Power: " + MechMain.plugin.placed.getDouble(configKey + ".power"));
+				 itemb2.setItemMeta(metab2);
+				 updated2.setItem(1, item2);
+				 updated2.setItem(2, itemb2);
+				 updated2.setItem(4, new ItemStack(Material.AIR));
+				 player.openInventory(updated2);
+				 break;
+				 
+			default:
+				return;
+			}
+		} 
 	}
 	
 	@EventHandler(priority = EventPriority.HIGH)
@@ -221,6 +245,31 @@ public class InventoryEvent implements Listener {
 			Player player = Bukkit.getPlayer(split);
 			if (player != null) InventoryHandler.saveInventoryForPlayer(player, event.getInventory());
 			else event.getPlayer().sendMessage(ChatColor.AQUA + "You may have lost some items because the player data for the player with this name can no longer be found!");
+		} else if (event.getInventory().getName().equalsIgnoreCase(ChatColor.BLUE + "[Mechanical] Generator")) {
+			int configKey = StringUtils.getNumber(event.getInventory().getItem(0).getItemMeta().getLore().get(1));
+			if (configKey == -1) {
+				return;
+			}
+			ItemStack fuel = event.getInventory().getItem(4);
+			if (fuel == null) return;
+			double d, output;
+			switch (fuel.getType()) {
+			case COAL:
+				 d = MechMain.plugin.generator.energyMultiplier * fuel.getAmount();
+				 output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
+				 MechMain.plugin.placed.set(configKey + ".fuel", output);
+				 MechMain.plugin.placed.saveAndReload();
+				 break;
+			case LAVA_BUCKET:
+				 d = MechMain.plugin.generator.energyMultiplier * 12.5 * fuel.getAmount();
+				 output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
+				 MechMain.plugin.placed.set(configKey + ".fuel", output);
+				 MechMain.plugin.placed.saveAndReload();
+				 break;
+				 
+			default:
+				return;
+			}
 		}
 	}
 }

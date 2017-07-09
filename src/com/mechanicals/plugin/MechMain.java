@@ -169,6 +169,10 @@ public class MechMain extends JavaPlugin {
 				plantFarmerEnabled = true;
 				comp += "PlantFarmer, ";
 				break;
+			case "generator":
+				generatorEnabled = true;
+				comp += "Generator, ";
+				break;
 			}
 		}
 		for (String in : itemData.getStringList("enabled")) {
