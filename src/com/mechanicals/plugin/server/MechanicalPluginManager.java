@@ -79,6 +79,7 @@ public class MechanicalPluginManager {
 				if (!resource.exists()) Files.copy(plugin.getResourceAsStream("lib/" + PluginLoadable.ECONOMY_PROVIDER_JAR), resource.getAbsoluteFile().toPath());
 				Plugin p = Bukkit.getPluginManager().loadPlugin(resource);
 				Bukkit.getPluginManager().enablePlugin(p);
+				plugin.economyManager = new EconomyManager();
 				enabled = true;
 			} catch (Exception e) {
 				logger.severe("Could not load active dependency - " + PluginLoadable.ECONOMY_PROVIDER);

@@ -54,7 +54,15 @@ public class StringUtils {
 		try {
 			return Integer.parseInt(in);
 		} catch (Exception e) {
-			return 0;
+			return -1;
+		}
+	}
+	
+	public static double getDouble(String in) {
+		try {
+			return Double.parseDouble(in);
+		} catch (Exception e) {
+			return -1.0;
 		}
 	}
 	

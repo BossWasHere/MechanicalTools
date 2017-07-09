@@ -3,13 +3,16 @@ package com.mechanicals.plugin.event;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.mechanicals.plugin.InventoryHandler;
 import com.mechanicals.plugin.MechMain;
@@ -88,13 +91,116 @@ public class InventoryEvent implements Listener {
 			}
 		} else if (inventoryName.equalsIgnoreCase(ChatColor.BLUE + "[Mechanical] Dyes")) {
 			if (!current.getType().equals(Material.INK_SACK)) event.setCancelled(true);
-		} else if (event.getInventory().getName().equalsIgnoreCase(ChatColor.BLUE + "[Mechanical] Inventory")) {
+		} else if (inventoryName.equalsIgnoreCase(ChatColor.BLUE + "[Mechanical] Inventory")) {
 			if (MechMain.plugin.iTool.matchesMeta(current)) event.setCancelled(true);
-		} else if (StringUtils.countOccurances(event.getInventory().getName(), " ") == 2 && event.getInventory().getName().endsWith("Inventory")) {
+		} else if (StringUtils.countOccurances(inventoryName, " ") == 2 && inventoryName.endsWith("Inventory")) {
 			if (!player.hasPermission(MechMain.plugin.permissions.loaded.get("remote_inventory_edit"))) {
 				event.setCancelled(true);
 				player.sendMessage(MechMain.plugin.texts.noPermissionRemoteEdit);
 			}
+		} else if (inventoryName.equalsIgnoreCase(ChatColor.BLUE + "[Mechanical] Generator") && event.getInventory().getItem(0).hasItemMeta()) {
+			if (current.getItemMeta().hasLore() && current.getItemMeta().hasDisplayName() && event.getInventory().getItem(0).getItemMeta().hasLore()) {
+				int configKey = StringUtils.getNumber(event.getInventory().getItem(0).getItemMeta().getLore().get(1));
+				event.setCancelled(true);
+				if (configKey == -1 || !MechMain.plugin.vault) {
+					return;
+				}
+				switch (current.getType()) {
+				case LAVA_BUCKET:
+					if (current.getItemMeta().getDisplayName().equalsIgnoreCase("Add Lava from Economy")) {
+						double d = MechMain.plugin.generator.energyMultiplier * 12.5;
+						if (!(d < 0.0)) {
+							if (MechMain.plugin.economyManager.getBalanceForUser(player) < d) {
+								player.sendMessage(MechMain.plugin.texts.notEnoughEconomy);
+								player.getLocation().getWorld().playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
+								return;
+							}
+							double output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
+							MechMain.plugin.placed.set(configKey + ".fuel", output);
+							MechMain.plugin.placed.saveAndReload();
+							MechMain.plugin.economyManager.withdrawUserBalance(player, output);
+							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("coal", "" + output));
+							player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1.0f, 1.5f);
+							
+							Inventory updated = event.getInventory();
+							ItemStack item = updated.getItem(1);
+							ItemMeta meta = item.getItemMeta();
+							meta.setDisplayName("Fuel: " + output);
+							item.setItemMeta(meta);
+							updated.setItem(1, item);
+							player.openInventory(updated);
+						}
+					}
+					break;
+				case COAL:
+					if (current.getItemMeta().getDisplayName().equalsIgnoreCase("Add Coal from Economy")) {
+						double d = MechMain.plugin.generator.energyMultiplier;
+						if (!(d < 0.0)) {
+							if (MechMain.plugin.economyManager.getBalanceForUser(player) < d) {
+								player.sendMessage(MechMain.plugin.texts.notEnoughEconomy);
+								player.getLocation().getWorld().playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
+								return;
+							}
+							double output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
+							MechMain.plugin.placed.set(configKey + ".fuel", output);
+							MechMain.plugin.placed.saveAndReload();
+							MechMain.plugin.economyManager.withdrawUserBalance(player, output);
+							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("lava", "" + output));
+							player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1.0f, 1.5f);
+							
+							Inventory updated = event.getInventory();
+							ItemStack item = updated.getItem(1);
+							ItemMeta meta = item.getItemMeta();
+							meta.setDisplayName("Fuel: " + output);
+							item.setItemMeta(meta);
+							updated.setItem(1, item);
+							player.openInventory(updated);
+						}
+					}
+					break;
+				default:
+					break;
+				}
+			} else if (current.getType().equals(Material.COAL) || current.getType().equals(Material.LAVA_BUCKET)) {
+				int configKey = StringUtils.getNumber(event.getInventory().getItem(0).getItemMeta().getLore().get(1));
+				if (configKey == -1) {
+					return;
+				}
+				ItemStack fuel = event.getInventory().getItem(4);
+				if (fuel == null) return;
+				double d, output;
+				switch (fuel.getType()) {
+				case COAL:
+					 d = MechMain.plugin.generator.energyMultiplier;
+					 output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
+					 MechMain.plugin.placed.set(configKey + ".fuel", output);
+					 MechMain.plugin.placed.saveAndReload();
+					 Inventory updated = event.getInventory();
+					 ItemStack item = updated.getItem(1);
+					 ItemMeta meta = item.getItemMeta();
+					 meta.setDisplayName("Fuel: " + output);
+					 item.setItemMeta(meta);
+					 updated.setItem(1, item);
+					 updated.setItem(4, new ItemStack(Material.AIR));
+					 player.openInventory(updated);
+				case LAVA_BUCKET:
+					 d = MechMain.plugin.generator.energyMultiplier * 12.5;
+					 output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
+					 MechMain.plugin.placed.set(configKey + ".fuel", output);
+					 MechMain.plugin.placed.saveAndReload();
+					 Inventory updated2 = event.getInventory();
+					 ItemStack item2 = updated2.getItem(1);
+					 ItemMeta meta2 = item2.getItemMeta();
+					 meta2.setDisplayName("Fuel: " + output);
+					 item2.setItemMeta(meta2);
+					 updated2.setItem(1, item2);
+					 updated2.setItem(4, new ItemStack(Material.AIR));
+					 player.openInventory(updated2);
+					 
+				default:
+					return;
+				}
+			} else event.setCancelled(true);
 		}
 	}
 	

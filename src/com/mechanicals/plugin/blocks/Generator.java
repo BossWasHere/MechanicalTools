@@ -2,17 +2,24 @@ package com.mechanicals.plugin.blocks;
 
 import java.util.Set;
 
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import com.mechanicals.plugin.InventoryHandler;
+import com.mechanicals.plugin.task.GeneratorTaskTimer;
+import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
 import com.mechanicals.plugin.utils.StringUtils;
 
 public class Generator extends BaseMechanicalBlock {
 
+	public final double energyMultiplier;
+	
 	public Generator() {
 		super();
+		energyMultiplier = plugin.blockData.getDouble("block.generator.energyMultiplier");
 	}
 	
 	@Override
@@ -38,6 +45,8 @@ public class Generator extends BaseMechanicalBlock {
 			plugin.placed.set(i + ".x", event.getBlock().getX());
 			plugin.placed.set(i + ".y", event.getBlock().getY());
 			plugin.placed.set(i + ".z", event.getBlock().getZ());
+			plugin.placed.set(i + ".power", 0.0);
+			plugin.placed.set(i + ".fuel", 0);
 			
 			plugin.placed.saveAndReload();
 			
@@ -95,7 +104,33 @@ public class Generator extends BaseMechanicalBlock {
 
 	@Override
 	public void updateRunnables() {
-		plugin.particleTask.reload();
+		ParticleSpawnerTaskTimer.shouldReload = true;
+		GeneratorTaskTimer.shouldReload = true;
+	}
+
+	public String getKeyForPos(Location location) {
+		Set<String> keys = plugin.placed.getKeys(false);
+		for (String key : keys) {
+			if (plugin.placed.getString(key + ".id").equalsIgnoreCase(getMechBlock().getId())) {
+				if (plugin.placed.getString(key + ".world").equalsIgnoreCase(location.getWorld().getName())) {
+					if (plugin.placed.getInt(key + ".x") == location.getBlockX()) {
+						if (plugin.placed.getInt(key + ".y") == location.getBlockY()) {
+							if (plugin.placed.getInt(key + ".z") == location.getBlockZ()) {
+								return key;
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	public void openFuelWindow(Player player, Location block) {
+		String s = getKeyForPos(block);
+		if (s != null) {
+			player.openInventory(InventoryHandler.loadGeneratorInventory(s));
+		}
 	}
 
 }

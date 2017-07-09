@@ -55,6 +55,8 @@ public class ParticleSpawnerTaskTimer extends MechRunnable {
 				mechBlocks.add(new Location(Bukkit.getWorld(plugin.placed.getString(key + ".world")), plugin.placed.getInt(key + ".x"), plugin.placed.getInt(key + ".y") + 1, plugin.placed.getInt(key + ".z")));
 			} else if (plugin.blockData.getBoolean("block.plantFarmer.showParticles") && MechanicalBlocks.PLANT_FARMER.getId().equals(plugin.placed.getString(key + ".id"))) {
 				mechBlocks.add(new Location(Bukkit.getWorld(plugin.placed.getString(key + ".world")), plugin.placed.getInt(key + ".x"), plugin.placed.getInt(key + ".y") + 1, plugin.placed.getInt(key + ".z")));
+			} else if (plugin.blockData.getBoolean("block.generator.showParticles") && MechanicalBlocks.GENERATOR.getId().equals(plugin.placed.getString(key + ".id"))) {
+				mechBlocks.add(new Location(Bukkit.getWorld(plugin.placed.getString(key + ".world")), plugin.placed.getInt(key + ".x"), plugin.placed.getInt(key + ".y") + 1, plugin.placed.getInt(key + ".z")));
 			}
 		}
 		

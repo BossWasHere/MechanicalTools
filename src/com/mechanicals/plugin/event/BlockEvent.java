@@ -6,6 +6,8 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Furnace;
+import org.bukkit.block.Hopper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.mechanicals.plugin.MechMain;
@@ -143,7 +146,7 @@ public class BlockEvent implements Listener {
 				}
 				
 			}
-		} else if (event.getBlock().getType() == Material.MOSSY_COBBLESTONE) {
+		} else if (event.getBlock().getType() == Material.FURNACE || event.getBlock().getType() == Material.BURNING_FURNACE) {
 			for (String key : MechMain.plugin.placed.getKeys(false)) {
 				if (MechMain.plugin.placed.getString(key + ".id", "").equals(MechanicalBlocks.GENERATOR.getId())) {
 					MechMain.plugin.generator.blockBreakEvent(event);
@@ -205,6 +208,15 @@ public class BlockEvent implements Listener {
 				Location out = new Location(sender ? b.getWorld() : a.getWorld(), x, y, z);
 				p.teleport(out);
 				p.sendMessage(MechMain.plugin.texts.teleportNow);
+			}
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.HIGH)
+	public void hopperFeedEvent(InventoryMoveItemEvent event) {
+		if (event.getSource().getHolder() instanceof Hopper) {
+			if (event.getDestination().getHolder() instanceof Furnace) {
+				//Stuff
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package com.mechanicals.plugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -86,6 +87,47 @@ public class InventoryHandler {
 			if (j == 4) continue;
 			i.setItem(j, filter);
 		}
+		return i;
+	}
+	
+	public static Inventory loadGeneratorInventory(String configKey) {
+		Inventory i = Bukkit.createInventory(null, 9, ChatColor.BLUE + "[Mechanical] Generator");
+		ItemStack filter = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)8);
+		ItemMeta meta = filter.getItemMeta();
+		meta.setDisplayName(MechMain.plugin.texts.placeFuel);
+		filter.setItemMeta(meta);
+		ItemStack locData = new ItemStack(Material.PAPER);
+		ItemMeta locMeta = locData.getItemMeta();
+		locMeta.setDisplayName("BlockPos");
+		locMeta.setLore(Arrays.asList(new String[] {"ConfigKey", configKey}));
+		locData.setItemMeta(locMeta);
+		i.setItem(0, locData);
+		ItemStack fuelData = new ItemStack(Material.BLAZE_POWDER);
+		ItemMeta fuelMeta = fuelData.getItemMeta();
+		fuelMeta.setDisplayName("Fuel: " + MechMain.plugin.placed.getDouble(configKey + ".fuel"));
+		fuelMeta.setLore(Arrays.asList(new String[] {"How much fuel this generator has"}));
+		locData.setItemMeta(locMeta);
+		i.setItem(0, locData);
+		i.setItem(1, fuelData);
+		for (int j = 2; j < 8; j++) {
+			if (j == 4) continue;
+			i.setItem(j, filter);
+		}
+		if (MechMain.plugin.vault) {
+			ItemStack coalEconomy = new ItemStack(Material.COAL);
+			ItemStack lavaEconomy = new ItemStack(Material.LAVA_BUCKET);
+			ItemMeta coalEconomyMeta = coalEconomy.getItemMeta();
+			coalEconomyMeta.setDisplayName("Add Coal from Economy");
+			coalEconomyMeta.setLore(Arrays.asList(new String[] {"\"Buy\" a piece of coal", "" + MechMain.plugin.generator.energyMultiplier}));
+			ItemMeta lavaEconomyMeta = lavaEconomy.getItemMeta();
+			lavaEconomyMeta.setDisplayName("Add Lava from Economy");
+			lavaEconomyMeta.setLore(Arrays.asList(new String[] {"\"Buy\" a bucket of lava", "" + (double) Math.round(MechMain.plugin.generator.energyMultiplier * 12.5 * 100.0) / 100.0}));
+			coalEconomy.setItemMeta(coalEconomyMeta);
+			lavaEconomy.setItemMeta(lavaEconomyMeta);
+			i.setItem(7, coalEconomy);
+			i.setItem(8, lavaEconomy);
+		}
+		
 		return i;
 	}
 	

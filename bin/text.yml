@@ -1,6 +1,8 @@
 ## Text Configuration for Mechanical Tools and Blocks plugin by IballisticBoss ##
 # Formatting with ~...~ can be used e.g. ~green~, ~darkred~, ~italic~ #
 # Use &player& for stating player name (only some texts) #
+# Use &item& for stating item type (only some texts when purchasing) #
+# Use &cost& for cost of a purchase (only some texts) #
 
 onlyPlayers: ~red~Only players can recieve Mechanical Tools and Blocks
 noPermission: ~red~You do not have permission to use this command!
@@ -19,10 +21,13 @@ brokenBlock: ~aqua~Broken a Mechanical Block successfully
 notEnabled: ~red~This block or item has been disabled by a server administrator!
 teleporting: ~darkgreen~Now teleporting...
 economyNotAvailable: ~red~Economy could not be setup - is there an economy management plugin?
+notEnoughEconomy: ~red~You do not have enough currency to do that!
+purchaseSuccess: ~blue~Successfully bought &item& for &cost&!
 
 #Items
 spawnPointTeleport_Use: ~darkblue~Teleporting to your spawn point...
 songIssue: ~red~An error has occurred while trying to play your song!
 noSongs: ~aqua~No NoteBlockSongs were found!
 placeDyeHere: ~aqua~Please place your dye in here
+placeFuelHere: ~aqua~Please place your fuel in here
 addDyeFirst: ~aqua~Please add dye first

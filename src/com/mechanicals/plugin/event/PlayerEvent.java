@@ -49,6 +49,8 @@ public class PlayerEvent implements Listener {
 			MechMain.plugin.dyeWand.itemUseEvent(event);
 		} else if (MechMain.plugin.flamethrower.matchesMeta(item)) {
 			MechMain.plugin.flamethrower.itemUseEvent(event);
+		} else if (event.getClickedBlock().getType().equals(Material.FURNACE) || event.getClickedBlock().getType().equals(Material.BURNING_FURNACE)) {
+			MechMain.plugin.generator.openFuelWindow(event.getPlayer(), event.getClickedBlock().getLocation());
 		}
 	}
 	

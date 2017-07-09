@@ -14,6 +14,7 @@ enabled:
     - elevator
     - animalGrowth
     - plantFarmer
+    - generator
 
 #Particles Configuration
 particle:
@@ -27,7 +28,7 @@ particle:
 # - permissions: Specific permissions for the block (other: a block placed by another player)
 # - crafting: [a: the top row, b: the middle row, c: the bottom row, items: specified crafting items, enabled: should crafting be allowed]
 # - showParticles: Display particles to players for special blocks
-# Other paramaters include: radius, teleportsPlayers, maxEntities, maxBlocksAtOnce, generateNewChunks
+# Other paramaters include: radius, teleportsPlayers, maxEntities, maxBlocksAtOnce, generateNewChunks, energyMultiplier
 block:
     blockBreaker: 
         name: Block Breaker
@@ -285,7 +286,10 @@ block:
             - Generator
             - Will convert coal or economy money to power
             - Servicable
-        energyMultiplier: 1.0
+        #Gaps between power generation (can be double/decimal)
+        trigger: 1.0
+        #The equivalent of 1 piece of coal to economy $
+        energyMultiplier: 25.0
         permissions:
             place: mechanical.generator.place
             break: mechanical.generator.destroy

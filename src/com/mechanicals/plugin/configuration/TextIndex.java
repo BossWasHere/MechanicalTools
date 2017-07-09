@@ -23,12 +23,15 @@ public class TextIndex {
 	public final String noPermissionRemoteEdit;
 	
 	public final String economyNotAvailable;
+	public final String notEnoughEconomy;
+	public final String purchaseSuccess;
 	
 	public final String bedTeleport_Use;
 	public final String songIssue;
 	public final String noSongs;
 	public final String teleportNow;
 	public final String placeDyes;
+	public final String placeFuel;
 	public final String addDyeFirst;
 	
 	public TextIndex(ConfigurationUnit config) {
@@ -50,11 +53,14 @@ public class TextIndex {
 		teleportNow = translateAlternateColorCodes(config.getString("teleporting", NOT_FOUND));
 		
 		economyNotAvailable = translateAlternateColorCodes(config.getString("economyNotAvailable", NOT_FOUND));
+		notEnoughEconomy = translateAlternateColorCodes(config.getString("notEnoughEconomy", NOT_FOUND));
+		purchaseSuccess = translateAlternateColorCodes(config.getString("purchaseSuccess", NOT_FOUND));
 		
 		bedTeleport_Use = translateAlternateColorCodes(config.getString("spawnPointTeleport_Use", NOT_FOUND));
 		songIssue = translateAlternateColorCodes(config.getString("songIssue", NOT_FOUND));
 		noSongs = translateAlternateColorCodes(config.getString("noSongs", NOT_FOUND));
 		placeDyes = translateAlternateColorCodes(config.getString("placeDyeHere", NOT_FOUND));
+		placeFuel = translateAlternateColorCodes(config.getString("placeFuelHere", NOT_FOUND));
 		addDyeFirst = translateAlternateColorCodes(config.getString("addDyeFirst", NOT_FOUND));
 	}
 	
@@ -111,5 +117,9 @@ public class TextIndex {
 	
 	public String givenItemTo(String player) {
 		return givenItemTo.replaceAll("(?i)&player&", player);
+	}
+	
+	public String purchaseSuccess(String item, String cost) {
+		return givenItemTo.replaceAll("(?i)&item&", item).replaceAll("(?i)&cost&", cost);
 	}
 }

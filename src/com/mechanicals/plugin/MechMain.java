@@ -38,6 +38,7 @@ import com.mechanicals.plugin.items.Flamethrower;
 import com.mechanicals.plugin.items.ITool;
 import com.mechanicals.plugin.items.Radio;
 import com.mechanicals.plugin.items.SpawnPointTeleporter;
+import com.mechanicals.plugin.server.EconomyManager;
 import com.mechanicals.plugin.server.MechanicalPluginManager;
 import com.mechanicals.plugin.server.ServerVersion;
 import com.mechanicals.plugin.task.AnimalGrowthTaskTimer;
@@ -45,6 +46,7 @@ import com.mechanicals.plugin.task.BlockBreakTaskTimer;
 import com.mechanicals.plugin.task.BlockPlaceTaskTimer;
 import com.mechanicals.plugin.task.ChunkLoadTaskTimer;
 import com.mechanicals.plugin.task.EntityTeleporterTaskTimer;
+import com.mechanicals.plugin.task.GeneratorTaskTimer;
 import com.mechanicals.plugin.task.GrinderTaskTimer;
 import com.mechanicals.plugin.task.ItemTeleporterTaskTimer;
 import com.mechanicals.plugin.task.ParticleSpawnerTaskTimer;
@@ -87,12 +89,14 @@ public class MechMain extends JavaPlugin {
 	public Set<ConfirmCooldown> cooldowns = Collections.synchronizedSet(new HashSet<>());
 	public MechanicalPluginManager mechPluginManager;
 	public WorldEditManager worldEditManager;
+	public EconomyManager economyManager;
 	
 	public BlockPlaceTaskTimer blockPlaceTask;				public BlockBreakTaskTimer blockBreakTask;
 	public TreeCutterTaskTimer treeCutterTask;				public EntityTeleporterTaskTimer entityTeleporterTask;
 	public ItemTeleporterTaskTimer itemTeleporterTask;		public GrinderTaskTimer grinderTask;
 	public ChunkLoadTaskTimer chunkLoadTask;				public AnimalGrowthTaskTimer animalGrowthTask;
-	public PlantFarmerTaskTimer plantFarmerTask;			public ParticleSpawnerTaskTimer particleTask;
+	public PlantFarmerTaskTimer plantFarmerTask;			public GeneratorTaskTimer generatorTask;
+	public ParticleSpawnerTaskTimer particleTask;
 	
 	
 	
@@ -218,7 +222,8 @@ public class MechMain extends JavaPlugin {
 		treeCutterTask = new TreeCutterTaskTimer();				entityTeleporterTask = new EntityTeleporterTaskTimer();
 		itemTeleporterTask = new ItemTeleporterTaskTimer();		chunkLoadTask = new ChunkLoadTaskTimer();
 		grinderTask = new GrinderTaskTimer();					animalGrowthTask = new AnimalGrowthTaskTimer();
-		plantFarmerTask = new PlantFarmerTaskTimer();			particleTask = new ParticleSpawnerTaskTimer();
+		plantFarmerTask = new PlantFarmerTaskTimer();			generatorTask = new GeneratorTaskTimer();
+		particleTask = new ParticleSpawnerTaskTimer();
 		
 		registerRunnables();
 		registerRecipes();
@@ -236,6 +241,7 @@ public class MechMain extends JavaPlugin {
 		if (chunkLoaderEnabled) chunkLoadTask.runTaskTimer(this, 200, 60);
 		if (animalGrowthEnabled) animalGrowthTask.runTaskTimer(this, 200, blockData.getLong("block.animalGrowth.trigger", 55) * 20);
 		if (plantFarmerEnabled) plantFarmerTask.runTaskTimer(this, 200, blockData.getLong("block.plantFarmer.trigger", 18) * 20);
+		if (generatorEnabled) generatorTask.runTaskTimer(this, 200, (long)(blockData.getDouble("block.generator.trigger") * 20));
 		
 		//Asynchronised
 		if (blockData.getBoolean("particle.enabled")) particleTask.runTaskTimerAsynchronously(this, 100, blockData.getLong("particle.ticks", 5));
