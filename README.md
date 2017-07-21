@@ -1,5 +1,5 @@
 # MechanicalTools
-<strong>Version 2.4</strong><br/>
+<strong>Version 2.4 (Current build 2.4.2.1)</strong><br/>
 <p>Bukkit plugin which adds mechanical blocks and tools to the vanilla game.<br/>
 This plugin focuses on adding automation to the vanilla experience of Minecraft.<br/>
 It is largely customisable and can be modified to suit the server's needs and resources</p>
@@ -17,12 +17,17 @@ Current "MechanicalBlocks" added to Bukkit:
   - Grinder
   - "Large" Teleporter
   - Chunk Loader
+  - Generator
+  - Miner (coming soon)
+  - AutoCrafter (coming soon)
 <br/>
 
 Current "MechanicalItems" added to Bukkit:
    - Spawn point teleporter
    - Radio
    - ITool
+   - Dye Wand
+   - Flamethrower
 <br/>
 
 Other Features:
@@ -38,6 +43,12 @@ Other Features:
 ---
 
 Changelog:
+<br/>
+
+Version 2.4.2.1:
+  - Changed project type from Eclipse to Maven
+  - New dependency management, now downloads depending plugins automagically
+  - Preparation for new blocks: AutoCrafter, Miner
 <br/>
 
 Version 2.4.2:
