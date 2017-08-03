@@ -121,9 +121,9 @@ public class InventoryEvent implements Listener {
 							double output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
 							MechMain.plugin.placed.set(configKey + ".fuel", output);
 							MechMain.plugin.placed.saveAndReload();
-							MechMain.plugin.economyManager.withdrawUserBalance(player, output);
-							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("coal", "" + output));
-							player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1.0f, 1.5f);
+							MechMain.plugin.economyManager.withdrawUserBalance(player, d);
+							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("coal", "" + d));
+							player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_BASS, 1.0f, 1.5f);
 							
 							Inventory updated = event.getInventory();
 							ItemStack item = updated.getItem(1);
@@ -147,9 +147,9 @@ public class InventoryEvent implements Listener {
 							double output = MechMain.plugin.placed.getDouble(configKey + ".fuel") + d;
 							MechMain.plugin.placed.set(configKey + ".fuel", output);
 							MechMain.plugin.placed.saveAndReload();
-							MechMain.plugin.economyManager.withdrawUserBalance(player, output);
-							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("lava", "" + output));
-							player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_PLING, 1.0f, 1.5f);
+							MechMain.plugin.economyManager.withdrawUserBalance(player, d);
+							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("lava", "" + d));
+							player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_BASS, 1.0f, 1.5f);
 							
 							Inventory updated = event.getInventory();
 							ItemStack item = updated.getItem(1);

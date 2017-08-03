@@ -120,6 +120,6 @@ public class TextIndex {
 	}
 	
 	public String purchaseSuccess(String item, String cost) {
-		return givenItemTo.replaceAll("(?i)&item&", item).replaceAll("(?i)&cost&", cost);
+		return purchaseSuccess.replaceAll("(?i)&item&", item).replaceAll("(?i)&cost&", cost);
 	}
 }

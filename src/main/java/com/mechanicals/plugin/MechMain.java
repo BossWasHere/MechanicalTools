@@ -127,6 +127,36 @@ public class MechMain extends JavaPlugin {
 		
 		Bukkit.getScheduler().runTask(this, mechPluginManager.getPluginLoadTask());
 		
+		permissions = new PermissionIndex(config, blockData, itemData);
+		texts = new TextIndex(textData);
+		
+		blockPlacer = new BlockPlacer();						blockBreaker = new BlockBreaker();
+		treeCutter = new TreeCutter();							entityTeleporter = new EntityTeleporter();
+		itemTeleporter = new ItemTeleporter();					grinder = new Grinder();
+		largeTeleporter = new LargeTeleporter();				chunkLoader = new ChunkLoader();
+		elevator = new Elevator();								animalGrowth = new AnimalGrowth();
+		plantFarmer = new PlantFarmer();						generator = new Generator();
+		miner = new Miner();									autoCrafter = new AutoCrafter();
+		
+		bedTeleporter = new SpawnPointTeleporter();				radio = new Radio();
+		iTool = new ITool();									dyeWand = new DyeWand();
+		flamethrower = new Flamethrower();
+		
+		
+		placementListener = new BlockEvent();					inventoryListener = new InventoryEvent();
+		playerListener = new PlayerEvent();
+		
+		blockPlaceTask = new BlockPlaceTaskTimer();				blockBreakTask = new BlockBreakTaskTimer();
+		treeCutterTask = new TreeCutterTaskTimer();				entityTeleporterTask = new EntityTeleporterTaskTimer();
+		itemTeleporterTask = new ItemTeleporterTaskTimer();		chunkLoadTask = new ChunkLoadTaskTimer();
+		grinderTask = new GrinderTaskTimer();					animalGrowthTask = new AnimalGrowthTaskTimer();
+		plantFarmerTask = new PlantFarmerTaskTimer();			minerTask = new MinerTaskTimer();
+		generatorTask = new GeneratorTaskTimer();				autoCraftTask = new AutoCrafterTaskTimer();
+		particleTask = new ParticleSpawnerTaskTimer();
+		
+	}
+	
+	public void complete() {
 		String comp = "";
 		for (String in : blockData.getStringList("enabled")) {
 			switch (in.toLowerCase()) {
@@ -216,37 +246,8 @@ public class MechMain extends JavaPlugin {
 		}
 		
 		logger.info("Starting Plugin with components enabled: " + (comp == "" ? "None" : comp.substring(0, comp.length() - 2)));
-		
-		permissions = new PermissionIndex(config, blockData, itemData);
-		texts = new TextIndex(textData);
-		
-		blockPlacer = new BlockPlacer();						blockBreaker = new BlockBreaker();
-		treeCutter = new TreeCutter();							entityTeleporter = new EntityTeleporter();
-		itemTeleporter = new ItemTeleporter();					grinder = new Grinder();
-		largeTeleporter = new LargeTeleporter();				chunkLoader = new ChunkLoader();
-		elevator = new Elevator();								animalGrowth = new AnimalGrowth();
-		plantFarmer = new PlantFarmer();						generator = new Generator();
-		miner = new Miner();									autoCrafter = new AutoCrafter();
-		
-		bedTeleporter = new SpawnPointTeleporter();				radio = new Radio();
-		iTool = new ITool();									dyeWand = new DyeWand();
-		flamethrower = new Flamethrower();
-		
-		
-		placementListener = new BlockEvent();					inventoryListener = new InventoryEvent();
-		playerListener = new PlayerEvent();
-		
-		blockPlaceTask = new BlockPlaceTaskTimer();				blockBreakTask = new BlockBreakTaskTimer();
-		treeCutterTask = new TreeCutterTaskTimer();				entityTeleporterTask = new EntityTeleporterTaskTimer();
-		itemTeleporterTask = new ItemTeleporterTaskTimer();		chunkLoadTask = new ChunkLoadTaskTimer();
-		grinderTask = new GrinderTaskTimer();					animalGrowthTask = new AnimalGrowthTaskTimer();
-		plantFarmerTask = new PlantFarmerTaskTimer();			minerTask = new MinerTaskTimer();
-		generatorTask = new GeneratorTaskTimer();				autoCraftTask = new AutoCrafterTaskTimer();
-		particleTask = new ParticleSpawnerTaskTimer();
-		
 		registerRunnables();
 		registerRecipes();
-		
 	}
 	
 	private void registerRunnables() {

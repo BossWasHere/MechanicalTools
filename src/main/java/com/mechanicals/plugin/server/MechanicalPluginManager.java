@@ -46,10 +46,11 @@ public class MechanicalPluginManager {
 			@Override
 			public void run() {
 				fetchUpdates();
-				if (tryNBAPI) enableNoteBlockAPI();
-				if (tryWorldEdit) enableWorldEdit();
-				if (tryVault) enableVault();
+				if (tryNBAPI) plugin.nbapi = enableNoteBlockAPI();
+				if (tryWorldEdit) plugin.weapi = enableWorldEdit();
+				if (tryVault) plugin.vault = enableVault();
 				
+				plugin.complete();
 			}
 		};
 	}
@@ -207,6 +208,7 @@ public class MechanicalPluginManager {
 				Plugin p = Bukkit.getPluginManager().loadPlugin(resource);
 				Bukkit.getPluginManager().enablePlugin(p);
 				enabled = true;
+				plugin.economyManager = new EconomyManager();
 			} catch (Exception e) {
 				DebugLogger.severe("[Plugin Manager] Could not load active dependency - " + PluginLoadable.WORLDEDIT);
 				DebugLogger.severe("[Plugin Manager] Functions requiring this will be disabled!");

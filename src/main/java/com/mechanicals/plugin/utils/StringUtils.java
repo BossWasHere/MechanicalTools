@@ -50,12 +50,21 @@ public class StringUtils {
 		return in.length() < 1;
 	}
 	
+	public static boolean isBoolean(String in) {
+		if (in.equalsIgnoreCase("true") || in.equalsIgnoreCase("false")) return true;
+		return false;
+	}
+	
 	public static int getNumber(String in) {
 		try {
 			return Integer.parseInt(in);
 		} catch (Exception e) {
 			return -1;
 		}
+	}
+	
+	public static boolean getBoolean(String in) {
+		return Boolean.parseBoolean(in);
 	}
 	
 	public static double getDouble(String in) {

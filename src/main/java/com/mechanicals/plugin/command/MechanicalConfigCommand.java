@@ -86,6 +86,8 @@ public class MechanicalConfigCommand extends RegisteredCommand {
 										plugin.textData.set(data.split(":")[0], StringUtils.getNumber(data.split(":")[1]));
 									} else if (StringUtils.isStringList(data.split(":")[1])) {
 										plugin.textData.set(data.split(":")[0], StringUtils.getStringList(data.split(":")[1]));
+									} else if (StringUtils.isBoolean(data.split(":")[1])) {
+										plugin.textData.set(data.split(":")[0], StringUtils.getBoolean(data.split(":")[1]));
 									} else {
 										if (data.split(":")[1].equalsIgnoreCase("null")) plugin.textData.set(data.split(":")[0], null);
 										else plugin.textData.set(data.split(":")[0], data.split(":")[1]);
@@ -99,6 +101,8 @@ public class MechanicalConfigCommand extends RegisteredCommand {
 										plugin.blockData.set(data.split(":")[0], StringUtils.getNumber(data.split(":")[1]));
 									} else if (StringUtils.isStringList(data.split(":")[1])) {
 										plugin.blockData.set(data.split(":")[0], StringUtils.getStringList(data.split(":")[1]));
+									} else if (StringUtils.isBoolean(data.split(":")[1])) {
+										plugin.blockData.set(data.split(":")[0], StringUtils.getBoolean(data.split(":")[1]));
 									} else {
 										if (data.split(":")[1].equalsIgnoreCase("null")) plugin.blockData.set(data.split(":")[0], null);
 										else plugin.blockData.set(data.split(":")[0], data.split(":")[1]);
@@ -112,6 +116,8 @@ public class MechanicalConfigCommand extends RegisteredCommand {
 										plugin.itemData.set(data.split(":")[0], StringUtils.getNumber(data.split(":")[1]));
 									} else if (StringUtils.isStringList(data.split(":")[1])) {
 										plugin.itemData.set(data.split(":")[0], StringUtils.getStringList(data.split(":")[1]));
+									} else if (StringUtils.isBoolean(data.split(":")[1])) {
+										plugin.itemData.set(data.split(":")[0], StringUtils.getBoolean(data.split(":")[1]));
 									} else {
 										if (data.split(":")[1].equalsIgnoreCase("null")) plugin.itemData.set(data.split(":")[0], null);
 										else plugin.itemData.set(data.split(":")[0], data.split(":")[1]);
@@ -125,6 +131,8 @@ public class MechanicalConfigCommand extends RegisteredCommand {
 										plugin.config.set(data.split(":")[0], StringUtils.getNumber(data.split(":")[1]));
 									} else if (StringUtils.isStringList(data.split(":")[1])) {
 										plugin.config.set(data.split(":")[0], StringUtils.getStringList(data.split(":")[1]));
+									} else if (StringUtils.isBoolean(data.split(":")[1])) {
+										plugin.config.set(data.split(":")[0], StringUtils.getBoolean(data.split(":")[1]));
 									} else {
 										if (data.split(":")[1].equalsIgnoreCase("null")) plugin.config.set(data.split(":")[0], null);
 										else plugin.config.set(data.split(":")[0], data.split(":")[1]);
