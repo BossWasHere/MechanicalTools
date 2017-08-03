@@ -66,7 +66,7 @@ public class MechanicalPluginManager {
 			
 			JSONObject current = json.getJSONObject("current");
 			String ver = current.getString("build");
-			if (!VersionMatcher.isAtOrHigherThan(ver, plugin.getPluginVersion())) {
+			if (!VersionMatcher.isLowerThan(ver, plugin.getPluginVersion())) {
 				plugin.logger.info("[Plugin Manager] There is an update for MechanicalTools: " + PluginLoadable.MECHANICALTOOLS_URL);
 			}
 			
@@ -98,7 +98,7 @@ public class MechanicalPluginManager {
 				DebugLogger.severe("[Plugin Manager] Could not load active dependency - " + PluginLoadable.NOTEBLOCKAPI);
 				DebugLogger.severe("[Plugin Manager] Functions requiring this will be disabled!");
 			}
-		}
+		} else return true;
 		return enabled;
 	}
 	
@@ -134,7 +134,7 @@ public class MechanicalPluginManager {
 						if (file.getName().toLowerCase().startsWith(PluginLoadable.WORLDEDIT_JAR.toLowerCase())) {
 							String ver = file.getName().substring(PluginLoadable.WORLDEDIT_JAR.length(), file.getName().length() - 4);
 							String newVer = data.getString("version");
-							boolean state = VersionMatcher.isAtOrHigherThan(ver, newVer);
+							boolean state = VersionMatcher.isLowerThan(newVer, ver);
 							if (state) {
 								DebugLogger.info("[Plugin Manager] Trying to update " + PluginLoadable.WORLDEDIT + " from version " + ver + " to " + newVer);
 								String hashA = data.getString("md5");
@@ -157,7 +157,7 @@ public class MechanicalPluginManager {
 				DebugLogger.severe("[Plugin Manager] Could not load active dependency - " + PluginLoadable.WORLDEDIT);
 				DebugLogger.severe("[Plugin Manager] Functions requiring this will be disabled!");
 			}
-		}
+		} else return true;
 		return enabled;
 	}
 	
@@ -189,7 +189,7 @@ public class MechanicalPluginManager {
 						if (file.getName().toLowerCase().startsWith(PluginLoadable.ECONOMY_PROVIDER_JAR.toLowerCase())) {
 							String ver = file.getName().substring(PluginLoadable.ECONOMY_PROVIDER_JAR.length(), file.getName().length() - 4);
 							String newVer = data.getString("version");
-							boolean state = VersionMatcher.isAtOrHigherThan(ver, newVer);
+							boolean state = VersionMatcher.isLowerThan(newVer, ver);
 							if (state) {
 								DebugLogger.info("[Plugin Manager] Trying to update " + PluginLoadable.ECONOMY_PROVIDER + " from version " + ver + " to " + newVer);
 								String hashA = data.getString("md5");
@@ -208,19 +208,17 @@ public class MechanicalPluginManager {
 				Plugin p = Bukkit.getPluginManager().loadPlugin(resource);
 				Bukkit.getPluginManager().enablePlugin(p);
 				enabled = true;
-				plugin.economyManager = new EconomyManager();
 			} catch (Exception e) {
 				DebugLogger.severe("[Plugin Manager] Could not load active dependency - " + PluginLoadable.WORLDEDIT);
 				DebugLogger.severe("[Plugin Manager] Functions requiring this will be disabled!");
 			}
-		}
+		} else return true;
 		return enabled;
 	}
 }
 
 interface PluginLoadable {
 	
-	//Maybe change the save location?
 	//Old Location: https://www.dropbox.com/s/jov3oxk7f5qb4hy/libraries.json?dl=1
 	String PLUGIN_MGR_JSON = "https://raw.githubusercontent.com/BossWasHere/MechanicalTools/master/libraries.json";
 	

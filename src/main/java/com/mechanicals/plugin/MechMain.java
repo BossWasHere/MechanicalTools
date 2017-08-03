@@ -125,8 +125,6 @@ public class MechMain extends JavaPlugin {
 		
 		mechPluginManager = new MechanicalPluginManager(config.getBoolean("useNoteBlockAPI", false), config.getBoolean("useWorldEditAPI", false), config.getBoolean("useVaultAPI", false));
 		
-		Bukkit.getScheduler().runTask(this, mechPluginManager.getPluginLoadTask());
-		
 		permissions = new PermissionIndex(config, blockData, itemData);
 		texts = new TextIndex(textData);
 		
@@ -153,6 +151,8 @@ public class MechMain extends JavaPlugin {
 		plantFarmerTask = new PlantFarmerTaskTimer();			minerTask = new MinerTaskTimer();
 		generatorTask = new GeneratorTaskTimer();				autoCraftTask = new AutoCrafterTaskTimer();
 		particleTask = new ParticleSpawnerTaskTimer();
+		
+		Bukkit.getScheduler().runTask(this, mechPluginManager.getPluginLoadTask());
 		
 	}
 	
@@ -246,6 +246,8 @@ public class MechMain extends JavaPlugin {
 		}
 		
 		logger.info("Starting Plugin with components enabled: " + (comp == "" ? "None" : comp.substring(0, comp.length() - 2)));
+		DebugLogger.info("[Debug] NoteBlockAPI: " + nbapi + " | WorldEdit: " + weapi + " | Vault: " + vault);
+		economyManager = new EconomyManager();
 		registerRunnables();
 		registerRecipes();
 	}

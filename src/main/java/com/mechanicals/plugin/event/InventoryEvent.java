@@ -122,7 +122,7 @@ public class InventoryEvent implements Listener {
 							MechMain.plugin.placed.set(configKey + ".fuel", output);
 							MechMain.plugin.placed.saveAndReload();
 							MechMain.plugin.economyManager.withdrawUserBalance(player, d);
-							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("coal", "" + d));
+							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("lava", "" + d));
 							player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_BASS, 1.0f, 1.5f);
 							
 							Inventory updated = event.getInventory();
@@ -148,7 +148,7 @@ public class InventoryEvent implements Listener {
 							MechMain.plugin.placed.set(configKey + ".fuel", output);
 							MechMain.plugin.placed.saveAndReload();
 							MechMain.plugin.economyManager.withdrawUserBalance(player, d);
-							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("lava", "" + d));
+							player.sendMessage(MechMain.plugin.texts.purchaseSuccess("coal", "" + d));
 							player.getLocation().getWorld().playSound(player.getLocation(), Sound.BLOCK_NOTE_BASS, 1.0f, 1.5f);
 							
 							Inventory updated = event.getInventory();
