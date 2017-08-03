@@ -137,6 +137,7 @@ public class EntityTeleporter extends BaseMechanicalBlock {
 
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		EntityTeleporterTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}

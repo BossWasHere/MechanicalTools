@@ -30,7 +30,7 @@ particle:
 # - permissions: Specific permissions for the block (other: a block placed by another player)
 # - crafting: [a: the top row, b: the middle row, c: the bottom row, items: specified crafting items, enabled: should crafting be allowed]
 # - showParticles: Display particles to players for special blocks
-# Other paramaters include: radius, teleportsPlayers, maxEntities, maxBlocksAtOnce, generateNewChunks, energyMultiplier, energyPerAction, maxOutput
+# Other paramaters include: radius, teleportsPlayers, maxEntities, maxBlocksAtOnce, generateNewChunks, energyMultiplier, energyPerAction, maxOutput, blacklist
 block:
     blockBreaker: 
         name: Block Breaker
@@ -40,6 +40,11 @@ block:
             - Place facing into a block for the block breaker to break it.
             - Automatic
         trigger: 5
+        blacklist:
+          - bedrock
+          - bed
+          - bed_block
+          - end_portal_frame
         permissions:
             place: mechanical.blockbreaker.place
             break: mechanical.blockbreaker.destroy
@@ -234,7 +239,7 @@ block:
             c: www
             items: w=wool;r=redstone
             enabled: true
-        showParticles: true
+        showParticles: false
         
     animalGrowth:
         name: Animal Growth
@@ -317,6 +322,11 @@ block:
             - Will break blocks in a 3x3 area
             - Requires a Generator
         trigger: 1
+        blacklist:
+          - bedrock
+          - bed
+          - bed_block
+          - end_portal_frame
         #Energy Per Block
         energyPerAction: 4.0
         permissions:

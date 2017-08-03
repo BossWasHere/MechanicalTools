@@ -219,7 +219,8 @@ public class MechanicalPluginManager {
 interface PluginLoadable {
 	
 	//Maybe change the save location?
-	String PLUGIN_MGR_JSON = "https://www.dropbox.com/s/jov3oxk7f5qb4hy/libraries.json?dl=1";
+	//Old Location: https://www.dropbox.com/s/jov3oxk7f5qb4hy/libraries.json?dl=1
+	String PLUGIN_MGR_JSON = "https://raw.githubusercontent.com/BossWasHere/MechanicalTools/master/libraries.json";
 	
 	String NOTEBLOCKAPI = "NoteBlockAPI";
 	String NOTEBLOCKAPI_JAR = "NoteBlockAPI-1.1.7.jar";

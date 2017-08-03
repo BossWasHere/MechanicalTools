@@ -138,6 +138,7 @@ public class TreeCutter extends BaseMechanicalBlock {
 
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		TreeCutterTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}

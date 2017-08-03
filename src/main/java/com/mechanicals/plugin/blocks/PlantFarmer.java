@@ -97,6 +97,7 @@ public class PlantFarmer extends BaseMechanicalBlock {
 	
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		PlantFarmerTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}

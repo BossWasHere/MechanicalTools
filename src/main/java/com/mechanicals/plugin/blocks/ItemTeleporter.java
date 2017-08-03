@@ -137,6 +137,7 @@ public class ItemTeleporter extends BaseMechanicalBlock {
 
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		ItemTeleporterTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}

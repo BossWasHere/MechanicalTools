@@ -1,6 +1,7 @@
 package com.mechanicals.plugin.task;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -9,6 +10,7 @@ import org.bukkit.Material;
 
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
 import com.mechanicals.plugin.server.MechRunnable;
+import com.mechanicals.plugin.utils.BlockUtils;
 import com.mechanicals.plugin.utils.WorldUtils;
 
 public class MinerTaskTimer extends MechRunnable {
@@ -25,17 +27,39 @@ public class MinerTaskTimer extends MechRunnable {
 	@Override
 	public void run() {
 		if (shouldReload) reload();
-		boolean ranOnce = false;
 		for (Location loc : locations) {
-			//int blocksToBreak = 0;
+			boolean power = false;
 			Set<Location> surrounding = WorldUtils.getBlocksSurrounding(loc);
 			for (Location generator : surrounding) {
 				if (generator.getBlock().getType().equals(Material.FURNACE) || generator.getBlock().getType().equals(Material.BURNING_FURNACE)) {
-					ranOnce = true;
+					for (String key : plugin.placed.getKeys(false)) {
+						if (!plugin.placed.getString(key + ".id").equalsIgnoreCase(plugin.generator.getMechBlock().getId())) continue;
+						if (plugin.placed.getString(key + ".world").equalsIgnoreCase(generator.getWorld().getName())) {
+							if (plugin.placed.getInt(key + ".x") == generator.getBlockX()) {
+								if (plugin.placed.getInt(key + ".y") == generator.getBlockY()) {
+									if (plugin.placed.getInt(key + ".z") == generator.getBlockZ()) {
+										double p = plugin.placed.getDouble(key + ".power", 0.0);
+										p -= plugin.miner.energyPerBlock;
+										if (p < 0) continue;
+										power = true;
+										plugin.placed.set(key + ".power", p);
+										plugin.placed.saveAndReload();
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (power) {
+				List<Location> cuboid = WorldUtils.getBlocksInCuboid(new Location(loc.getWorld(), loc.getBlockX() - 1, 0, loc.getBlockZ() - 1), new Location(loc.getWorld(), loc.getBlockX() + 1, loc.getBlockY() - 1, loc.getBlockZ() + 1));
+				for (Location l : cuboid) {
+					if (l.getBlock().getType().equals(Material.AIR)) continue;
+					if (BlockUtils.breakBlock(l, plugin.miner.blacklist, new Location(loc.getWorld(), loc.getBlockX(), loc.getBlockY() + 2, loc.getBlockZ()))) break;
 				}
 			}
 		}
-		if (ranOnce) plugin.placed.saveAndReload();
 	}
 	
 	public void reload() {

@@ -135,6 +135,7 @@ public class BlockPlacer extends BaseMechanicalBlock {
 
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		BlockPlaceTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}

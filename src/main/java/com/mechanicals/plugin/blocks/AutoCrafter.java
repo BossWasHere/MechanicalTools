@@ -97,6 +97,7 @@ public class AutoCrafter extends BaseMechanicalBlock {
 	
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		AutoCrafterTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}

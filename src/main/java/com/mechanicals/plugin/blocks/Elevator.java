@@ -96,6 +96,7 @@ public class Elevator extends BaseMechanicalBlock {
 
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}
 

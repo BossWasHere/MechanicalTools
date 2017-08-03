@@ -3,11 +3,13 @@ package com.mechanicals.plugin.item;
 import java.util.Random;
 
 import org.bukkit.DyeColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import com.mechanicals.plugin.server.VersionMatcher;
+import com.mechanicals.plugin.utils.MathUtils;
 
 /**
  * Collection of all block and item IDs for the plugin to decode items from
@@ -64,7 +66,8 @@ public enum Items {
 	  dispenser ("DISPENSER"), 
 	  sandstone ("SANDSTONE"), 
 	  noteblock ("NOTE_BLOCK"), 
-	  bed ("BED"), 
+	  bed ("BED"),
+	  bed_block ("BED_BLOCK"),
 	  powered_rail ("POWERED_RAIL"), 
 	  detector_rail ("DETECTOR_RAIL"), 
 	  sticky_piston ("PISTON_STICKY_BASE"), 
@@ -521,7 +524,7 @@ public enum Items {
 	}
 	private Items(String id) {
 		this.id = id;
-		this.data = 0;
+		data = 0;
 	}
 	
 	public static ItemStack getMaterial(final String in) throws Exception {
@@ -535,8 +538,76 @@ public enum Items {
 		}
 	}
 	
-	public static short getData(ItemStack item) {
-		return item.getDurability();
+	public static ItemStack getDropItem(final Material in, final short data) {
+		switch (in) {
+		case COAL_ORE:
+			return new ItemStack(Material.COAL);
+		case DIAMOND_ORE:
+			return new ItemStack(Material.DIAMOND);
+		case LAPIS_ORE:
+				return new ItemStack(Material.INK_SACK, MathUtils.getRandom(1, 5), (short)4);
+		case REDSTONE_ORE:
+			return new ItemStack(Material.REDSTONE, MathUtils.getRandom(1, 4));
+		case QUARTZ_ORE:
+			return new ItemStack(Material.QUARTZ);
+		case GRAVEL:
+			if (MathUtils.getRandom(0, 9) < 9) return new ItemStack(Material.GRAVEL);
+			return new ItemStack(Material.FLINT);
+		case LONG_GRASS:
+			if (data == 1) if (MathUtils.getRandom(0, 9) < 9) return new ItemStack(Material.AIR);
+			return new ItemStack(Material.SEEDS);
+		case STONE:
+			if (data == 0) return new ItemStack(Material.COBBLESTONE);
+			return new ItemStack(in, 1, data);
+		case GRASS:
+		case GRASS_PATH:
+			return new ItemStack(Material.DIRT);
+		case DIRT:
+			if (data != 1) return new ItemStack(Material.DIRT);
+		case MELON_BLOCK:
+			return new ItemStack(Material.MELON, MathUtils.getRandom(1, 5));
+		case GLOWSTONE:
+			return new ItemStack(Material.GLOWSTONE_DUST, MathUtils.getRandom(1, 4));
+		case WEB:
+			return new ItemStack(Material.STRING);
+		case SNOW:
+			return new ItemStack(Material.SNOW_BALL);
+		default:
+			return new ItemStack(in, 1, data);
+		}
+	}
+	
+	public static boolean hasBlockInventory(Location block) {
+		switch (block.getBlock().getType()) {
+		case DROPPER:
+		case DISPENSER:
+		case CHEST:
+		case TRAPPED_CHEST:
+		case HOPPER:
+		case JUKEBOX:
+		case FURNACE:
+		case BURNING_FURNACE:
+		case ENCHANTMENT_TABLE:
+		case BLACK_SHULKER_BOX:
+		case RED_SHULKER_BOX:
+		case GREEN_SHULKER_BOX:
+		case BROWN_SHULKER_BOX:
+		case BLUE_SHULKER_BOX:
+		case PURPLE_SHULKER_BOX:
+		case CYAN_SHULKER_BOX:
+		case SILVER_SHULKER_BOX:
+		case GRAY_SHULKER_BOX:
+		case PINK_SHULKER_BOX:
+		case LIME_SHULKER_BOX:
+		case YELLOW_SHULKER_BOX:
+		case LIGHT_BLUE_SHULKER_BOX:
+		case MAGENTA_SHULKER_BOX:
+		case ORANGE_SHULKER_BOX:
+		case WHITE_SHULKER_BOX:
+			return true;
+		default:
+			return false;
+		}
 	}
 	
 	public static boolean isColourable(Block block) {

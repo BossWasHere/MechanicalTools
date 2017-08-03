@@ -10,6 +10,7 @@ import org.bukkit.Material;
 
 import com.mechanicals.plugin.blocks.MechanicalBlocks;
 import com.mechanicals.plugin.server.MechRunnable;
+import com.mechanicals.plugin.utils.BlockUtils;
 
 public class BlockBreakTaskTimer extends MechRunnable {
 
@@ -30,8 +31,11 @@ public class BlockBreakTaskTimer extends MechRunnable {
 		while (blocks.hasNext()) {
 			Location block = blocks.next();
 			Location drop = dropper.next();
-			if (drop.getBlock().getType() != Material.DROPPER) shouldReload = true;
-			if (block.getBlock().getType() != Material.AIR && block.getBlock().getType() != Material.DISPENSER) block.getBlock().breakNaturally();
+			if (drop.getBlock().getType() != Material.DROPPER) {
+				shouldReload = true;
+				continue;
+			}
+			BlockUtils.breakBlock(block, plugin.blockBreaker.blacklist);
 		}
 		if (shouldReload) reload();
 	}

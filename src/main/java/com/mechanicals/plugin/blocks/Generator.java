@@ -107,6 +107,7 @@ public class Generator extends BaseMechanicalBlock {
 
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		ParticleSpawnerTaskTimer.shouldReload = true;
 		GeneratorTaskTimer.shouldReload = true;
 	}

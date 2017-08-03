@@ -1,0 +1,32 @@
+{
+	"current": {
+		"id": "MechanicalTools",
+		"build": "2.4.3",
+		"release": "02-20-2017 20:45"
+	},
+	"libraries": {
+		
+		"worldedit": {
+			"id": "WorldEdit",
+			"version": "6.1.7.2",
+			"downloadUrl": "https://dev.bukkit.org/projects/worldedit/files/2431372/download",
+			"md5": "1B64E31C38FC140016EF5A35E390F17C",
+			"sha-256": "711BE37301A327ABA4E347131875D0564DBFDC2F41053A12DB97F0234661778B"
+		},
+		"noteblockapi": {
+			"id": "NoteBlockAPI",
+			"version": "1.1.7",
+			"downloadUrl": "internal",
+			"md5": "CA7FED74F28E0B0EE888A474514B9C7B",
+			"sha-256": "34E0EE5FD1E072B745CF8DD942693C1C795CD09756F8F5898CAAFF14EA5CD31C"
+		},
+		"vault": {
+			"id": "Vault",
+			"version": "1.5.6",
+			"downloadUrl": "https://dev.bukkit.org/projects/vault/files/894359/download",
+			"md5": "FF7A7B7233146B002727DFA238C8420E",
+			"sha-256": "D7B28F10A6B50B667836DFFDC8DE5E4BAE85DB74DB72E73FA9F062EDBB375795"
+		}
+		
+	}
+}

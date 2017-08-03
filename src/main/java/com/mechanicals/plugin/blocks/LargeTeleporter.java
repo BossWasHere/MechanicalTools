@@ -130,6 +130,7 @@ public class LargeTeleporter extends BaseMechanicalBlock {
 
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}
 	

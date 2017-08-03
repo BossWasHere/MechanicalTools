@@ -1,5 +1,7 @@
 package com.mechanicals.plugin.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Sound;
@@ -14,12 +16,14 @@ import com.mechanicals.plugin.utils.StringUtils;
 public class Miner extends BaseMechanicalBlock {
 	
 	public final double energyPerBlock;
+	public final List<String> blacklist;
 	
 	public Miner() {
 		super();
 		double e = plugin.blockData.getDouble("block.miner.energyPerAction");
 		if (e > plugin.blockData.getDouble("block.generator.maxOutput")) energyPerBlock = plugin.blockData.getDouble("block.generator.maxOutput");
 		else energyPerBlock = e;
+		blacklist =  plugin.blockData.getStringList("block.miner.blacklist", new ArrayList<String>());
 	}
 	
 	@Override
@@ -102,6 +106,7 @@ public class Miner extends BaseMechanicalBlock {
 	
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		MinerTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}

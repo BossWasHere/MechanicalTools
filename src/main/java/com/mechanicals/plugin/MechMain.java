@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
@@ -26,6 +27,7 @@ import com.mechanicals.plugin.blocks.Generator;
 import com.mechanicals.plugin.blocks.Grinder;
 import com.mechanicals.plugin.blocks.ItemTeleporter;
 import com.mechanicals.plugin.blocks.LargeTeleporter;
+import com.mechanicals.plugin.blocks.MechanicalBlocks;
 import com.mechanicals.plugin.blocks.Miner;
 import com.mechanicals.plugin.blocks.PlantFarmer;
 import com.mechanicals.plugin.blocks.TreeCutter;
@@ -67,6 +69,7 @@ public class MechMain extends JavaPlugin {
 	public boolean nbapi = false, weapi = false, vault = false;
 	
 	public static MechMain plugin;
+	public static Set<Location> mechanicalBlocks = new HashSet<Location>();
 	
 	public PermissionIndex permissions;
 	public TextIndex texts;
@@ -388,6 +391,15 @@ public class MechMain extends JavaPlugin {
 	
 	public InputStream getResourceAsStream(String resource) {
 		return getClass().getResourceAsStream("/" + resource);
+	}
+
+	public void reloadPlacedBlocks() {
+		Set<String> keys = plugin.placed.getKeys(false);
+		for (String key : keys) {
+			if (MechanicalBlocks.BLOCK_BREAKER.getId().equals(plugin.placed.getString(key + ".id"))) {
+				mechanicalBlocks.add(new Location(Bukkit.getWorld(plugin.placed.getString(key + ".world")), plugin.placed.getInt(key + ".x"), plugin.placed.getInt(key + ".y"), plugin.placed.getInt(key + ".z")));
+			}
+		}
 	}
 
 }

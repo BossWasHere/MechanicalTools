@@ -1,5 +1,7 @@
 package com.mechanicals.plugin.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.management.modelmbean.InvalidTargetObjectTypeException;
@@ -19,8 +21,12 @@ import com.mechanicals.plugin.utils.StringUtils;
 
 public class BlockBreaker extends BaseMechanicalBlock {
 	
+	public final List<String> blacklist;
+	
 	public BlockBreaker() {
 		super();
+		blacklist = plugin.blockData.getStringList("block.blockBreaker.blacklist", new ArrayList<String>());
+		if (!blacklist.contains("air")) blacklist.add("air");
 	}
 	
 	@Override
@@ -136,6 +142,7 @@ public class BlockBreaker extends BaseMechanicalBlock {
 	
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		BlockBreakTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}

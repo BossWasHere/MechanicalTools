@@ -48,4 +48,9 @@ public abstract class BaseMechanicalBlock implements IMechanicalBlock {
 	public String breakOtherPerm() { return getMechBlock().getBreakOtherPermission(); }
 	public String commandPerm() { return getMechBlock().getCommandPermission(); }
 	public String commandOtherPerm() { return getMechBlock().getCommandOtherPermission(); }
+	
+	@Override
+	public void updateRunnables() {
+		plugin.reloadPlacedBlocks();
+	}
 }

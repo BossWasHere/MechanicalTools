@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import com.mechanicals.plugin.InventoryHandler;
 import com.mechanicals.plugin.item.Items;
 import com.mechanicals.plugin.task.extra.ConfirmCooldown;
+import com.mechanicals.plugin.utils.BlockUtils;
 
 public class DyeWand extends BaseMechanicalItem {
 
@@ -21,7 +22,6 @@ public class DyeWand extends BaseMechanicalItem {
 		return MechanicalItems.DYE_WAND;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void itemUseEvent(PlayerInteractEvent event) {
 		if (!plugin.dyeWandEnabled) {
@@ -57,17 +57,17 @@ public class DyeWand extends BaseMechanicalItem {
 							return;
 						}
 						if (!dye.getType().equals(Material.INK_SACK)) return;
-						if (block.getData() == (byte) Items.getReverseDyeColor(dye.getDurability())) return;
+						if (BlockUtils.getData(block) == (byte) Items.getReverseDyeColor(dye.getDurability())) return;
 						
 						switch (block.getType()) {
 						case HARD_CLAY:
-							block.setTypeIdAndData(Material.STAINED_CLAY.getId(), (byte) Items.getReverseDyeColor(dye.getDurability()), false);
+							BlockUtils.setBlockAndData(block, Material.STAINED_CLAY, (byte) Items.getReverseDyeColor(dye.getDurability()), false);
 							break;
 						case GLASS:
-							block.setTypeIdAndData(Material.STAINED_GLASS.getId(), (byte) Items.getReverseDyeColor(dye.getDurability()), false);
+							BlockUtils.setBlockAndData(block, Material.STAINED_GLASS, (byte) Items.getReverseDyeColor(dye.getDurability()), false);
 							break;
 						case THIN_GLASS:
-							block.setTypeIdAndData(Material.STAINED_GLASS_PANE.getId(), (byte) Items.getReverseDyeColor(dye.getDurability()), false);
+							BlockUtils.setBlockAndData(block, Material.STAINED_GLASS_PANE, (byte) Items.getReverseDyeColor(dye.getDurability()), false);
 							break;
 						case WOOL:
 						case STAINED_CLAY:
@@ -76,10 +76,10 @@ public class DyeWand extends BaseMechanicalItem {
 						case CONCRETE:
 						case CONCRETE_POWDER:
 						//Issue with coloring beds; waiting for new metadata handling
-						/*case BED:
-						case BED_BLOCK:*/
+/*						case BED:
+						case BED_BLOCK:				*/
 						case CARPET:
-							block.setData((byte)Items.getReverseDyeColor(dye.getDurability()));
+							BlockUtils.setData(block, (byte)Items.getReverseDyeColor(dye.getDurability()));
 							break;
 						default:
 							return;

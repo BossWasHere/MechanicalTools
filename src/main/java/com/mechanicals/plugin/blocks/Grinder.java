@@ -97,6 +97,7 @@ public class Grinder extends BaseMechanicalBlock {
 	
 	@Override
 	public void updateRunnables() {
+		super.updateRunnables();
 		GrinderTaskTimer.shouldReload = true;
 		ParticleSpawnerTaskTimer.shouldReload = true;
 	}

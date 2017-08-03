@@ -115,6 +115,19 @@ public class ConfigurationUnit extends YamlConfiguration {
 	}
 	
 	/**
+	 * Gets a string list from the configuration at the specified key path
+	 * @param key the key path to search for the value
+	 * @param i the value to return if null
+	 * @return The string found at the key path, or the value of i if null
+	 * @since 2.5
+	 * @author IballisticBoss
+	 */
+	public List<String> getStringList(String key, List<String> i) {
+		List<String> l = config.getStringList(key);
+		return l == null ? i : l;
+	}
+	
+	/**
 	 * Gets a string list from the configuration at the specified key path with a maximum number of elements
 	 * @param key the key path to search for values
 	 * @param maxLength the maximum number of elements in the list
@@ -239,6 +252,20 @@ public class ConfigurationUnit extends YamlConfiguration {
 	@Override
 	public double getDouble(String key) {
 		return config.getDouble(key);
+	}
+	
+	/**
+	 * Overridden Super-Type Method
+	 * Gets a double from the configuration at the specified key path, or returns value of i if null
+	 * @param key the key path to search for the value
+	 * @param i the value to return if a key is not found
+	 * @return The double found at the key path, or i if null
+	 * @since 2.5
+	 * @author IballisticBoss
+	 */
+	@Override
+	public double getDouble(String key, double i) {
+		return config.getDouble(key, i);
 	}
 	
 	/**

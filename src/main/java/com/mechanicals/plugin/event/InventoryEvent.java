@@ -193,7 +193,7 @@ public class InventoryEvent implements Listener {
 				 ItemMeta meta = item.getItemMeta();
 				 meta.setDisplayName("Fuel: " + output);
 				 item.setItemMeta(meta);
-				 ItemStack itemb = updated.getItem(1);
+				 ItemStack itemb = updated.getItem(2);
 				 ItemMeta metab = itemb.getItemMeta();
 				 metab.setDisplayName("Power: " + MechMain.plugin.placed.getDouble(configKey + ".power"));
 				 itemb.setItemMeta(metab);
@@ -212,7 +212,7 @@ public class InventoryEvent implements Listener {
 				 ItemMeta meta2 = item2.getItemMeta();
 				 meta2.setDisplayName("Fuel: " + output);
 				 item2.setItemMeta(meta2);
-				 ItemStack itemb2 = updated2.getItem(1);
+				 ItemStack itemb2 = updated2.getItem(2);
 				 ItemMeta metab2 = itemb2.getItemMeta();
 				 metab2.setDisplayName("Power: " + MechMain.plugin.placed.getDouble(configKey + ".power"));
 				 itemb2.setItemMeta(metab2);
