@@ -4,7 +4,7 @@
 
 	<groupId>com.mechanicals.plugin</groupId>
 	<artifactId>MechanicalTools</artifactId>
-	<version>2.4.3</version>
+	<version>2.4.3.1</version>
 	<packaging>jar</packaging>
 
 	<name>MechanicalTools</name>
@@ -13,7 +13,7 @@
 	<properties>
 		<jdk.version>1.7</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<MechanicalTools.version>2.4.3</MechanicalTools.version>
+		<MechanicalTools.version>2.4.3.1</MechanicalTools.version>
 	</properties>
 
 	<repositories>

@@ -35,18 +35,14 @@ public class DyeWand extends BaseMechanicalItem {
 					if (!c.isCooled()) {
 						return;
 					}
-					synchronized (plugin.cooldowns) {
-						plugin.cooldowns.remove(c);
-					}
+					plugin.cooldowns.remove(c);
 				}
 			}
 			if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR) {
 				event.getPlayer().openInventory(InventoryHandler.loadDyeInventoryForPlayer(event.getPlayer()));
 				ConfirmCooldown c = new ConfirmCooldown(event.getPlayer().getName(), "", 14, plugin.itemData.getInt("item.dyeWand.cooldown", 3));
 				c.runTaskTimerAsynchronously(plugin, 0, 20);
-				synchronized (plugin.cooldowns) {
-					plugin.cooldowns.add(c);
-				}
+				plugin.cooldowns.add(c);
 			} else {
 				Block block = event.getClickedBlock();
 				if (block != null) {

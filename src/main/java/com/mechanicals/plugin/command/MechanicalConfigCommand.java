@@ -437,15 +437,11 @@ public class MechanicalConfigCommand extends RegisteredCommand {
 		return new String[] {"Invalid Entry"};
 	}
 	
-	public synchronized void removeCooldown(ConfirmCooldown c) {
-		synchronized (plugin.cooldowns) {
-			plugin.cooldowns.remove(c);
-		}
+	public void removeCooldown(ConfirmCooldown c) {
+		plugin.cooldowns.remove(c);
 	}
 	
-	public synchronized void addCooldown(ConfirmCooldown c) {
-		synchronized (plugin.cooldowns) {
-			plugin.cooldowns.add(c);
-		}
+	public void addCooldown(ConfirmCooldown c) {
+		plugin.cooldowns.add(c);
 	}
 }

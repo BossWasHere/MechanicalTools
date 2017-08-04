@@ -44,17 +44,13 @@ public class Radio extends BaseMechanicalItem {
 					if (!c.isCooled()) {
 						return;
 					}
-					synchronized (plugin.cooldowns) {
-						plugin.cooldowns.remove(c);
-					}
+					plugin.cooldowns.remove(c);
 				}
 			}
 			openNoteBlockWindow(event.getPlayer());
 			ConfirmCooldown c = new ConfirmCooldown(event.getPlayer().getName(), "", 13, plugin.itemData.getInt("item.radio.cooldown", 5));
 			c.runTaskTimerAsynchronously(plugin, 0, 20);
-			synchronized (plugin.cooldowns) {
-				plugin.cooldowns.add(c);
-			}
+			plugin.cooldowns.add(c);
 		} else {
 			event.getPlayer().sendMessage(plugin.texts.noPermissionUse);
 		}

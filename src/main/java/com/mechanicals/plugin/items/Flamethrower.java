@@ -30,9 +30,7 @@ public class Flamethrower extends BaseMechanicalItem {
 					if (!c.isCooled()) {
 						return;
 					}
-					synchronized (plugin.cooldowns) {
-						plugin.cooldowns.remove(c);
-					}
+					plugin.cooldowns.remove(c);
 				}
 			}
 			if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR) {
@@ -40,9 +38,7 @@ public class Flamethrower extends BaseMechanicalItem {
 				
 				ConfirmCooldown c = new ConfirmCooldown(event.getPlayer().getName(), "", 16, plugin.itemData.getInt("item.flamethrower.cooldown", 2));
 				c.runTaskTimerAsynchronously(plugin, 0, 20);
-				synchronized (plugin.cooldowns) {
-					plugin.cooldowns.add(c);
-				}
+				plugin.cooldowns.add(c);
 			} else {
 				
 			}

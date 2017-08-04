@@ -3,10 +3,10 @@ package com.mechanicals.plugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -95,7 +95,7 @@ public class MechMain extends JavaPlugin {
 	public BlockEvent placementListener;
 	public InventoryEvent inventoryListener;
 	public PlayerEvent playerListener;
-	public Set<ConfirmCooldown> cooldowns = Collections.synchronizedSet(new HashSet<ConfirmCooldown>());
+	public Set<ConfirmCooldown> cooldowns = ConcurrentHashMap.newKeySet();
 	public MechanicalPluginManager mechPluginManager;
 	public WorldEditManager worldEditManager;
 	public EconomyManager economyManager;
